@@ -16,3 +16,7 @@ migrate-up: ## run all migration
 
 shell: ## log into into app container -- bash-shell
 	docker-compose exec app bash
+
+startapp: ## create an app="app"
+	mkdir streetteam/apps/$(app)
+	docker-compose exec app python streetteam/manage.py startapp $(app) streetteam/apps/$(app)
