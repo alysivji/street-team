@@ -9,7 +9,10 @@ up: ## start local dev environment; run migrations
 	make migrate-up
 
 migration: ## create migration app="app" msg="msg"
-	python streetteam/manage.py makemigrations $(app) $(msg)
+	docker-compose exec app python streetteam/manage.py makemigrations $(app) $(msg)
 
 migrate-up: ## run all migration
-	python streetteam/manage.py migrate
+	docker-compose exec app python streetteam/manage.py migrate
+
+shell: ## log into into app container -- bash-shell
+	docker-compose exec app bash
