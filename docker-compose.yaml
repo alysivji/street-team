@@ -23,7 +23,6 @@ services:
     ports:
       - "9432:5432"
 
-  # busy-beaver business logic
   app:
     build:
       context: .
