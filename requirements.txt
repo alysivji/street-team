@@ -1,2 +1,4 @@
 Django
+djangorestframework
 psycopg2-binary
+twilio
