@@ -19,6 +19,7 @@ See `Makefile` for now.
   - [ ] how to handle users that have not registered with website (not in MVP)
 - [ ] get happy path working with tests
 - What are other media thigns we can send?
+  - [`content-types` Twilio accepts](https://www.twilio.com/docs/sms/accepted-mime-types)
   - [ ] send a pdf
   - [ ] send a voice memo
   - [ ] send a contact

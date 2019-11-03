@@ -33,7 +33,7 @@ services:
     environment:
       <<: *db_env_vars
       IN_PRODUCTION: 0
-      PYTHONPATH: .
+      PYTHONPATH: /app/streetteam
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
     volumes:

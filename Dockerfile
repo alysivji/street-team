@@ -14,7 +14,7 @@ RUN groupadd -g 901 -r sivdev \
 EXPOSE 5000
 
 # Switch from root user for security
-USER sivdev_user
+# USER sivdev_user
 
 COPY ./ /app
 

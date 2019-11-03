@@ -32,3 +32,12 @@ startapp: ## create an app="app"
 
 ngrok: ## start ngrok to forward port
 	ngrok http 8000
+
+test: ## run tests
+	docker-compose exec app pytest
+
+# test-cov: ## run tests with coverage.py
+# 	docker-compose exec app pytest --cov ./busy_beaver $(args)
+
+# test-covhtml: ## run tests and load html coverage report
+# 	docker-compose exec app pytest --cov ./busy_beaver --cov-report html && open ./htmlcov/index.html
