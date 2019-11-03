@@ -34,7 +34,6 @@ services:
       <<: *db_env_vars
       IN_PRODUCTION: 0
       PYTHONPATH: /app/streetteam
-      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@db:5432/streetteam
     volumes:
