@@ -36,3 +36,7 @@ See `Makefile` for now.
 - [ ] versioning
 - [ ] restrict content-type
 - [ ] https://www.django-rest-framework.org/topics/ajax-csrf-cors/
+- [ ] serving static files in production
+  - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/
+  - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/#serving-static-files-during-development
+  - [ ] Maybe use S3?

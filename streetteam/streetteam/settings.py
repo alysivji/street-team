@@ -15,18 +15,20 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# User defined vars
+IN_PRODUCTION = os.getenv("IN_PRODUCTION") == 1
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zcj4**&#_&3cer3q)wf2a+^n-72p@l=b0#(m&!-n&4x#-+)hu('
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if IN_PRODUCTION else True
 
 # Development environment setting
-ALLOWED_HOSTS = ['0.0.0.0', '.ngrok.io']
+ALLOWED_HOSTS = ['0.0.0.0'] if IN_PRODUCTION else ['0.0.0.0', '.ngrok.io']
 APPEND_SLASH = True
 
 # Application definition
@@ -126,7 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
-
+# TODO THIS IS DURING DEVELOPMENT ONLY, FIGURE OUT A BETTER PATTERN FOR PROD
+STATIC_ROOT = "/tmp"
 
 # Custom Settings
 AUTH_USER_MODEL = 'users.User'

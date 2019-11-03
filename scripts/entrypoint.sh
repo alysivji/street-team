@@ -19,8 +19,17 @@ printf "\n%s\n"  "Database is online!"
 
 if [ "$SERVER" = "webserver" ]; then
     echo "Starting Django server"
-    python streetteam/manage.py migrate
-    python streetteam/manage.py runserver 0.0.0.0:8000
+    cd streetteam
+    python manage.py migrate
+    python manage.py collectstatic --no-input
+    if [ "$PRODUCTION" = 1 ]; then
+        gunicorn "streetteam.wsgi" -b 0.0.0.0:8000 --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+    elif [ "$PRODUCTION" = 0 ]; then
+        gunicorn "streetteam.wsgi" -b 0.0.0.0:8000 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+    else
+        echo "Unrecognized option for variable IN_PRODUCTION: '$PRODUCTION'"
+        exit 1
+    fi
 elif [ "$SERVER" = "worker" ]; then
     echo "TODO Starting Celery worker"
 else
