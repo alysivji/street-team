@@ -15,10 +15,13 @@ attach: ## attach to process for debugging purposes
 	docker attach `docker-compose ps -q app`
 
 migration: ## create migration app="app" msg="msg"
-	docker-compose exec app python streetteam/manage.py makemigrations $(app) $(msg)
+	docker-compose exec app python streetteam/manage.py makemigrations -n "$(msg)" $(app)
 
 migrate-up: ## run all migration
-	docker-compose exec app python streetteam/manage.py migrate
+	docker-compose exec app python streetteam/manage.py migrate $(app)
+
+dropdb:  ## drop all tables in development database
+	psql -d postgresql://streetteam_user:streetteam_password@localhost:9432/streetteam -f ./scripts/drop_all_tables.sql
 
 shell: ## log into into app container -- bash-shell
 	docker-compose exec app bash
