@@ -34,7 +34,6 @@ See `Makefile` for now.
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/#serving-static-files-during-development
   - [ ] Maybe use S3?
-- [ ] `healthcheck` endpoint
 - [ ] build out CI, check out azure pipelines
 
 ## Updating Dependencies

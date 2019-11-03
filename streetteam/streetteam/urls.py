@@ -16,9 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
 from django.urls import include, path
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('integration/', include("apps.twilio_integration.urls"))
+    path("admin/", admin.site.urls),
+    path("integration/", include("apps.twilio_integration.urls")),
+    path(
+        "healthcheck/",
+        lambda request: HttpResponse(
+            b'{"ping": "pong"}', content_type="application/json"
+        ),
+    ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
