@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # internal
     'apps.mediahub',
+    'apps.twilio_integration'
 ]
 
 MIDDLEWARE = [

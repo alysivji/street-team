@@ -4,9 +4,27 @@ Tools to simplify work related to event marketing.
 
 ## Instructions
 
-See `Makefile`
+See `Makefile` for now.
 
-## Todo
+## Roadmap
+
+- [ ] draw out user flow diagram for app interaction
+  - [ ] save everything that comes in
+  - [ ] just sms
+    - [ ] copy > 5 message
+  - [ ] 1 - 5 pictures
+    - [ ] we receive your picture(s). Thank you!
+  - [ ] > 5 pictures
+    - [ ] Somethign went wrong. You may have forgotten to attach a picture. Remember you can attach up to 5 pictures per message!
+  - [ ] how to handle users that have not registered with website (not in MVP)
+- [ ] get happy path working with tests
+- What are other media thigns we can send?
+  - [ ] send a pdf
+  - [ ] send a voice memo
+  - [ ] send a contact
+  - [ ] send a ???
+
+## Production Todo
 
 - [ ] security
   - [ ] [lock down endpoint](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-django-project-by-validating-incoming-twilio-requests)
@@ -16,9 +34,4 @@ See `Makefile`
 - [ ] permissions
 - [ ] versioning
 - [ ] restrict content-type
-
-## Next Steps
-
-- [ ] what happens when we send 0 pictures, 1 pic - 6 pics (limit is 5 i think)
-  - [ ] save responses... use for tests
-- [ ] django function view
+- [ ] https://www.django-rest-framework.org/topics/ajax-csrf-cors/
