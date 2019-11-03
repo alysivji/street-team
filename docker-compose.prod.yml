@@ -1,0 +1,33 @@
+version: '3.6'
+
+networks:
+  sivnet:
+    external: true
+  local:
+    external: false
+
+services:
+  app:
+    image: alysivji/streetteam:latest
+    command: webserver
+    environment:
+      IN_PRODUCTION: 1
+      PYTHONPATH: /app/streetteam
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_SETTINGS_MODULE: streetteam.settings
+      DB_URI: ${STREETTEAM_DB_URI}
+    volumes:
+      - .:/app/
+    ports:
+      - 8000:8000
+    stdin_open: true
+    tty: true
+    networks:
+      - sivnet
+      - local
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=sivnet
+      - traefik.backend=streetteam
+      - traefik.frontend.rule=Host:streetteam.sivji.com
+      - traefik.port=8000
