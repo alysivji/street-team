@@ -8,7 +8,7 @@ services:
   db:
     # infrastructure
     image: postgres:10.3-alpine
-    environment: &db_env_vars
+    environment:
       POSTGRES_DB: streetteam
       POSTGRES_USER: streetteam_user
       POSTGRES_PASSWORD: streetteam_password
@@ -31,7 +31,6 @@ services:
     depends_on:
       - db
     environment:
-      <<: *db_env_vars
       IN_PRODUCTION: 0
       PYTHONPATH: /app/streetteam
       DJANGO_SETTINGS_MODULE: streetteam.settings

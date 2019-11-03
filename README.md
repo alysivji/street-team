@@ -8,16 +8,8 @@ See `Makefile` for now.
 
 ## Roadmap
 
-- [ ] draw out user flow diagram for app interaction
-  - [ ] save everything that comes in
-  - [ ] just sms
-    - [ ] copy > 5 message
-  - [ ] 1 - 5 pictures
-    - [ ] we receive your picture(s). Thank you!
-  - [ ] > 5 pictures
-    - [ ] Somethign went wrong. You may have forgotten to attach a picture. Remember you can attach up to 5 pictures per message!
-  - [ ] how to handle users that have not registered with website (not in MVP)
-- [ ] get happy path working with tests
+- [x] draw out user flow diagram for app interaction
+- [x] get happy path working with tests
 - What are other media thigns we can send?
   - [`content-types` Twilio accepts](https://www.twilio.com/docs/sms/accepted-mime-types)
   - [ ] send a pdf
@@ -27,11 +19,13 @@ See `Makefile` for now.
 
 ## Production Todo
 
+- [ ] `factory-boy` for testing
 - [ ] security
   - [ ] [lock down endpoint](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-django-project-by-validating-incoming-twilio-requests)
   - [ ] [Security docs](https://www.twilio.com/docs/usage/security)
-  - [ ] [anti-fraud developer's guide](https://www.twilio.com/docs/usage/anti-fraud-developer-guide)
+  - [x] [anti-fraud developer's guide](https://www.twilio.com/docs/usage/anti-fraud-developer-guide)
   - [ ] [Django docs](https://docs.djangoproject.com/en/2.2/topics/security/)
+  - `https` via traefik
 - [ ] permissions
 - [ ] versioning
 - [ ] restrict content-type
@@ -40,6 +34,8 @@ See `Makefile` for now.
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/#serving-static-files-during-development
   - [ ] Maybe use S3?
+- [ ] `healthcheck` endpoint
+- [ ] build out CI, check out azure pipelines
 
 ## Updating Dependencies
 

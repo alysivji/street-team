@@ -39,11 +39,11 @@ ngrok: ## start ngrok to forward port
 test: ## run tests
 	docker-compose exec app pytest $(args)
 
-# test-cov: ## run tests with coverage.py
-# 	docker-compose exec app pytest --cov ./busy_beaver $(args)
+test-cov: ## run tests with coverage.py
+	docker-compose exec app pytest --cov ./streetteam $(args)
 
-# test-covhtml: ## run tests and load html coverage report
-# 	docker-compose exec app pytest --cov ./busy_beaver --cov-report html && open ./htmlcov/index.html
+test-covhtml: ## run tests and load html coverage report
+	docker-compose exec app pytest --cov ./streetteam --cov-report html && open ./htmlcov/index.html
 
 requirements: ## generate requirements.txt using piptools
 	pip-compile --output-file=requirements.txt requirements.in
