@@ -49,5 +49,5 @@ class TwilioWebhook(APIView):
             media_resources.append(item)
 
         MediaResource.objects.bulk_create(media_resources)
-        resp.message(body=f"Recieved {num_media_items} picture(s)! Thank you!")
+        resp.message(body=f"Received {num_media_items} picture(s)! Thank you!")
         return HttpResponse(resp.to_xml(), content_type="application/xml")
