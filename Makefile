@@ -11,6 +11,9 @@ up: ## start local dev environment; run migrations
 	docker-compose up -d
 	make migrate-up
 
+down: ## stop local dev environment
+	docker-compose down
+
 attach: ## attach to process for debugging purposes
 	docker attach `docker-compose ps -q app`
 
@@ -34,7 +37,7 @@ ngrok: ## start ngrok to forward port
 	ngrok http 8000
 
 test: ## run tests
-	docker-compose exec app pytest
+	docker-compose exec app pytest $(args)
 
 # test-cov: ## run tests with coverage.py
 # 	docker-compose exec app pytest --cov ./busy_beaver $(args)

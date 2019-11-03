@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name='PhoneNumber',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('number', models.CharField(max_length=30)),
+                ('number', models.CharField(max_length=30, unique=True)),
             ],
         ),
         migrations.CreateModel(
