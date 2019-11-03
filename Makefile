@@ -44,3 +44,6 @@ test: ## run tests
 
 # test-covhtml: ## run tests and load html coverage report
 # 	docker-compose exec app pytest --cov ./busy_beaver --cov-report html && open ./htmlcov/index.html
+
+requirements: ## generate requirements.txt using piptools
+	pip-compile --output-file=requirements.txt requirements.in

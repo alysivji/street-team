@@ -40,3 +40,7 @@ See `Makefile` for now.
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/
   - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/#serving-static-files-during-development
   - [ ] Maybe use S3?
+
+## Updating Dependencies
+
+- use [pip-tools](https://github.com/jazzband/pip-tools/) to manage dependencies

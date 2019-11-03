@@ -1,0 +1,7 @@
+Django==2.2.6
+djangorestframework==3.10.3
+gunicorn==19.9.0
+psycopg2-binary==2.8.4
+pytest==5.2.2
+pytest-django==3.6.0
+twilio==6.33.0
