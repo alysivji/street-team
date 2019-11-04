@@ -122,3 +122,4 @@ STATIC_ROOT = "/tmp"
 
 # Custom Settings
 AUTH_USER_MODEL = "users.User"
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")

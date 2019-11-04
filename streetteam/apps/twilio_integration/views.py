@@ -1,7 +1,10 @@
 from rest_framework.views import APIView
+from django.conf import settings
 from django.http import HttpResponse
+from django.utils.decorators import method_decorator
 from twilio.twiml.messaging_response import MessagingResponse
 
+from .decorators import validate_twilio_request
 from .models import PhoneNumber, ReceivedMessage
 from apps.mediahub.models import MediaResource
 
@@ -13,6 +16,7 @@ RECEIVED_SMS = (
 
 
 class TwilioWebhook(APIView):
+    @method_decorator(validate_twilio_request(settings.TWILIO_AUTH_TOKEN))
     def post(self, request, format=None):
         data = request.data
         resp = MessagingResponse()

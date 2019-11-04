@@ -8,7 +8,8 @@ See `Makefile` for now.
 
 ## Roadmap
 
-- [x] draw out user flow diagram for app interaction
+- [ ] draw out user flow diagram for app interaction
+  - [x] implement
 - [x] get happy path working with tests
 - What are other media thigns we can send?
   - [`content-types` Twilio accepts](https://www.twilio.com/docs/sms/accepted-mime-types)
@@ -21,8 +22,9 @@ See `Makefile` for now.
 
 - [ ] `factory-boy` for testing
 - [ ] security
-  - [ ] [lock down endpoint](https://www.twilio.com/docs/usage/tutorials/how-to-secure-your-django-project-by-validating-incoming-twilio-requests)
-  - [ ] [Security docs](https://www.twilio.com/docs/usage/security)
+  - [x] [Security docs](https://www.twilio.com/docs/usage/security)
+    - [x] Validate request is from Twilio
+    - [ ] HTTP Digest Auth (figure out how to do this)
   - [x] [anti-fraud developer's guide](https://www.twilio.com/docs/usage/anti-fraud-developer-guide)
   - [ ] [Django docs](https://docs.djangoproject.com/en/2.2/topics/security/)
   - `https` via traefik

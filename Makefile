@@ -47,3 +47,12 @@ test-covhtml: ## run tests and load html coverage report
 
 requirements: ## generate requirements.txt using piptools
 	pip-compile --output-file=requirements.txt requirements.in
+
+shell: ## log into into app container -- bash-shell
+	docker-compose exec app bash
+
+shell-db:  ## log into database container -- psql
+	docker-compose exec db psql -w --username "streetteam_user" --dbname "streetteam"
+
+devshell: ## open ipython shell with application context
+	docker-compose exec app python streetteam/manage.py shell
