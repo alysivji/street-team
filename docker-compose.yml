@@ -1,0 +1,44 @@
+version: '3.6'
+
+volumes:
+  pgdata:
+
+
+services:
+  db:
+    # infrastructure
+    image: postgres:10.3-alpine
+    environment:
+      POSTGRES_DB: streetteam
+      POSTGRES_USER: streetteam_user
+      POSTGRES_PASSWORD: streetteam_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    ports:
+      - "9432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: webserver
+    depends_on:
+      - db
+    environment:
+      IN_PRODUCTION: 0
+      PYTHONPATH: /app/streetteam
+      DJANGO_SETTINGS_MODULE: streetteam.settings
+      DB_URI: postgres://streetteam_user:streetteam_password@db:5432/streetteam
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+    volumes:
+      - .:/app/
+    ports:
+      - 8000:8000
+    stdin_open: true
+    tty: true
