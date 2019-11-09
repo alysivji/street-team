@@ -27,7 +27,7 @@ if [ "$SERVER" = "webserver" ]; then
     if [ "$PRODUCTION" = 1 ]; then
         gunicorn "streetteam.wsgi" -b 0.0.0.0:8100 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
     elif [ "$PRODUCTION" = 0 ]; then
-        gunicorn "streetteam.wsgi" -b 0.0.0.0:8000 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
+        gunicorn "streetteam.wsgi" -b 0.0.0.0:8100 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
     else
         echo "Unrecognized option for variable IN_PRODUCTION: '$PRODUCTION'"
         exit 1

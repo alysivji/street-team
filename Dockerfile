@@ -11,7 +11,7 @@ RUN groupadd -g 901 -r sivdev \
     && useradd -g sivdev -r -u 901 sivdev_user \
     && pip install --no-cache-dir -r /tmp/requirements_dev.txt
 
-EXPOSE 8000 8100
+EXPOSE 8100
 
 # Switch from root user for security
 # USER sivdev_user
