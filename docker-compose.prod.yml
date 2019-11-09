@@ -8,18 +8,17 @@ networks:
 
 services:
   app:
-    image: alysivji/streetteam:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     command: webserver
     environment:
-      IN_PRODUCTION: 1
+      IN_PRODUCTION: '1'
       PYTHONPATH: /app/streetteam
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: ${STREETTEAM_DB_URI}
-    volumes:
-      - .:/app/
-    ports:
-      - 8000:8000
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
     stdin_open: true
     tty: true
     networks:
@@ -30,4 +29,5 @@ services:
       - traefik.docker.network=sivnet
       - traefik.backend=streetteam
       - traefik.frontend.rule=Host:streetteam.sivji.com
-      - traefik.port=8000
+      - traefik.frontend.headers.SSLProxyHeaders=X-Forwarded-Proto:https
+      - traefik.port=8100
