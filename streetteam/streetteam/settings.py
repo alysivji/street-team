@@ -17,7 +17,7 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # User defined vars
-IN_PRODUCTION = os.getenv("IN_PRODUCTION") == 1
+IN_PRODUCTION = os.getenv("IN_PRODUCTION") == '1'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -33,7 +33,7 @@ SECRET_KEY = (
 DEBUG = False if IN_PRODUCTION else True
 
 # Development environment setting
-ALLOWED_HOSTS = ["0.0.0.0"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io"]
+ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io"]
 APPEND_SLASH = True
 
 # Application definition
