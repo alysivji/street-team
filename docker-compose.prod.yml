@@ -19,7 +19,7 @@ services:
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: ${STREETTEAM_DB_URI}
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
-    volumes:
+    volumes:  # TODO: once we move to image, we wont' need to do this
       - .:/app/
     stdin_open: true
     tty: true
