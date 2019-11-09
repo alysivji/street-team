@@ -19,6 +19,8 @@ services:
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: ${STREETTEAM_DB_URI}
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+    volumes:
+      - .:/app/
     stdin_open: true
     tty: true
     networks:
