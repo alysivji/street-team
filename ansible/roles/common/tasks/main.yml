@@ -10,3 +10,13 @@
   git:
     repo: "{{ code_repository }}"
     dest: "{{ app_dir }}"
+
+- name: build latest image
+  shell: ". /home/{{ user }}/.bash_profile && make prod-build"
+  args:
+      chdir: "{{ app_dir }}"
+
+- name: deploy latest image
+  shell: ". /home/{{ user }}/.bash_profile && make prod-up"
+  args:
+      chdir: "{{ app_dir }}"

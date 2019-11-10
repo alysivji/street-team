@@ -59,3 +59,6 @@ prod-up: ## start prod environment
 
 prod-down: ## stop prod environment
 	docker-compose -f docker-compose.prod.yml down
+
+prod-build: ## build prod containers
+	docker-compose -f docker-compose.prod.yml build
