@@ -24,11 +24,6 @@ from apps.common.views import DebugEndpoint
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("integration/", include("apps.twilio_integration.urls")),
-    path(
-        "healthcheck/",
-        lambda request: HttpResponse(
-            b'{"ping": "pong"}', content_type="application/json"
-        ),
-    ),
+    path("healthcheck/", lambda request: HttpResponse(b'{"ping": "pong"}', content_type="application/json")),
     path("debug/", view=DebugEndpoint.as_view()),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

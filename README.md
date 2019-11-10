@@ -52,8 +52,16 @@ to promote an event or a product.
 
 ## Contributing
 
+### Set up Development Environment
+
 1. Fork and clone repo
-1. `make up`
+1. Create and activate virtual environment
+1. `pip install pre-commit==1.20.0`
+1. `pre-commit install`
+1. `pip install -r requirements.txt`
+1. Point IDE's PYTHONPATH to the virtualenv's Python binary
+
+`make up` to start server
 
 ### Updating Dependencies
 

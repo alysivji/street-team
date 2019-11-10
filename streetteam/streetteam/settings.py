@@ -17,17 +17,13 @@ import dj_database_url
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # User defined vars
-IN_PRODUCTION = os.getenv("IN_PRODUCTION") == '1'
+IN_PRODUCTION = os.getenv("IN_PRODUCTION") == "1"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    os.getenv("DJANGO_SECRET_KEY")
-    if IN_PRODUCTION
-    else "zcj4**&#_&3cer3q)wf2a+^n-72p@l=b0#(m&!-n&4x#-+)hu("
-)
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") if IN_PRODUCTION else "zcj4**&#_&3cer3q)wf2a+^n-72p@l=b0#(m&!-n&4x#-+)hu("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if IN_PRODUCTION else True
@@ -36,7 +32,7 @@ ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ng
 APPEND_SLASH = True
 
 # set in traefik
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') if IN_PRODUCTION else None
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https") if IN_PRODUCTION else None
 
 # Application definition
 INSTALLED_APPS = [
@@ -56,7 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # needs to be after security
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # needs to be after security
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -116,8 +112,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Custom Settings
 AUTH_USER_MODEL = "users.User"

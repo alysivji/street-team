@@ -18,9 +18,7 @@ def create_twilio_headers():
 @pytest.mark.django_db
 def test_send_SMS__receive_error_message(client, create_twilio_headers):
     # Arrange
-    filepath = (
-        "streetteam/apps/twilio_integration/tests/files/twilio_webhook__send_sms.json"
-    )
+    filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__send_sms.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
     uri = "http://testserver/integration/twilio/"
