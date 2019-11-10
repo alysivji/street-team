@@ -2,61 +2,60 @@
 
 Tools to simplify work related to event marketing.
 
-## Instructions
+## Project Information
 
-See `Makefile` for now.
+Organizing events is a thankless job.
+There are many moving pieces that go into planning an event
+and then running it the day of.
 
-## Updating Dependencies
+It is unreasonable to ask event organizers
+to take pictures and operate social media
+on top of the laundry list of things they are responsibile for.
+
+[Chicago Python](https://www.chipy.org) has grown in 2019:
+from 2-3 events/month to 5-8 events/month.
+Having a dedicated individual attend all events
+to manage social media is a tall ask.
+Multiple resources would ease the workload,
+but requires coordination ahead of time.
+
+### Introducing the Chicago Python Street Team
+
+Have you ever wondered how you can help Chicago Python
+in the limited time you have?
+You're in luck!
+We've built a platform to enable our community to
+help us manage our social media channels.
+
+Take a picture while at a Chicago Python event
+and text it to the group inbox!
+The social media manager will review all pictures
+and  use the appropriate ones for social media posts.
+
+Outsourcing to the community FTW!!
+
+### Current Features
+
+- Send a text message with 1-5 images to a phone number
+  - this image could be featured in a Chicago Python social media post!
+
+### Upcoming Roadmap
+
+- Login to add caption to pictures and add to the Twitter queue
+  - Social Media Manager will approve tweets to be published
+
+### Etymology
+
+A [**street team**](https://en.wikipedia.org/wiki/Street_team)
+is a group of volunteers who "hit the streets"
+to promote an event or a product.
+
+## Contributing
+
+1. Fork and clone repo
+1. `make up`
+
+### Updating Dependencies
 
 - use [pip-tools](https://github.com/jazzband/pip-tools/) to manage dependencies
-
-## Todo
-
-- [ ] draw out user flow diagram for app interaction
-  - [x] implement
-- [x] get happy path working with tests
-- What are other media thigns we can send?
-  - [`content-types` Twilio accepts](https://www.twilio.com/docs/sms/accepted-mime-types)
-  - [ ] send a pdf
-  - [ ] send a voice memo
-  - [ ] send a contact
-  - [ ] send a ???
-
-## Production Todo
-
-- [ ] security
-  - [x] [Security docs](https://www.twilio.com/docs/usage/security)
-    - [x] Validate request is from Twilio
-  - [x] [anti-fraud developer's guide](https://www.twilio.com/docs/usage/anti-fraud-developer-guide)
-  - [x] [Django docs](https://docs.djangoproject.com/en/2.2/topics/security/)
-  - [ ] [Django deployment checklist](https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/)
-  - [ ] `https` via traefik
-    - [ ] [other django configuration](https://docs.djangoproject.com/en/2.2/topics/security/#ssl-https)
-    - [ ] `CSRF_COOKIE_SECURE` and `SESSION_COOKIE_SECURE`
-- [x] https://www.django-rest-framework.org/topics/ajax-csrf-cors/
-- [ ] serving static files in production
-  - [ ] `STATIC_ROOT` and `STATIC_URL`
-  - [ ] `MEDIA_ROOT`, `MEDIA_URL`, and `FILE_UPLOAD_PERMISSIONS`
-  - [ ] https://docs.djangoproject.com/en/2.2/howto/static-files/deployment/
-  - [x] https://docs.djangoproject.com/en/2.2/howto/static-files/#serving-static-files-during-development
-  - [ ] Maybe use S3?
-    - https://coderbook.com/@marcus/how-to-store-django-static-and-media-files-on-s3-in-production/
-    - https://testdriven.io/blog/storing-django-static-and-media-files-on-amazon-s3/
-    - https://medium.com/@manibatra23/setting-up-amazon-s3-bucket-for-serving-django-static-and-media-files-3e781ab325d5
-    - https://www.codingforentrepreneurs.com/blog/s3-static-media-files-for-django/
-- [ ] logging
-  - [ ] JSON logging
-  - [ ] [Filtering error reports](https://docs.djangoproject.com/en/2.2/howto/error-reporting/#filtering-error-reports)
-- [ ] sentry
-- [ ] `python manage.py check --deploy`
-
-## Roadmap
-
-- [ ] `factory-boy` for testing
-- [ ] permissions
-- [ ] build out CI, check out azure pipelines
-  - [ ] needs to be public first
-  - [ ] build out CD pipeline -- release + watchtower
-- [ ] api versioning
-- [ ] restrict content-type
-- [ ] [HTTP Digest Authentication](https://www.twilio.com/docs/usage/security)
+- add new dependency to `requirements.in` and run `make requirements`
