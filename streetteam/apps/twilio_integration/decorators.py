@@ -14,9 +14,7 @@ def validate_twilio_request(signing_secret: str):
         @functools.wraps(func)
         def decorated_function(request, *args, **kwargs):
             request_valid = validator.validate(
-                request.build_absolute_uri(),
-                request.POST,
-                request.META.get("HTTP_X_TWILIO_SIGNATURE", ""),
+                request.build_absolute_uri(), request.POST, request.META.get("HTTP_X_TWILIO_SIGNATURE", "")
             )
 
             if request_valid:

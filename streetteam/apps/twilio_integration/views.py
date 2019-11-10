@@ -30,11 +30,7 @@ class TwilioWebhook(APIView):
             return HttpResponse()
 
         from_number, _ = PhoneNumber.objects.get_or_create(number=from_number)
-        params = {
-            "twilio_message_id": msg_id,
-            "data": data,
-            "phone_number": from_number,
-        }
+        params = {"twilio_message_id": msg_id, "data": data, "phone_number": from_number}
         msg = ReceivedMessage(**params)
         msg.save()
 
@@ -47,9 +43,7 @@ class TwilioWebhook(APIView):
         for num in range(num_media_items):
             content_type = data.get(f"MediaContentType{num}")
             url = data.get(f"MediaUrl{num}")
-            item = MediaResource(
-                resource_url=url, content_type=content_type, phone_number=from_number
-            )
+            item = MediaResource(resource_url=url, content_type=content_type, phone_number=from_number)
             media_resources.append(item)
 
         MediaResource.objects.bulk_create(media_resources)
