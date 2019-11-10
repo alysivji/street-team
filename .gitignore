@@ -126,6 +126,7 @@ dmypy.json
 
 # project specific
 staticfiles/
+site.retry
 
 # environment specific
 .envrc

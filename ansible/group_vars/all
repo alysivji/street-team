@@ -1,0 +1,6 @@
+group: alysivji
+user: alysivji
+
+app_name: street-team
+app_dir: "/home/{{ user }}/{{ app_name }}"
+code_repository: https://github.com/alysivji/street-team.git
