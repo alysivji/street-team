@@ -53,3 +53,12 @@ shell-db:  ## log into database container -- psql
 
 devshell: ## open ipython shell with application context
 	docker-compose exec app python streetteam/manage.py shell
+
+prod-up: ## start prod environment
+	docker-compose -f docker-compose.prod.yml up -d
+
+prod-down: ## stop prod environment
+	docker-compose -f docker-compose.prod.yml down
+
+prod-build: ## build prod containers
+	docker-compose -f docker-compose.prod.yml build
