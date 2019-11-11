@@ -68,6 +68,44 @@ to promote an event or a product.
 - use [pip-tools](https://github.com/jazzband/pip-tools/) to manage dependencies
 - add new dependency to `requirements.in` and run `make requirements`
 
+## Notes
+
 ### Django Admin Details
 
 l / p = admin@dev.com / password
+
+### Dump Production Database
+
+```console
+pg_dump -h ${POSTGRES_HOST} -U ${STREET_TEAM_USER} -p ${POSTGRES_PORT} ${STREET_TEAM_DB} > dbdump.sql
+rsync -vr -e ssh ${user}@${vps_ip}:${path_to_file} [path_to_save_to]
+pg_restore -d 'postgres://streetteam_user:streetteam_password@0.0.0.0:9432/streetteam' --jobs 4 dbdump.sql
+```
+
+### Sample Data Migration
+
+```python
+from datetime import datetime
+from django.db import migrations
+
+
+def add_default_datetimes_to_newly_created_column(apps, schema_editor):
+
+    MediaResource = apps.get_model("mediahub", "MediaResource")
+    all_records = MediaResource.objects.all()
+    for record in all_records.iterator():
+        record.created_at = datetime.utc()
+        record.updated_at = datetime.utc()
+        record.save()
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('mediahub', '0002_add_datetime_fields_to_model'),
+    ]
+
+    operations = [
+        migrations.RunPython(add_default_datetimes_to_newly_created_column, reverse_code=migrations.RunPython.noop)
+    ]
+```

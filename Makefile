@@ -21,6 +21,9 @@ attach: ## attach to process for debugging purposes
 migration: ## create migration app="app" msg="msg"
 	docker-compose exec app python streetteam/manage.py makemigrations -n "$(msg)" $(app)
 
+migration-empty: ## create empty migration app="app" msg="msg"
+	docker-compose exec app python streetteam/manage.py makemigrations --empty -n "$(msg)" $(app)
+
 migrate-up: ## run all migration
 	docker-compose exec app python streetteam/manage.py migrate $(app)
 
