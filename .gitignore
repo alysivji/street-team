@@ -132,4 +132,4 @@ site.retry
 .envrc
 .vscode
 .pdbrc.py
-docker-compose-override.yml
+docker-compose.override.yml
