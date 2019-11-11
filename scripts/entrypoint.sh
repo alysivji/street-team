@@ -24,6 +24,7 @@ if [ "$SERVER" = "webserver" ]; then
     cd streetteam
     python manage.py migrate
     python manage.py collectstatic --no-input
+
     if [ "$PRODUCTION" = 1 ]; then
         # TODO remove --reload once we move to image
         gunicorn "streetteam.wsgi" -b 0.0.0.0:8100 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}

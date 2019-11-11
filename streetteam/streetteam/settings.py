@@ -45,10 +45,13 @@ INSTALLED_APPS = [
     # third party
     "rest_framework",
     # internal
+    "apps.common",
     "apps.users",
     "apps.mediahub",
     "apps.twilio_integration",
 ]
+if not IN_PRODUCTION:
+    INSTALLED_APPS.append("django_extensions")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
