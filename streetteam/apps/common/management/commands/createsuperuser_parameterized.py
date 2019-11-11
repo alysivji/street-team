@@ -10,8 +10,11 @@ To use:
 Code adapted from https://stackoverflow.com/a/42491469/4326704
 """
 
+import logging
 from django.contrib.auth.management.commands import createsuperuser
 from django.core.management import CommandError
+
+logger = logging.getLogger(__name__)
 
 
 class Command(createsuperuser.Command):
@@ -32,7 +35,7 @@ class Command(createsuperuser.Command):
 
         try:
             self.UserModel.objects.get(email=email)
-        except self.model.DoesNotExist:
+        except self.UserModel.DoesNotExist:
             super(Command, self).handle(*args, **options)
             print("New user created")
         else:

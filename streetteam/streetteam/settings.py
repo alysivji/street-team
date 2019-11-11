@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     "apps.mediahub",
     "apps.twilio_integration",
 ]
+if not IN_PRODUCTION:
+    INSTALLED_APPS.append("django_extensions")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

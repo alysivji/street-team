@@ -10,6 +10,7 @@ build:  ## rebuild app
 up: ## start local dev environment; run migrations
 	docker-compose up -d
 	make migrate-up
+	make superuser
 
 down: ## stop local dev environment
 	docker-compose down
@@ -33,6 +34,9 @@ startapp: ## create an app="app"
 	mkdir streetteam/apps/$(app)
 	docker-compose exec app python streetteam/manage.py startapp $(app) streetteam/apps/$(app)
 
+superuser:  ## add superuser to database
+	docker-compose exec app python streetteam/manage.py createsuperuser_parameterized --noinput --email admin@streetteam.com --password my-secret-password
+
 ngrok: ## start ngrok to forward port
 	ngrok http 8000
 
@@ -52,7 +56,7 @@ shell-db:  ## log into database container -- psql
 	docker-compose exec db psql -w --username "streetteam_user" --dbname "streetteam"
 
 devshell: ## open ipython shell with application context
-	docker-compose exec app python streetteam/manage.py shell
+	docker-compose exec app python streetteam/manage.py shell_plus
 
 prod-up: ## start prod environment
 	docker-compose -f docker-compose.prod.yml up -d
