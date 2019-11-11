@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # third party
     "rest_framework",
     # internal
+    "apps.common",
     "apps.users",
     "apps.mediahub",
     "apps.twilio_integration",

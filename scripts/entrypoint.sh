@@ -28,6 +28,7 @@ if [ "$SERVER" = "webserver" ]; then
         # TODO remove --reload once we move to image
         gunicorn "streetteam.wsgi" -b 0.0.0.0:8100 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
     elif [ "$PRODUCTION" = 0 ]; then
+        python manage.py createsuperuser_parameterized --email admin@streetteam.com --pasword my-secret-password
         gunicorn "streetteam.wsgi" -b 0.0.0.0:8100 --reload --env DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE}
     else
         echo "Unrecognized option for variable IN_PRODUCTION: '$PRODUCTION'"
