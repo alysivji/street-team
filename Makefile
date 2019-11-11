@@ -35,7 +35,7 @@ startapp: ## create an app="app"
 	docker-compose exec app python streetteam/manage.py startapp $(app) streetteam/apps/$(app)
 
 superuser:  ## add superuser to database
-	docker-compose exec app python streetteam/manage.py createsuperuser_parameterized --noinput --email admin@streetteam.com --password my-secret-password
+	docker-compose exec app python streetteam/manage.py createsuperuser_parameterized --noinput --email admin@dev.com --password password
 
 ngrok: ## start ngrok to forward port
 	ngrok http 8000

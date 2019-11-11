@@ -67,3 +67,7 @@ to promote an event or a product.
 
 - use [pip-tools](https://github.com/jazzband/pip-tools/) to manage dependencies
 - add new dependency to `requirements.in` and run `make requirements`
+
+### Django Admin Details
+
+l / p = admin@dev.com / password
