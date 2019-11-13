@@ -6,8 +6,8 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build application
-        run: make up
+        run: docker-compose up -d
         env:
           TWILIO_AUTH_TOKEN: test_token
       - name: Test application
-        run: make test
+        run: docker-compose exec app pytest
