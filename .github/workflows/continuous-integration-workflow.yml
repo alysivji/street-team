@@ -2,7 +2,7 @@ name: Build and Test Street Team
 on: [pull_request]
 jobs:
   build-and-test-app:
-    runs-on: ubuntu-latest
+    runs-on: docker://python:3.8.0
 
     services:
       postgres:
@@ -18,9 +18,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+        with:
+          path: /app/streetteam
       - name: Install requirements and migrate database
-        uses: docker://python:3.8.0
-        env: &app_build
+        env: &build_env_vars
           IN_PRODUCTION: 0
           PYTHONPATH: /app/streetteam
           DJANGO_SETTINGS_MODULE: streetteam.settings
@@ -31,3 +32,4 @@ jobs:
           python streeteam/manage.py migrate
       - name: Test application
         run: docker-compose exec app pytest
+        env: *build_env_vars
