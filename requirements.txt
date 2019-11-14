@@ -13,6 +13,7 @@ chardet==3.0.4            # via requests
 click==7.0                # via black
 coverage==4.5.4
 dj-database-url==0.5.0
+django-extensions==2.2.5
 django==2.2.6
 djangorestframework==3.10.3
 entrypoints==0.3          # via flake8
@@ -36,7 +37,7 @@ pytest==5.2.2
 pytz==2019.3              # via django, twilio
 regex==2019.11.1          # via black
 requests==2.22.0          # via twilio
-six==1.12.0               # via packaging, twilio
+six==1.12.0               # via django-extensions, packaging, twilio
 sqlparse==0.3.0           # via django
 toml==0.10.0              # via black
 twilio==6.33.0
