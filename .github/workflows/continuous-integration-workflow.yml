@@ -16,7 +16,7 @@ jobs:
         with:
           postgres version: 10.3
           postgres user: streetteam
-          postgres_password: streetteam_password
+          postgres password: streetteam_password
           postgres_db: streetteam
       - uses: actions/setup-python@v1
         with:
