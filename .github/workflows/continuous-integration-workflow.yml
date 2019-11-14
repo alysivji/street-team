@@ -27,10 +27,13 @@ jobs:
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
-      - name: Install requirements and migrate database
-        run: |
-          pip install -r requirements.txt
-          python street-team/streeteam/manage.py migrate
+      # cache this
+      - name: Install requirements
+        run: pip install -r requirements.txt
+      - name: Print Current Working Directory
+        run: pwd
+      - name: Migrate database
+        run: python streeteam/manage.py migrate
       - name: Test application
         run: pytest
 
