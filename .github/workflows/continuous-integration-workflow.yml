@@ -14,10 +14,10 @@ jobs:
       - name: Setup PostgreSQL
         uses: Harmon758/postgresql-action@v1.0.0
         with:
-          postgres version: 10.3
-          postgres user: streetteam
-          postgres password: streetteam_password
-          postgres_db: streetteam
+          postgresql version: 10.3
+          postgresql user: streetteam
+          postgresql password: streetteam_password
+          postgresql db: streetteam
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
