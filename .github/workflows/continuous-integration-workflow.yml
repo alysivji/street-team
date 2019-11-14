@@ -28,12 +28,10 @@ jobs:
         with:
           python-version: "3.8.0"
       # cache this
-      # - name: Install requirements
-      #   run: pip install -r requirements.txt
-      - name: Print Current Working Directory
-        run: pwd && ls
+      - name: Install requirements
+        run: pip install -r requirements.txt
       - name: Migrate database
-        run: python streeteam/manage.py migrate
+        run: python streetteam/manage.py migrate
       - name: Test application
         run: pytest
 
