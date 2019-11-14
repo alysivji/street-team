@@ -10,21 +10,14 @@ jobs:
       DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
       TWILIO_AUTH_TOKEN: test_token
 
-    services:
-      postgres:
-        image: postgres:10.3-alpine
-        env:
-          POSTGRES_USER: streetteam
-          POSTGRES_PASSWORD: streetteam_user
-          POSTGRES_DB: streetteam_password
-        ports:
-        - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       - name: Setup PostgreSQL
         uses: Harmon758/postgresql-action@v1.0.0
+        with:
+          postgres version: 10.3
+          postgres user: streetteam
+          postgres_password: streetteam_password
+          postgres_db: streetteam
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
