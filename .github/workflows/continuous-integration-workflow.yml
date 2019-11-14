@@ -12,7 +12,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:10.3-alpine
         env:
           POSTGRES_USER: streetteam
           POSTGRES_PASSWORD: streetteam_user
@@ -23,10 +23,13 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - uses: actions/checkout@v1
+      - name: Setup PostgreSQL
+        uses: Harmon758/postgresql-action@v1.0.0
       - uses: actions/setup-python@v1
         with:
           python-version: "3.8.0"
+      - name: Checkout repo
+        uses: actions/checkout@v1
       # cache this
       - name: Install requirements
         run: pip install -r requirements.txt
@@ -34,4 +37,3 @@ jobs:
         run: python streetteam/manage.py migrate
       - name: Test application
         run: pytest
-
