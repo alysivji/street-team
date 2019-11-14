@@ -1,5 +1,11 @@
 name: Build and Test Street Team
 on: [pull_request]
+env:
+  IN_PRODUCTION: '0'
+  PYTHONPATH: /app/streetteam
+  DJANGO_SETTINGS_MODULE: streetteam.settings
+  DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
+  TWILIO_AUTH_TOKEN: test_token
 jobs:
   build-and-test-app:
     runs-on: docker://python:3.8.0
@@ -21,15 +27,8 @@ jobs:
         with:
           path: /app/streetteam
       - name: Install requirements and migrate database
-        env: &build_env_vars
-          IN_PRODUCTION: 0
-          PYTHONPATH: /app/streetteam
-          DJANGO_SETTINGS_MODULE: streetteam.settings
-          DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
-          TWILIO_AUTH_TOKEN: test_token
         run: |
           pip install -r requirements.txt
           python streeteam/manage.py migrate
       - name: Test application
         run: docker-compose exec app pytest
-        env: *build_env_vars
