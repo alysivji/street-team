@@ -11,22 +11,24 @@ jobs:
       TWILIO_AUTH_TOKEN: test_token
 
     steps:
-      - name: Setup PostgreSQL
-        uses: Harmon758/postgresql-action@v1.0.0
-        with:
-          postgresql version: 10.3
-          postgresql user: streetteam
-          postgresql password: streetteam_password
-          postgresql db: streetteam
-      - uses: actions/setup-python@v1
-        with:
-          python-version: "3.8.0"
-      - name: Checkout repo
-        uses: actions/checkout@v1
-      # cache this
-      - name: Install requirements
-        run: pip install -r requirements.txt
-      - name: Migrate database
-        run: python streetteam/manage.py migrate
-      - name: Test application
-        run: pytest
+      # - name: Setup PostgreSQL
+      #   uses: Harmon758/postgresql-action@v1.0.0
+      #   with:
+      #     postgresql version: 10.3
+      #     postgresql user: streetteam
+      #     postgresql password: streetteam_password
+      #     postgresql db: streetteam
+      # - uses: actions/setup-python@v1
+      #   with:
+      #     python-version: "3.8.0"
+      # - name: Checkout repo
+      #   uses: actions/checkout@v1
+      # # cache this
+      # - name: Install requirements
+      #   run: pip install -r requirements.txt
+      # - name: Migrate database
+      #   run: python streetteam/manage.py migrate
+      # - name: Test application
+      #   run: pytest
+      - name: you got this
+        run: echo $DB_URI

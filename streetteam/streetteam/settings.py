@@ -90,6 +90,7 @@ WSGI_APPLICATION = "streetteam.wsgi.application"
 
 # development environment setting
 DATABASES = {}
+print(os.environ("DB_URI", "did not pull anything"))
 DATABASES["default"] = dj_database_url.config(env="DB_URI")
 
 
