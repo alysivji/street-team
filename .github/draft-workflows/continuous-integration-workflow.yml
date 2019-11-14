@@ -1,0 +1,14 @@
+name: Build and Test Street Team
+on: [pull_request]
+jobs:
+  build-and-test-app:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build application stack
+        run: docker-compose build
+      - name: Run application
+        run: docker-compose up -d
+      - name: Run tests
+        run: docker-compose exec app pytest
