@@ -34,3 +34,5 @@ jobs:
         run: python streetteam/manage.py migrate
       - name: Test application
         run: python streetteam/manage.py test
+        env:
+          PYTHONPATH: ${GITHUB_WORKSPACE}/..
