@@ -5,7 +5,6 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       IN_PRODUCTION: '0'
-      PYTHONPATH: /app/streetteam
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
       TWILIO_AUTH_TOKEN: test_token
@@ -26,10 +25,15 @@ jobs:
       - uses: actions/checkout@v1
         with:
           path: /app/streetteam
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8.0"
       - name: Install requirements and migrate database
+        env:
+          PYTHONPATH: ${GITHUB_WORKSPACE}
         run: |
           pip install -r requirements.txt
-          python streeteam/manage.py migrate
+          python street-team/streeteam/manage.py migrate
       - name: Test application
-        run: docker-compose exec app pytest
+        run: pytest
 
