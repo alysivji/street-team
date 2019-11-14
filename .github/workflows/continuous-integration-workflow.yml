@@ -3,12 +3,6 @@ on: [pull_request]
 jobs:
   build-and-test-app:
     runs-on: docker://python:3.8.0
-    env:
-      IN_PRODUCTION: '0'
-      PYTHONPATH: /app/streetteam
-      DJANGO_SETTINGS_MODULE: streetteam.settings
-      DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
-      TWILIO_AUTH_TOKEN: test_token
 
     services:
       postgres:
@@ -27,6 +21,12 @@ jobs:
         with:
           path: /app/streetteam
       - name: Install requirements and migrate database
+        env:
+          IN_PRODUCTION: '0'
+          PYTHONPATH: /app/streetteam
+          DJANGO_SETTINGS_MODULE: streetteam.settings
+          DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
+          TWILIO_AUTH_TOKEN: test_token
         run: |
           pip install -r requirements.txt
           python streeteam/manage.py migrate
