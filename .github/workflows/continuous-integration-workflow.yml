@@ -12,3 +12,5 @@ jobs:
         run: docker-compose up -d
       - name: Run tests
         run: docker-compose exec app pytest
+        env:
+          COMPOSE_INTERACTIVE_NO_CLI: 1
