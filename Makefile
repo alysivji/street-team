@@ -1,4 +1,4 @@
-.PHONY: help
+.PHONY: help logs
 
 help: ## This help
 	@echo "Makefile for managing application:\n"
@@ -69,3 +69,6 @@ prod-down: ## stop prod environment
 
 prod-build: ## build prod containers
 	docker-compose -f docker-compose.prod.yml build
+
+logs: ## attach to logs
+	docker logs `docker-compose ps -q app`
