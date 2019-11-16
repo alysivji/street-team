@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       IN_PRODUCTION: '0'
-      PYTHONPATH: ${GITHUB_WORKSPACE}
+      PYTHONPATH: ${GITHUB_WORKSPACE}/streetteam
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
       TWILIO_AUTH_TOKEN: test_token
