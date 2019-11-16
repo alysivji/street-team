@@ -32,9 +32,5 @@ jobs:
         run: pip install -r requirements_dev.txt
       - name: Migrate database
         run: python streetteam/manage.py migrate
-      - name: Install tree
-        run: sudo apt-get install tree
-      - name: print tree
-        run: tree .
       - name: Test application
         run: python streetteam/manage.py test
