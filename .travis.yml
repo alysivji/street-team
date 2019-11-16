@@ -15,7 +15,7 @@ python:
   - "3.8"
 
 env:
-  - IN_PRODUCTION=0 PYTHONPATH=. DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token
+  - IN_PRODUCTION=0 PYTHONPATH=./street-team DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token
 
 install:
   - pip install -r requirements_dev.txt
