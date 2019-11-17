@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third party
-    "rest_framework",
+    "rest_framework",  # REST APIs
+    "watchman",  # status endpoints for services (db, cache, storage, etc)
     # internal
     "apps.common",
     "apps.users",
@@ -122,6 +123,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Custom Settings
+TEST_RUNNER = "apps.common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
-TEST_RUNNER = "apps.common.runner.PytestTestRunner"

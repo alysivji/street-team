@@ -14,19 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.conf import settings
-from django.conf.urls.static import static
 from django.http import HttpResponse
 from django.urls import include, path
 
 from apps.common.views import DebugEndpoint
 
 urlpatterns = [
-    path("fubar/", admin.site.urls, name="admin"),
-    path("integration/", include("apps.twilio_integration.urls")),
+    # internal
     path("healthcheck/", lambda request: HttpResponse(b'{"ping": "pong"}', content_type="application/json")),
     path("debug/", view=DebugEndpoint.as_view()),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # admin
+    path("fubar/", admin.site.urls, name="admin"),
+    # business functionality
+    path("integration/", include("apps.twilio_integration.urls")),
+    # third party apps
+    path("watchman/", include("watchman.urls")),
+]
 
 admin.site.site_header = "ChiPy Street Team Administration"
 admin.site.site_title = "ChiPy Street Team Administration"
