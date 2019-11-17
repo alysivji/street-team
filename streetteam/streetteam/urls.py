@@ -22,7 +22,7 @@ from django.urls import include, path
 from apps.common.views import DebugEndpoint
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("fubar/", admin.site.urls, name="admin"),
     path("integration/", include("apps.twilio_integration.urls")),
     path("healthcheck/", lambda request: HttpResponse(b'{"ping": "pong"}', content_type="application/json")),
     path("debug/", view=DebugEndpoint.as_view()),
