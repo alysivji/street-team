@@ -122,6 +122,11 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# Watchman -- monitoring Django services
+# https://github.com/mwarkentin/django-watchman
+WATCHMAN_CHECKS = ("watchman.checks.caches", "watchman.checks.databases")
+WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_required"
+
 # Custom Settings
 TEST_RUNNER = "apps.common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
