@@ -2,3 +2,4 @@
 ipython
 pdbpp
 django-extensions
+django-pdb

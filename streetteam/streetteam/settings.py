@@ -50,8 +50,6 @@ INSTALLED_APPS = [
     "apps.mediahub",
     "apps.twilio_integration",
 ]
-if not IN_PRODUCTION:
-    INSTALLED_APPS.append("django_extensions")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -64,12 +62,16 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+if not IN_PRODUCTION:
+    INSTALLED_APPS.extend(["django_extensions", "django_pdb"])
+    MIDDLEWARE.extend(["django_pdb.middleware.PdbMiddleware"])
+
 ROOT_URLCONF = "streetteam.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -77,6 +79,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.common.context_processors.from_settings",
             ]
         },
     }
