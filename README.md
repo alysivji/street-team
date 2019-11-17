@@ -1,5 +1,10 @@
 # Street Team
 
+[![Build Status](https://travis-ci.com/alysivji/street-team.svg?branch=master)](https://travis-ci.com/alysivji/street-team)
+[![codecov](https://codecov.io/gh/alysivji/street-team/branch/master/graph/badge.svg)](https://codecov.io/gh/alysivji/street-team)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 Tools to simplify work related to event marketing.
 
 ## Project Information
