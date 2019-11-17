@@ -109,3 +109,9 @@ class Migration(migrations.Migration):
         migrations.RunPython(add_default_datetimes_to_newly_created_column, reverse_code=migrations.RunPython.noop)
     ]
 ```
+
+## Django-Watchman
+
+We are using [Django-Watchman](https://github.com/mwarkentin/django-watchman) to monitor services.
+
+Dashboard: http://0.0.0.0:8100/watchman/dashboard/
