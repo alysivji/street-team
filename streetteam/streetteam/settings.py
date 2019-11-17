@@ -50,8 +50,6 @@ INSTALLED_APPS = [
     "apps.mediahub",
     "apps.twilio_integration",
 ]
-if not IN_PRODUCTION:
-    INSTALLED_APPS.append("django_extensions")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -63,6 +61,10 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if not IN_PRODUCTION:
+    INSTALLED_APPS.extend(["django_extensions", "django_pdb"])
+    MIDDLEWARE.extend(["django_pdb.middleware.PdbMiddleware"])
 
 ROOT_URLCONF = "streetteam.urls"
 
