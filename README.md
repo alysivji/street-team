@@ -1,5 +1,10 @@
 # Street Team
 
+[![Build Status](https://travis-ci.com/alysivji/street-team.svg?branch=master)](https://travis-ci.com/alysivji/street-team)
+[![codecov](https://codecov.io/gh/alysivji/street-team/branch/master/graph/badge.svg)](https://codecov.io/gh/alysivji/street-team)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
 Tools to simplify work related to event marketing.
 
 ## Project Information
@@ -109,3 +114,9 @@ class Migration(migrations.Migration):
         migrations.RunPython(add_default_datetimes_to_newly_created_column, reverse_code=migrations.RunPython.noop)
     ]
 ```
+
+## Django-Watchman
+
+We are using [Django-Watchman](https://github.com/mwarkentin/django-watchman) to monitor services.
+
+Dashboard: http://0.0.0.0:8100/watchman/dashboard/
