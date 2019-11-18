@@ -1,3 +1,4 @@
+import uuid
 from django.contrib.auth import get_user_model
 import pytest
 
@@ -30,3 +31,11 @@ def test_create_superuser():
 
     with pytest.raises(ValueError):
         User.objects.create_superuser(email="super@user.com", password="foo", is_superuser=False)
+
+
+@pytest.mark.django_db
+def test_user_has_uuid_field():
+    User = get_user_model()
+    user = User.objects.create_user("super@user.com", "foo")
+
+    assert isinstance(user.uuid, uuid.UUID)
