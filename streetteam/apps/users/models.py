@@ -13,6 +13,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
 
     email = models.EmailField(_("email address"), unique=True)
+    username = models.EmailField(null=True)  # field is required for python social auth
+
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
