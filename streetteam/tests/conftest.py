@@ -1,7 +1,7 @@
-from django.test import Client
+from django.test import RequestFactory
 import pytest
 
 
 @pytest.fixture
 def client():
-    yield Client()
+    yield RequestFactory()

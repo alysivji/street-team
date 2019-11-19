@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     # third party
     "rest_framework",  # REST APIs
     "watchman",  # status endpoints for services (db, cache, storage, etc)
+    "social_django",  # login using oauth providers
     # internal
     "apps.common",
     "apps.users",
@@ -107,6 +108,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Authentication backends
+# https://docs.djangoproject.com/en/2.2/ref/settings/#authentication-backends
+AUTHENTICATION_BACKENDS = ["social_core.backends.github.GithubOAuth2", "django.contrib.auth.backends.ModelBackend"]
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 LANGUAGE_CODE = "en-us"
@@ -122,12 +128,29 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Watchman -- monitoring Django services
-# https://github.com/mwarkentin/django-watchman
-WATCHMAN_CHECKS = ("watchman.checks.caches", "watchman.checks.databases")
-WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_required"
 
 # Custom Settings
 TEST_RUNNER = "apps.common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
+
+
+# Watchman -- monitoring Django services
+# https://github.com/mwarkentin/django-watchman
+WATCHMAN_CHECKS = ("watchman.checks.caches", "watchman.checks.databases")
+WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_required"
+
+
+# Python Social Auth -- login using OAuth providers
+# https://python-social-auth.readthedocs.io/
+# https://python-social-auth.readthedocs.io/en/latest/backends/github.html
+SOCIAL_AUTH_PASSWORDLESS = True
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+# TODO
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
+SOCIAL_AUTH_LOGIN_ERROR_URL = "/"
+SOCIAL_AUTH_LOGOUT_REDIRECT_URL = "/"
+# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
+SOCIAL_AUTH_GITHUB_KEY = os.getenv("GITHUB_CLIENT_ID")
+SOCIAL_AUTH_GITHUB_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
+SOCIAL_AUTH_GITHUB_SCOPE = ["read:user", "user:email"]

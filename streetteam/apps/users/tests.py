@@ -12,13 +12,6 @@ def test_create_user():
     assert user.is_staff is False
     assert user.is_superuser is False
 
-    with pytest.raises(TypeError):
-        User.objects.create_user()
-    with pytest.raises(TypeError):
-        User.objects.create_user(email="")
-    with pytest.raises(ValueError):
-        User.objects.create_user(email="", password="foo")
-
 
 @pytest.mark.django_db
 def test_create_superuser():
@@ -28,9 +21,6 @@ def test_create_superuser():
     assert admin_user.is_active is True
     assert admin_user.is_staff is True
     assert admin_user.is_superuser is True
-
-    with pytest.raises(ValueError):
-        User.objects.create_superuser(email="super@user.com", password="foo", is_superuser=False)
 
 
 @pytest.mark.django_db
