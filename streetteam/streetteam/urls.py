@@ -17,18 +17,17 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 
-from apps.common.views import DebugEndpoint
-
 urlpatterns = [
     # internal
     path("healthcheck/", lambda request: HttpResponse(b'{"ping": "pong"}', content_type="application/json")),
-    path("debug/", view=DebugEndpoint.as_view()),
+    path("debug/", include("apps.common.urls"), name="debug"),
     # admin
     path("fubar/", admin.site.urls, name="admin"),
     # business functionality
-    path("integration/", include("apps.twilio_integration.urls")),
+    path("integration/", include("apps.twilio_integration.urls"), name="twilio_integration"),
     # third party apps
     path("watchman/", include("watchman.urls")),
+    path("", include("social_django.urls", namespace="social")),
 ]
 
 admin.site.site_header = "ChiPy Street Team Administration"
