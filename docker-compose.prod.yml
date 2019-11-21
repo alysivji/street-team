@@ -25,9 +25,21 @@ services:
       - sivnet
       - local
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.docker.network=sivnet
       - traefik.backend=streetteam
       - traefik.frontend.rule=Host:streetteam.sivji.com
       - traefik.frontend.headers.SSLProxyHeaders=X-Forwarded-Proto:https
       - traefik.port=8100
+
+  # agents to support street-team
+  watchtower: #  restart app container when new releases
+    image: v2tec/watchtower
+    command: --label-enable --cleanup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - local
+    labels:
+      - traefik.enable=false
