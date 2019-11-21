@@ -8,9 +8,7 @@ networks:
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: alysivji/street-team:latest
     command: webserver
     environment:
       IN_PRODUCTION: '1'
