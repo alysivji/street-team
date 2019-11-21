@@ -15,7 +15,7 @@ python:
   - "3.8"
 
 env:
-  - IN_PRODUCTION=0 PYTHONPATH=./streetteam DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token
+  - IN_PRODUCTION=0 PYTHONPATH=./streetteam DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token IMAGE_NAME="alysivji/street-team"
 
 install:
   - pip install -r requirements_dev.txt
@@ -30,3 +30,14 @@ script:
   - flake8
   - black --check .
   - codecov
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker pull ${IMAGE_NAME} || true
+  - docker build -f Dockerfile --pull --cache-from ${IMAGE_NAME} --tag ${IMAGE_NAME} --tag ${IMAGE_NAME}:${TRAVIS_TAG} .
+deploy:
+  provider: script
+  script:
+    - docker push ${IMAGE_NAME} && docker push ${IMAGE_NAME}:${TRAVIS_COMMIT}
+  on:
+    tags: true

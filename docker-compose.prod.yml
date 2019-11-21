@@ -8,9 +8,7 @@ networks:
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    image: alysivji/street-team:latest
     command: webserver
     environment:
       IN_PRODUCTION: '1'
@@ -21,17 +19,27 @@ services:
       TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
       GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
-    volumes:  # TODO: once we move to image, we wont' need to do this
-      - .:/app/
     stdin_open: true
     tty: true
     networks:
       - sivnet
       - local
     labels:
+      - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
       - traefik.docker.network=sivnet
       - traefik.backend=streetteam
       - traefik.frontend.rule=Host:streetteam.sivji.com
       - traefik.frontend.headers.SSLProxyHeaders=X-Forwarded-Proto:https
       - traefik.port=8100
+
+  # agents to support street-team
+  watchtower: #  restart app container when new releases
+    image: v2tec/watchtower
+    command: --label-enable --cleanup
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - local
+    labels:
+      - traefik.enable=false
