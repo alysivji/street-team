@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework",  # REST APIs
     "watchman",  # status endpoints for services (db, cache, storage, etc)
     "social_django",  # login using oauth providers
+    "django_fsm",  # declarative state management for django models
     # internal
     "apps.common",
     "apps.users",
