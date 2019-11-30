@@ -1,7 +1,7 @@
 from django import forms
 
 
-class ReceiverForm(forms.Form):
+class LinkPhoneNumberForm(forms.Form):
     phone_number = forms.RegexField(
         label="Your phone number (xxx-xxx-xxxx format)",
         regex=r"^\d{3}[-\s]?\d{3}[-\s]?\d{4}$",
@@ -9,5 +9,5 @@ class ReceiverForm(forms.Form):
     )
 
 
-class VerificationCodeForm(forms.Form):
+class ConfirmVerificationCodeForm(forms.Form):
     code = forms.CharField(label="Enter verification code", error_messages={"invalid": "Please enter code"})
