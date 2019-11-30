@@ -1,12 +1,13 @@
 from rest_framework.views import APIView
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from twilio.twiml.messaging_response import MessagingResponse
 
 from .decorators import validate_twilio_request
-from .forms import ReceiverForm
+from .forms import ReceiverForm, VerificationCodeForm
 from .models import PhoneNumber, ReceivedMessage
 from apps.mediahub.models import MediaResource
 
@@ -53,24 +54,29 @@ class TwilioWebhook(APIView):
         return HttpResponse(resp.to_xml(), content_type="application/xml")
 
 
+# TODO Requires auth
 def get_name(request):
-    # if this is a POST request we need to process the form data
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
         form = ReceiverForm(request.POST)
-        # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            # return HttpResponseRedirect('/thanks/')
-
-            # confirm number is valid using
-
-            return HttpResponse({"ping": "pong"}, content_type="application/json")
-
-    # if a GET (or any other method) we'll create a blank form
+            return HttpResponseRedirect(reverse("verify_code_send_via_sms"))
     else:
         form = ReceiverForm()
 
     return render(request, "phone_number.html", {"form": form})
+
+
+# TODO Requires auth
+def verify_code_send_via_sms(request):
+    if request.method == "POST":
+        form = VerificationCodeForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect(reverse("success"))
+    else:
+        form = VerificationCodeForm()
+
+    return render(request, "enter_verification_code.html", {"form": form})
+
+
+def success(request):
+    return HttpResponse(b'{"ping": "pong"}', content_type="application/json")
