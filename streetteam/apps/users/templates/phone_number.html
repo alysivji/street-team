@@ -1,0 +1,5 @@
+<form action="{% url 'enter_phone_number_to_send_verification_code' %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit">
+</form>

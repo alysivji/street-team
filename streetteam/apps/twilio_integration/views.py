@@ -1,13 +1,10 @@
 from rest_framework.views import APIView
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from twilio.twiml.messaging_response import MessagingResponse
 
 from .decorators import validate_twilio_request
-from .forms import LinkPhoneNumberForm, ConfirmVerificationCodeForm
 from .models import PhoneNumber, ReceivedMessage
 from apps.mediahub.models import MediaResource
 
@@ -52,32 +49,3 @@ class TwilioWebhook(APIView):
         MediaResource.objects.bulk_create(media_resources)
         resp.message(body=f"Received {num_media_items} picture(s)! Thank you!")
         return HttpResponse(resp.to_xml(), content_type="application/xml")
-
-
-# TODO Requires auth
-def get_name(request):
-    if request.method == "POST":
-        form = LinkPhoneNumberForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect(reverse("verify_code_send_via_sms"))
-    else:
-        form = LinkPhoneNumberForm()
-
-    return render(request, "phone_number.html", {"form": form})
-
-
-# TODO Requires auth
-def verify_code_send_via_sms(request):
-    if request.method == "POST":
-        form = ConfirmVerificationCodeForm(request.POST)
-        if form.is_valid():
-            return HttpResponseRedirect(reverse("success"))
-    else:
-        form = ConfirmVerificationCodeForm()
-
-    return render(request, "enter_verification_code.html", {"form": form})
-
-
-# TODO Requires auth
-def success(request):
-    return HttpResponse(b'{"ping": "pong"}', content_type="application/json")
