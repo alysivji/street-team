@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .forms import LinkPhoneNumberForm, ConfirmVerificationCodeForm
+from ..forms import LinkPhoneNumberForm, ConfirmVerificationCodeForm
 
 
 # TODO Requires auth
