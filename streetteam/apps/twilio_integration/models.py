@@ -9,23 +9,22 @@ class PhoneNumber(BaseModel):
     id = models.AutoField(primary_key=True)
     number = models.CharField(max_length=30, unique=True)
 
-    # Account Creation State Machine
     class STATE:
-        NO_ACCOUNT = "no_account"
-        ACCOUNT_CREATED = "account_created"
+        """Has phone_number been linked to account"""
+
+        UNLINKED_PHONE_NUMBER = "unlinked_phone_number"
         ATTEMPT_PHONE_LINK = "attempt_phone_link"
         PHONE_LINK_SUCCESS = "phone_link_success"
         PHONE_LINK_FAILED = "phone_link_failed"
 
     STATE_CHOICES = [
-        (STATE.NO_ACCOUNT, "no_account", "no_account"),
-        (STATE.ACCOUNT_CREATED, "account_created", "account_created"),
-        (STATE.ATTEMPT_PHONE_LINK, "attempt_phone_link", "attempt_phone_link"),
-        (STATE.PHONE_LINK_SUCCESS, "phone_link_success", "phone_link_success"),
-        (STATE.PHONE_LINK_FAILED, "phone_link_failed", "phone_link_failed"),
+        (STATE.UNLINKED_PHONE_NUMBER,) * 3,
+        (STATE.ATTEMPT_PHONE_LINK,) * 3,
+        (STATE.PHONE_LINK_SUCCESS,) * 3,
+        (STATE.PHONE_LINK_FAILED,) * 3,
     ]
 
-    account_creation_status = FSMField(default=STATE.NO_ACCOUNT, state_choices=STATE_CHOICES)
+    account_link_state = FSMField(default=STATE.UNLINKED_PHONE_NUMBER, state_choices=STATE_CHOICES)
 
     # TODO save should also have a transition
     # override SAVE ala 2 scoops

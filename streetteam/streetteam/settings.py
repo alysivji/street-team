@@ -146,11 +146,11 @@ WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_re
 # Python Social Auth -- login using OAuth providers
 # https://python-social-auth.readthedocs.io/
 # https://python-social-auth.readthedocs.io/en/latest/backends/github.html
+LOGIN_URL = "/"
 SOCIAL_AUTH_PASSWORDLESS = True
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-# TODO
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/"
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/account"
+SOCIAL_AUTH_LOGIN_ERROR_URL = "/error"  # TODO
 SOCIAL_AUTH_LOGOUT_REDIRECT_URL = "/"
 # SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
 SOCIAL_AUTH_GITHUB_KEY = os.getenv("GITHUB_CLIENT_ID")
