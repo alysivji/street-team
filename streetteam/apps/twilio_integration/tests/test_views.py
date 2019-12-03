@@ -21,7 +21,7 @@ def test_send_SMS__receive_error_message(client, create_twilio_headers):
     filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__send_sms.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
-    uri = "http://testserver/integration/twilio/"
+    uri = "http://testserver/sms/twilio/callback/"
     headers = create_twilio_headers(uri, data)
 
     # Act
@@ -37,7 +37,7 @@ def test_send_1_picture_MMS__receive_thank_you_message(client, create_twilio_hea
     filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__attach_1_picture.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
-    uri = "http://testserver/integration/twilio/"
+    uri = "http://testserver/sms/twilio/callback/"
     headers = create_twilio_headers(uri, data)
 
     # Act
@@ -53,7 +53,7 @@ def test_send_3_picture_MMS__receive_thank_you_message(client, create_twilio_hea
     filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__attach_3_pictures.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
-    uri = "http://testserver/integration/twilio/"
+    uri = "http://testserver/sms/twilio/callback/"
     headers = create_twilio_headers(uri, data)
 
     # Act
@@ -69,7 +69,7 @@ def test_send_5_picture_MMS__receive_thank_you_message(client, create_twilio_hea
     filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__attach_5_pictures.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
-    uri = "http://testserver/integration/twilio/"
+    uri = "http://testserver/sms/twilio/callback/"
     headers = create_twilio_headers(uri, data)
 
     # Act
@@ -85,7 +85,7 @@ def test_send_6_picture_MMS__receive_error_message(client, create_twilio_headers
     filepath = "streetteam/apps/twilio_integration/tests/files/twilio_webhook__attach_6_pictures.json"
     with open(filepath, "r") as read_file:
         data = json.load(read_file)
-    uri = "http://testserver/integration/twilio/"
+    uri = "http://testserver/sms/twilio/callback/"
     headers = create_twilio_headers(uri, data)
 
     # Act
