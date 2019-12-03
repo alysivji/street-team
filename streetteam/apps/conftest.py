@@ -1,14 +1,14 @@
-from django.test import RequestFactory
+from django.test import Client
 import pytest
 
 
-# TODO this is not being used properly
+# TODO: use RequestFactory
 # test client is slow... this is fast, but requires us to test view
 # so we have to do it a bit differently
-@pytest.fixture(name="request_factory")
+@pytest.fixture
 def client():
     """Django Test Client"""
-    yield RequestFactory()
+    yield Client()
 
 
 @pytest.fixture
