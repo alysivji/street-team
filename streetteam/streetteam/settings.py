@@ -134,7 +134,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Custom Settings
 TEST_RUNNER = "apps.common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
-TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
 
 
 # Watchman -- monitoring Django services
@@ -156,3 +155,9 @@ SOCIAL_AUTH_LOGOUT_REDIRECT_URL = "/"
 SOCIAL_AUTH_GITHUB_KEY = os.getenv("GITHUB_CLIENT_ID")
 SOCIAL_AUTH_GITHUB_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
 SOCIAL_AUTH_GITHUB_SCOPE = ["read:user", "user:email"]
+
+
+# Twilio Credentials
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "random_token")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
+TWILIO_SERVICE_SID = os.getenv("TWILIO_SERVICE_SID", "random_token")

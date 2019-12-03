@@ -1,7 +1,8 @@
+from django_fsm import FSMField, transition
 from django.contrib.postgres.fields import JSONField
 from django.db import models
-from django_fsm import FSMField, transition
 
+from .adapter import twilio
 from apps.common.models import BaseModel
 from apps.users.models import User
 
@@ -10,7 +11,7 @@ class PhoneNumber(BaseModel):
     id = models.AutoField(primary_key=True)
     number = models.CharField(max_length=30, unique=True)
 
-    user = models.ForeignKey(User, related_name="phone_numbers", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, related_name="phone_numbers", on_delete=models.CASCADE)
 
     class AccountLinkState:
         """Has phone_number been linked to account"""
@@ -29,35 +30,28 @@ class PhoneNumber(BaseModel):
 
         INITIAL_STATE = UNLINKED_PHONE_NUMBER
 
-    account_link_state = FSMField(
-        default=AccountLinkState.INITIAL_STATE, choices=AccountLinkState.CHOICES, protected=True
-    )
-
-    # TODO save should also have a transition
-    # override SAVE ala 2 scoops
+    account_link_state = FSMField(default=AccountLinkState.INITIAL_STATE, choices=AccountLinkState.CHOICES)
 
     @transition(
         field=account_link_state,
         source=AccountLinkState.UNLINKED_PHONE_NUMBER,
         target=AccountLinkState.ATTEMPT_PHONE_LINK,
     )
-    def link_phone_number(self):
-        # ask them to enter a phone number, use Twilio API to ensure number is valid
-        # send a text message to that number with code, store code in database
-        pass
+    def link_account(self, user):
+        self.user = user
+        twilio.send_verification_token(self.number)
 
-    # @transition(
-    #     field=AccountLinkState, source=AccountLinkState.ATTEMPT_PHONE_LINK,
-    # target=AccountLinkState.PHONE_LINK_SUCCESS,
-    # on_error=AccountLinkState.PHONE_LINK_FAILED
-    # )
-    # def phone_successfully_linked(self, entered_code):
-    #     pass
-
-    # @transition(field=AccountLinkState, source=AccountLinkState.PHONE_LINK_FAILED,
-    # target=AccountLinkState.ATTEMPT_PHONE_LINK)
-    # def retry_link_phone_number(self):
-    #     pass
+    @transition(
+        field=account_link_state,
+        source=AccountLinkState.ATTEMPT_PHONE_LINK,
+        target=AccountLinkState.PHONE_LINK_SUCCESS,
+        on_error=AccountLinkState.PHONE_LINK_FAILED,
+    )
+    def confirm_verification_code(self, entered_code):
+        valid_token = twilio.valid_verification_token(self.number, entered_code)
+        if not valid_token:
+            raise ValueError("validation is not valid")
+        return True
 
 
 class ReceivedMessage(BaseModel):
