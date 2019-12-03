@@ -24,6 +24,7 @@ urlpatterns = [
     # admin
     path("fubar/", admin.site.urls, name="admin"),
     # business functionality
+    path("", include("apps.website.urls"), name="website"),
     path("integration/", include("apps.twilio_integration.urls"), name="twilio_integration"),
     path("user/", include("apps.users.urls"), name="user"),
     # third party apps
