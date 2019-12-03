@@ -49,9 +49,10 @@ INSTALLED_APPS = [
     "django_fsm",  # declarative state management for django models
     # internal
     "apps.common",
-    "apps.users",
     "apps.mediahub",
     "apps.twilio_integration",
+    "apps.users",
+    "apps.website",
 ]
 
 MIDDLEWARE = [
