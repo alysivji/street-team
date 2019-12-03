@@ -1,7 +1,25 @@
 import pytest
+
+from .utils import FakeTwilioClient
 from apps.twilio_integration.models import PhoneNumber, ReceivedMessage
+from apps.users.models import User
+
+MODULE_TO_TEST = "apps.twilio_integration.models"
 
 
+@pytest.fixture
+def PatchedTwilio(patcher):
+    def _wrapper(token_sent=None):
+        obj = FakeTwilioClient(token_sent=token_sent)
+        return patcher(MODULE_TO_TEST, namespace="twilio", replacement=obj)
+
+    return _wrapper
+
+
+#############
+# PhoneNumber
+#############
+@pytest.mark.unit
 @pytest.mark.django_db
 def test_create_and_retrieve_phone_number():
     phone_number = PhoneNumber(number="+13125551234")
@@ -11,6 +29,30 @@ def test_create_and_retrieve_phone_number():
     assert record.number == "+13125551234"
 
 
+@pytest.mark.unit
+@pytest.mark.state_machine
+@pytest.mark.django_db
+def test_state_transition__link_acount__happy_path(PatchedTwilio):
+    # Arrange
+    # create phone number and initial state
+    phone_number = PhoneNumber(number="+13125551234")
+    phone_number.save()
+    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.INITIAL_STATE
+    # create user
+    user = User(email="test@user.com")
+    user.save()
+    PatchedTwilio()
+
+    # Act
+    phone_number.link_account(user)
+
+    # Assert
+    phone_number.account_link_state == PhoneNumber.AccountLinkState.ATTEMPT_PHONE_LINK
+
+
+#################
+# ReceivedMessage
+#################
 @pytest.mark.django_db
 def test_create_and_retrieve_message():
     phone_number = PhoneNumber(number="+13125551234")
