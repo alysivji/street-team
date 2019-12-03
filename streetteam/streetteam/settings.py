@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "watchman",  # status endpoints for services (db, cache, storage, etc)
     "social_django",  # login using oauth providers
     "django_fsm",  # declarative state management for django models
+    "django_fsm_log",  # audit log for django fsm changes
     # internal
     "apps.common",
     "apps.mediahub",
