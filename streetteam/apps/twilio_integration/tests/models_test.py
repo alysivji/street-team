@@ -29,6 +29,8 @@ def test_create_and_retrieve_phone_number():
     assert record.number == "+13125551234"
 
 
+# TODO thinking out loud
+# unit testing this for happy path is a bit ridiculous
 @pytest.mark.unit
 @pytest.mark.state_machine
 @pytest.mark.django_db
