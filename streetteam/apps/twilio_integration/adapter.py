@@ -6,6 +6,8 @@ from typing import NamedTuple
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client
 
+from .exceptions import PhoneNumberNotValid
+
 
 class PhoneNumber(NamedTuple):
     is_valid: bool
@@ -33,7 +35,7 @@ class TwilioAdapter:
         try:
             resp = self.client.lookups.phone_numbers(phone_number).fetch()
         except TwilioRestException:  # invalid number returns 404
-            return PhoneNumber(is_valid=False, number="", country_code="")
+            raise PhoneNumberNotValid
 
         return PhoneNumber(is_valid=True, number=resp.phone_number, country_code=resp.country_code)
 
