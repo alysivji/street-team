@@ -1,5 +1,6 @@
 from django.test import Client
 import pytest
+from apps.users.tests.factories import UserFactory
 
 
 # TODO: use RequestFactory
@@ -9,6 +10,16 @@ import pytest
 def client():
     """Django Test Client"""
     yield Client()
+
+
+@pytest.fixture
+def login_user(client):
+    def _login_user():
+        user = UserFactory()
+        client.force_login(user)
+        return user
+
+    yield _login_user
 
 
 @pytest.fixture

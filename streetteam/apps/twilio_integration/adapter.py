@@ -9,7 +9,7 @@ from twilio.rest import Client
 from .exceptions import PhoneNumberNotValid
 
 
-class PhoneNumber(NamedTuple):
+class PhoneNumberDTO(NamedTuple):
     number: str  # E.164 format
     country_code: str
 
@@ -30,13 +30,13 @@ class TwilioAdapter:
     def __repr__(self):
         return "<TwilioAdapter>"
 
-    def verify_phone_number(self, phone_number: str) -> PhoneNumber:
+    def verify_phone_number(self, phone_number: str) -> PhoneNumberDTO:
         try:
             resp = self.client.lookups.phone_numbers(phone_number).fetch()
         except TwilioRestException:  # invalid number returns 404
             raise PhoneNumberNotValid
 
-        return PhoneNumber(number=resp.phone_number, country_code=resp.country_code)
+        return PhoneNumberDTO(number=resp.phone_number, country_code=resp.country_code)
 
     def send_verification_token(self, phone_number: str):
         try:

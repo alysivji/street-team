@@ -1,7 +1,7 @@
 import pytest
 
 from .utils import FakeTwilioClient
-from apps.twilio_integration.adapter import PhoneNumber
+from apps.twilio_integration.adapter import PhoneNumberDTO
 from apps.twilio_integration.forms import ConfirmVerificationCodeForm, LinkPhoneNumberForm
 from apps.twilio_integration.exceptions import PhoneNumberNotValid
 
@@ -20,7 +20,7 @@ def PatchedTwilio(patcher):
 @pytest.mark.unit
 def test_phone_number_form__valid_input(PatchedTwilio):
     # Arrange
-    return_value = PhoneNumber(number="+13125555555", country_code="US")
+    return_value = PhoneNumberDTO(number="+13125555555", country_code="US")
     PatchedTwilio(valid_number=return_value)
     form_data = {"phone_number": "312 555 5555"}
 
