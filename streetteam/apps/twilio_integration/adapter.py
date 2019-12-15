@@ -10,7 +10,6 @@ from .exceptions import PhoneNumberNotValid
 
 
 class PhoneNumber(NamedTuple):
-    is_valid: bool
     number: str  # E.164 format
     country_code: str
 
@@ -37,7 +36,7 @@ class TwilioAdapter:
         except TwilioRestException:  # invalid number returns 404
             raise PhoneNumberNotValid
 
-        return PhoneNumber(is_valid=True, number=resp.phone_number, country_code=resp.country_code)
+        return PhoneNumber(number=resp.phone_number, country_code=resp.country_code)
 
     def send_verification_token(self, phone_number: str):
         try:
