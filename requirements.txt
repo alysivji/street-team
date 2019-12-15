@@ -22,6 +22,9 @@ django-watchman==0.18.0
 django==2.2.6
 djangorestframework==3.10.3
 entrypoints==0.3          # via flake8
+factory-boy==2.12.0
+faker-e164==0.1.0
+faker==3.0.0
 flake8==3.7.9
 gunicorn==19.9.0
 idna==2.8                 # via requests
@@ -30,6 +33,7 @@ more-itertools==7.2.0     # via pytest
 oauthlib==3.1.0           # via requests-oauthlib, social-auth-core
 packaging==19.2           # via pytest
 pathspec==0.6.0           # via black
+phonenumberslite==8.11.1  # via faker-e164
 pluggy==0.13.0            # via pytest
 psycopg2-binary==2.8.4
 py==1.8.0                 # via pytest
@@ -40,15 +44,17 @@ pyparsing==2.4.2          # via packaging
 pytest-cov==2.8.1
 pytest-django==3.6.0
 pytest==5.2.2
+python-dateutil==2.8.1    # via faker
 python3-openid==3.1.0     # via social-auth-core
 pytz==2019.3              # via django, twilio
 regex==2019.11.1          # via black
 requests-oauthlib==1.3.0  # via social-auth-core
 requests==2.22.0          # via requests-oauthlib, social-auth-core, twilio
-six==1.12.0               # via django-appconf, packaging, social-auth-app-django, social-auth-core, twilio
+six==1.12.0               # via django-appconf, faker, packaging, python-dateutil, social-auth-app-django, social-auth-core, twilio
 social-auth-app-django==3.1.0
 social-auth-core==3.2.0
 sqlparse==0.3.0           # via django
+text-unidecode==1.3       # via faker
 toml==0.10.0              # via black
 twilio==6.33.0
 typed-ast==1.4.0          # via black

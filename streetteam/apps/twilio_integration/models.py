@@ -13,6 +13,9 @@ class PhoneNumber(BaseModel):
 
     user = models.ForeignKey(User, null=True, related_name="phone_numbers", on_delete=models.CASCADE)
 
+    def __repr__(self):
+        return f"<PhoneNumber: {self.number}>"
+
     class AccountLinkState:
         """Has phone_number been linked to account"""
 
