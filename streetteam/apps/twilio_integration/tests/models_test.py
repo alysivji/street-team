@@ -1,8 +1,9 @@
 import pytest
 
+from .factories import PhoneNumberFactory
 from .utils import FakeTwilioClient
 from apps.twilio_integration.models import PhoneNumber, ReceivedMessage
-from apps.users.models import User
+from apps.users.tests.factories import UserFactory
 
 MODULE_TO_TEST = "apps.twilio_integration.models"
 
@@ -22,11 +23,9 @@ def PatchedTwilio(patcher):
 @pytest.mark.unit
 @pytest.mark.django_db
 def test_create_and_retrieve_phone_number():
-    phone_number = PhoneNumber(number="+13125551234")
-    phone_number.save()
-
-    record = PhoneNumber.objects.get(number="+13125551234")
-    assert record.number == "+13125551234"
+    phone_number = PhoneNumberFactory()
+    record = PhoneNumber.objects.get(number=phone_number.number)
+    assert record
 
 
 # TODO thinking out loud
@@ -38,20 +37,17 @@ def test_create_and_retrieve_phone_number():
 @pytest.mark.django_db
 def test_state_transition__link_acount__happy_path(PatchedTwilio):
     # Arrange
-    # create phone number and initial state
-    phone_number = PhoneNumber(number="+13125551234")
-    phone_number.save()
-    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.INITIAL_STATE
-    # create user
-    user = User(email="test@user.com")
-    user.save()
+    phone_number = PhoneNumberFactory(user=None)
+    user = UserFactory()
     PatchedTwilio()
+
+    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.INITIAL_STATE
 
     # Act
     phone_number.link_account(user)
 
     # Assert
-    phone_number.account_link_state == PhoneNumber.AccountLinkState.ATTEMPT_PHONE_LINK
+    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.ATTEMPT_PHONE_LINK
 
 
 #################
