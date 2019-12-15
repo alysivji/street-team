@@ -1,6 +1,6 @@
 import pytest
 
-from .factories import PhoneNumberFactory
+from .factories import PhoneNumberFactory, ReceivedMessageFactory
 from .utils import FakeTwilioClient
 from apps.twilio_integration.models import PhoneNumber, ReceivedMessage
 from apps.users.tests.factories import UserFactory
@@ -24,8 +24,8 @@ def PatchedTwilio(patcher):
 @pytest.mark.django_db
 def test_create_and_retrieve_phone_number():
     phone_number = PhoneNumberFactory()
-    record = PhoneNumber.objects.get(number=phone_number.number)
-    assert record
+    record = PhoneNumber.objects.first()
+    assert record.number == phone_number.number
 
 
 # TODO thinking out loud
@@ -41,9 +41,8 @@ def test_state_transition__link_acount__happy_path(PatchedTwilio):
     user = UserFactory()
     PatchedTwilio()
 
-    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.INITIAL_STATE
-
     # Act
+    assert phone_number.account_link_state == PhoneNumber.AccountLinkState.INITIAL_STATE
     phone_number.link_account(user)
 
     # Assert
@@ -55,13 +54,13 @@ def test_state_transition__link_acount__happy_path(PatchedTwilio):
 #################
 @pytest.mark.django_db
 def test_create_and_retrieve_message():
-    phone_number = PhoneNumber(number="+13125551234")
-    phone_number.save()
-
+    # Arrange
     random_data = {"field": "value"}
-    received_message = ReceivedMessage(data=random_data, phone_number=phone_number)
-    received_message.save()
+    received_message = ReceivedMessageFactory(data=random_data)
 
+    # Act
     record = ReceivedMessage.objects.first()
+
+    # Assert
     assert record.data == random_data
-    assert record.phone_number.number == "+13125551234"
+    assert record.phone_number.number == received_message.phone_number.number
