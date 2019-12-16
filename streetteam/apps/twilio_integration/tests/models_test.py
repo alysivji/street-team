@@ -28,10 +28,6 @@ def test_create_and_retrieve_phone_number():
     assert record.number == phone_number.number
 
 
-# TODO thinking out loud
-# unit testing this for happy path only is a bit ridiculous
-# we should be testing for all cases to ensure flow is proper
-# view tests should test happy
 @pytest.mark.unit
 @pytest.mark.state_machine
 @pytest.mark.django_db

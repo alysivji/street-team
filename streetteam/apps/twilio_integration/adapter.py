@@ -1,7 +1,3 @@
-# TODO log everything going in and coming back from twilio...
-# easier to debug
-# TODO catch twilio exceptions and log them
-
 from typing import NamedTuple
 from twilio.base.exceptions import TwilioRestException
 from twilio.rest import Client

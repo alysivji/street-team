@@ -2,7 +2,7 @@ from django.urls import path
 from .views import enter_phone_number_to_send_verification_code, verify_code_send_via_sms, success, TwilioWebhook
 
 urlpatterns = [
-    path("twilio/callback/", view=TwilioWebhook.as_view()),  # TODO change in twilio console
+    path("twilio/callback/", view=TwilioWebhook.as_view()),
     path(
         "confirm_phone_number/",
         view=enter_phone_number_to_send_verification_code,

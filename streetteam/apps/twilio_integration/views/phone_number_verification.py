@@ -18,7 +18,6 @@ def enter_phone_number_to_send_verification_code(request):
             phone_number.save()
 
             # TODO flash a message that says we sent a code
-            # https://docs.djangoproject.com/en/3.0/ref/contrib/messages/
             return HttpResponseRedirect(reverse("verify_code_send_via_sms"))
     else:
         form = LinkPhoneNumberForm()
