@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     "rest_framework",  # REST APIs
     "watchman",  # status endpoints for services (db, cache, storage, etc)
     "social_django",  # login using oauth providers
+    "django_fsm",  # declarative state management for django models
+    "django_fsm_log",  # audit log for django fsm changes
     # internal
     "apps.common",
-    "apps.users",
     "apps.mediahub",
     "apps.twilio_integration",
+    "apps.users",
+    "apps.website",
 ]
 
 MIDDLEWARE = [
@@ -132,7 +135,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Custom Settings
 TEST_RUNNER = "apps.common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
-TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
 
 
 # Watchman -- monitoring Django services
@@ -144,13 +146,19 @@ WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_re
 # Python Social Auth -- login using OAuth providers
 # https://python-social-auth.readthedocs.io/
 # https://python-social-auth.readthedocs.io/en/latest/backends/github.html
+LOGIN_URL = "/"
 SOCIAL_AUTH_PASSWORDLESS = True
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-# TODO
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/"
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/"
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/account"
+SOCIAL_AUTH_LOGIN_ERROR_URL = "/error"  # TODO
 SOCIAL_AUTH_LOGOUT_REDIRECT_URL = "/"
 # SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
 SOCIAL_AUTH_GITHUB_KEY = os.getenv("GITHUB_CLIENT_ID")
 SOCIAL_AUTH_GITHUB_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
 SOCIAL_AUTH_GITHUB_SCOPE = ["read:user", "user:email"]
+
+
+# Twilio Credentials
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "random_token")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN", "random_token")
+TWILIO_SERVICE_SID = os.getenv("TWILIO_SERVICE_SID", "random_token")

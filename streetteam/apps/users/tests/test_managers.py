@@ -1,4 +1,3 @@
-import uuid
 from django.contrib.auth import get_user_model
 import pytest
 
@@ -21,11 +20,3 @@ def test_create_superuser():
     assert admin_user.is_active is True
     assert admin_user.is_staff is True
     assert admin_user.is_superuser is True
-
-
-@pytest.mark.django_db
-def test_user_has_uuid_field():
-    User = get_user_model()
-    user = User.objects.create_user("super@user.com", "foo")
-
-    assert isinstance(user.uuid, uuid.UUID)

@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from twilio.twiml.messaging_response import MessagingResponse
 
-from .decorators import validate_twilio_request
-from .models import PhoneNumber, ReceivedMessage
+from apps.twilio_integration.decorators import validate_twilio_request
+from apps.twilio_integration.models import PhoneNumber, ReceivedMessage
 from apps.mediahub.models import MediaResource
 
 RECEIVED_SMS = (
