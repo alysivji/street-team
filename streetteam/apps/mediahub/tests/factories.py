@@ -1,6 +1,6 @@
 import factory
 
-from ..models import MediaResource
+from apps.mediahub.models import MediaResource
 from apps.twilio_integration.tests.factories import PhoneNumberFactory
 
 

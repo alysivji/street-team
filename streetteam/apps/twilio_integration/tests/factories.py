@@ -1,7 +1,7 @@
 from faker_e164.providers import E164Provider
 import factory
 
-from ..models import PhoneNumber, ReceivedMessage
+from apps.twilio_integration.models import PhoneNumber, ReceivedMessage
 from apps.users.tests.factories import UserFactory
 
 faker = factory.Faker._get_faker()

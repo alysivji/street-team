@@ -1,8 +1,8 @@
 import pytest
 
-from ..utils import FakeTwilioClient
-from ...adapter import PhoneNumberDTO
-from ...models import PhoneNumber
+from apps.twilio_integration.adapter import PhoneNumberDTO
+from apps.twilio_integration.models import PhoneNumber
+from apps.twilio_integration.tests.utils import FakeTwilioClient
 
 
 @pytest.fixture
