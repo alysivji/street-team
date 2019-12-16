@@ -6,9 +6,26 @@ This folder contains Ansible configuration settings to deploy Street Team on a V
 
 ```bash
 export STREETTEAM_DB_URI={}
-export TWILIO_AUTH_TOKEN={}
 export DJANGO_SECRET_KEY={}
+
+export STREETTEAM_GITHUB_CLIENT_ID={}
+export STREETTEAM_GITHUB_CLIENT_SECRET={}
+
+export STREETTEAM_TWILIO_ACCOUNT_SID={}
+export STREETTEAM_TWILIO_AUTH_TOKEN={}
+export STREETTEAM_TWILIO_SERVICE_SID={}
 ```
+
+### Where to Find Keys
+
+#### GitHub
+
+https://github.com/settings/applications/
+
+#### Twilio
+
+Account SID / Auth Token: https://www.twilio.com/console/project/settings
+Service SID: https://www.twilio.com/console/verify/services
 
 ## Deployment Workflow
 
