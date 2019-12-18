@@ -68,9 +68,18 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-if not IN_PRODUCTION:
-    INSTALLED_APPS.extend(["django_extensions", "django_pdb"])
+if DEBUG:
+    INSTALLED_APPS.extend(["django_extensions", "django_pdb", "debug_toolbar"])
+    MIDDLEWARE.insert(2, "debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.extend(["django_pdb.middleware.PdbMiddleware"])
+
+    # tricks to have debug toolbar when developing with docker
+    # https://stackoverflow.com/questions/26898597/django-debug-toolbar-and-docker
+    INTERNAL_IPS = ["0.0.0.0"]
+    import socket
+
+    ip = socket.gethostbyname(socket.gethostname())
+    INTERNAL_IPS += [ip[:-1] + "1"]
 
 ROOT_URLCONF = "streetteam.urls"
 
