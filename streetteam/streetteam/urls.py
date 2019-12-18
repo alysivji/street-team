@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
@@ -23,6 +24,7 @@ urlpatterns = [
     path("debug/", include("apps.common.urls"), name="debug"),
     # admin
     path("fubar/", admin.site.urls, name="admin"),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
     # business functionality
     path("", include("apps.website.urls"), name="website"),
     path("sms/", include("apps.twilio_integration.urls"), name="twilio_integration"),
@@ -30,6 +32,11 @@ urlpatterns = [
     path("watchman/", include("watchman.urls")),
     path("", include("social_django.urls", namespace="social")),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
 admin.site.site_header = "ChiPy Street Team Administration"
 admin.site.site_title = "ChiPy Street Team Administration"

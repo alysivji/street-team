@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 class DebugEndpoint(APIView):
     def get(self, request, format=None):
+        raise ValueError
         return HttpResponse()
 
     def post(self, request, format=None):

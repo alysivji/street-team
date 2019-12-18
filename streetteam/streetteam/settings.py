@@ -23,7 +23,7 @@ IN_PRODUCTION = os.getenv("IN_PRODUCTION") == "1"
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY") if IN_PRODUCTION else "zcj4**&#_&3cer3q)wf2a+^n-72p@l=b0#(m&!-n&4x#-+)hu("
+SECRET_KEY = os.getenv("SECRET_KEY") if IN_PRODUCTION else "zcj4**&#_&3cer3q)wf2a+^n-72p@l=b0#(m&!-n&4x#-+)hu("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if IN_PRODUCTION else True
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "social_django",  # login using oauth providers
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
+    "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
     # internal
     "apps.common",
     "apps.mediahub",
@@ -65,11 +66,21 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "apps.common.middleware.SuperuserCanViewDebugToolbarInProductionMiddleware",
 ]
 
-if not IN_PRODUCTION:
-    INSTALLED_APPS.extend(["django_extensions", "django_pdb"])
+if DEBUG:
+    INSTALLED_APPS.extend(["django_extensions", "django_pdb", "debug_toolbar"])
+    MIDDLEWARE.insert(2, "debug_toolbar.middleware.DebugToolbarMiddleware")
     MIDDLEWARE.extend(["django_pdb.middleware.PdbMiddleware"])
+
+    # tricks to have debug toolbar when developing with docker
+    # https://stackoverflow.com/questions/26898597/django-debug-toolbar-and-docker
+    INTERNAL_IPS = ["0.0.0.0"]
+    import socket
+
+    ip = socket.gethostbyname(socket.gethostname())
+    INTERNAL_IPS += [ip[:-1] + "1"]
 
 ROOT_URLCONF = "streetteam.urls"
 
