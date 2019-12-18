@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "social_django",  # login using oauth providers
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
+    "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
     # internal
     "apps.common",
     "apps.mediahub",

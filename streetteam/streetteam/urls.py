@@ -23,6 +23,7 @@ urlpatterns = [
     path("debug/", include("apps.common.urls"), name="debug"),
     # admin
     path("fubar/", admin.site.urls, name="admin"),
+    path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
     # business functionality
     path("", include("apps.website.urls"), name="website"),
     path("sms/", include("apps.twilio_integration.urls"), name="twilio_integration"),
