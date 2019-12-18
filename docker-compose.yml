@@ -33,6 +33,7 @@ services:
     environment:
       IN_PRODUCTION: 0
       PYTHONPATH: /app/streetteam
+      SECRET_KEY: shhhhh-its-a-secret
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@db:5432/streetteam
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
