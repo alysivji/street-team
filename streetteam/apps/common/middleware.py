@@ -3,9 +3,9 @@ from django.views.debug import technical_500_response
 
 
 class SuperuserCanViewDebugToolbarInProductionMiddleware:
-    """Trick I found in Two Scoops of Django
+    """Allow signed-in superuser to view Debug Toolbar
 
-    Signed-in superusers can use the Debug Toolbar
+    Trick I found in Two Scoops of Django
     """
 
     def __init__(self, get_response):
