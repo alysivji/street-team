@@ -1,7 +1,7 @@
 from django.db import models
 
-from apps.common.models import BaseModel
 from apps.twilio_integration.models import PhoneNumber
+from common.models import BaseModel
 
 
 class MediaResource(BaseModel):
