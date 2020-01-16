@@ -95,7 +95,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.common.context_processors.from_settings",
+                "common.context_processors.from_settings",
             ]
         },
     }
@@ -144,7 +144,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Custom Settings
-TEST_RUNNER = "apps.common.runner.PytestTestRunner"
+TEST_RUNNER = "common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
 
 
