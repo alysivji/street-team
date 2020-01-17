@@ -1,6 +1,7 @@
 """Management command to create superuser with parameters
 
-We use this because the createsuperuser management command requires a password
+We use this because the createsuperuser management command requires a password.
+This management command is mostly used for development workflows.
 
 To use:
     python streetteam/manage.py createsuperuser_parameterized \

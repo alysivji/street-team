@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
     # internal
-    "apps.common",
+    "apps.debug",
     "apps.mediahub",
     "apps.twilio_integration",
     "apps.users",
@@ -66,7 +66,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "apps.common.middleware.SuperuserCanViewDebugToolbarInProductionMiddleware",
+    "common.middleware.SuperuserCanViewDebugToolbarInProductionMiddleware",
 ]
 
 if DEBUG:
@@ -95,7 +95,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "apps.common.context_processors.from_settings",
+                "common.context_processors.from_settings",
             ]
         },
     }
@@ -144,7 +144,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Custom Settings
-TEST_RUNNER = "apps.common.runner.PytestTestRunner"
+TEST_RUNNER = "common.runner.PytestTestRunner"
 AUTH_USER_MODEL = "users.User"
 
 

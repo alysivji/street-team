@@ -3,8 +3,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from .adapter import twilio
-from apps.common.models import BaseModel
 from apps.users.models import User
+from common.models import BaseModel
 
 
 class PhoneNumber(BaseModel):

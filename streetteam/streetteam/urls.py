@@ -21,7 +21,7 @@ from django.urls import include, path
 urlpatterns = [
     # internal
     path("healthcheck/", lambda request: HttpResponse(b'{"ping": "pong"}', content_type="application/json")),
-    path("debug/", include("apps.common.urls"), name="debug"),
+    path("debug/", include("apps.debug.urls"), name="debug"),
     # admin
     path("fubar/", admin.site.urls, name="admin"),
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
