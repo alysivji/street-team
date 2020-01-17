@@ -1,5 +1,7 @@
 import pytest
 
+from django_fsm_log.models import StateLog
+
 from apps.twilio_integration.adapter import PhoneNumberDTO
 from apps.twilio_integration.models import PhoneNumber
 from apps.twilio_integration.tests.utils import FakeTwilioClient
@@ -65,6 +67,18 @@ def test_connect_phone_number__unlinked_user(client, login_user, PatchedTwilio):
     phone_number = user.phone_numbers.first()
     assert phone_number.number == number
     assert phone_number.account_link_state == PhoneNumber.AccountLinkState.PHONE_LINK_SUCCESS
+
+    # assert state log got updated
+    logs = StateLog.objects.all()
+    assert len(logs) == 2
+
+    log = logs[0]
+    assert log.source_state == "unlinked_phone_number"
+    assert log.state == "attempt_phone_link"
+
+    log = logs[1]
+    assert log.source_state == "attempt_phone_link"
+    assert log.state == "phone_link_success"
 
 
 @pytest.mark.todo
