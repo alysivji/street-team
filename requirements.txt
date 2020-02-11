@@ -21,7 +21,7 @@ django-debug-toolbar==2.1
 git+https://github.com/alysivji/django-fsm-log.git@1.7.0#egg=django-fsm-log==1.7.0
 django-fsm==2.7.0
 django-watchman==1.0.0
-django==3.0.2
+django==3.0.3
 djangorestframework==3.10.3
 entrypoints==0.3          # via flake8
 factory-boy==2.12.0
