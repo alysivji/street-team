@@ -5,7 +5,6 @@ dj-database-url==0.5.0
 django-admin-honeypot==1.1.0
 django-debug-toolbar==2.1
 django-fsm==2.7.0
-git+git://github.com/Chive/django-multiupload.git@ba52e161a68ce19062c3655e89544c2d377990a0#egg=multiupload
 django-storages==1.9.1
 django-watchman==1.0.0
 Django==3.0.6
