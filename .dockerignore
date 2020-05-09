@@ -2,3 +2,4 @@ venv/
 .gitignore
 .dockerignore
 docker-compose.yaml
+.envrc
