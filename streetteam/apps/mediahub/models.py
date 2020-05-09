@@ -5,12 +5,14 @@ from django.db import models
 
 from apps.twilio_integration.models import PhoneNumber
 from common.models import BaseModel
+from common.storage import MediaStorage
 
 
 def get_file_path(self, filename):
     extension = filename.split(".")[-1]
     filename = f"{uuid.uuid4()}.{extension}"
-    return os.path.join("uploads-images", filename)
+    # TODO change when we become multitenant
+    return os.path.join(MediaStorage.location, "uploaded-images", filename)
 
 
 class MediaResource(BaseModel):

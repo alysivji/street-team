@@ -139,13 +139,13 @@ USE_TZ = True
 # LocalStack for localdev
 # DigitalOcean Blob Store with a CDN for staging and production
 # Using django-storages to upload files to CDN
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "common.storage.MediaStorage"
+STATICFILES_STORAGE = "common.storage.StaticStorage"
 
 AWS_S3_ENDPOINT_URL = "http://localstack:4566"  # env var
 AWS_ACCESS_KEY_ID = "foo"  # env var
 AWS_SECRET_ACCESS_KEY = "bar"  # env var
-AWS_STORAGE_BUCKET_NAME = "streetteam"  # env var
+AWS_STORAGE_BUCKET_NAME = "streetteam"
 AWS_S3_CUSTOM_DOMAIN = "localhost:4566/streetteam"  # env var
 AWS_DEFAULT_ACL = "public-read"
 AWS_S3_SECURE_URLS = True if IN_PRODUCTION else False
