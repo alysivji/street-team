@@ -1,7 +1,16 @@
+import os
+import uuid
+
 from django.db import models
 
 from apps.twilio_integration.models import PhoneNumber
 from common.models import BaseModel
+
+
+def get_file_path(self, filename):
+    extension = filename.split(".")[-1]
+    filename = f"{uuid.uuid4()}.{extension}"
+    return os.path.join("uploads-images", filename)
 
 
 class MediaResource(BaseModel):
@@ -12,5 +21,5 @@ class MediaResource(BaseModel):
     phone_number = models.ForeignKey(PhoneNumber, related_name="media_resources", on_delete=models.CASCADE)
 
 
-class Attachment(models.Model):
-    file = models.FileField(upload_to="attachments")
+class UploadedImage(models.Model):
+    image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
