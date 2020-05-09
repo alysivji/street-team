@@ -2,6 +2,7 @@ version: '3.6'
 
 volumes:
   pgdata:
+  localstack-data:
 
 
 services:
@@ -58,3 +59,5 @@ services:
       - HOSTNAME=localstack-s3
     ports:
       - "5000:5000"
+    volumes:
+     - localstack-data:/tmp/localstack
