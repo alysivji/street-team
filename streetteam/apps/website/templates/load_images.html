@@ -1,0 +1,8 @@
+<h1>Upload Images</h1>
+
+<form action="/upload/" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <br>
+  <input type="submit" value="Submit">
+</form>
