@@ -132,7 +132,7 @@ export AWS_ACCESS_KEY_ID=foo
 export AWS_SECRET_ACCESS_KEY=foo
 
 # make bucket
-aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 mb s3://a-cli-demo
+aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket a-cli-demo --acl public-read
 
 # upload file
 aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 cp requirements.txt s3://a-cli-demo
