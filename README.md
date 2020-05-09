@@ -125,18 +125,19 @@ Dashboard: http://0.0.0.0:8100/watchman/dashboard/
 
 We are using [LocalStack](https://github.com/localstack/localstack) to replicate an S3-like object store for development.
 
-[Tips on Setting up LocalStack in Docker-Compose](https://bluesock.org/~willkg/blog/dev/using_localstack_for_s3.html)
-
 ```bash
 export AWS_ACCESS_KEY_ID=foo
 export AWS_SECRET_ACCESS_KEY=foo
 
 # make bucket
-aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket a-cli-demo --acl public-read
+aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
 
 # upload file
-aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 cp requirements.txt s3://a-cli-demo
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 cp requirements.txt s3://streetteam
 
 # list bucket
-aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 ls s3://a-cli-demo
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 ls s3://streetteam
+
+# view file
+http://localhost:4566/streetteam/requirements.txt
 ```

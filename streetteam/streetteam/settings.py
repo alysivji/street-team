@@ -136,11 +136,20 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Static and Media Files are stored on a Blob Store and served via http
+# LocalStack for localdev
+# DigitalOcean Blob Store with a CDN for staging and production
+# Using django-storages to upload files to CDN
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_S3_ENDPOINT_URL = "http://localstack:4566"  # env var
+AWS_ACCESS_KEY_ID = "foo"  # env var
+AWS_SECRET_ACCESS_KEY = "bar"  # env var
+AWS_STORAGE_BUCKET_NAME = "streetteam"  # env var
+AWS_DEFAULT_ACL = "public-read"
+
+STATIC_URL = "http://localstack:4566/"  # env var
+MEDIA_URL = "http://localstack:4566/"  # env var
 
 
 # Custom Settings
