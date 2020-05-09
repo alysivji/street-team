@@ -15,7 +15,7 @@ def upload_file(request):
             file_data = {"image": image}
             form = UploadImagesForm(request.POST, file_data)
             if form.is_valid():
-                handle_uploaded_file(form.files)
+                handle_uploaded_file(request.user, form.files)
                 num_processed += 1
             else:
                 print("did not process")

@@ -4,15 +4,18 @@ import uuid
 from django.db import models
 
 from apps.twilio_integration.models import PhoneNumber
+from apps.users.models import User
 from common.models import BaseModel
-from common.storage import MediaStorage
 
 
 def get_file_path(self, filename):
+    # all files are saved in streetteam/chicago-python
+    # this is hacked together right now
+    # fix later
     extension = filename.split(".")[-1]
     filename = f"{uuid.uuid4()}.{extension}"
-    # TODO change when we become multitenant
-    return os.path.join(MediaStorage.location, "uploaded-images", filename)
+    path = os.path.join("uploaded-images", filename)
+    return path
 
 
 class MediaResource(BaseModel):
@@ -25,3 +28,4 @@ class MediaResource(BaseModel):
 
 class UploadedImage(models.Model):
     image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
+    user = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
