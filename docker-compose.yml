@@ -51,13 +51,15 @@ services:
 
   # https://hub.docker.com/r/localstack/localstack/
   # localstack running a fake S3
-  localstack-s3:
+  localstack:
     image: localstack/localstack:0.11.1
     environment:
-      - SERVICES=s3:5000
+      - EDGE_PORT=4566
       - DEFAULT_REGION=us-east-1
-      - HOSTNAME=localstack-s3
+      - HOSTNAME=localstack
+      - SERVICES=s3
+      - DATA_DIR=/tmp/localstack/data
     ports:
-      - "5000:5000"
+      - "4566:4566"
     volumes:
-     - localstack-data:/tmp/localstack
+     - localstack-data:/tmp/localstack/data

@@ -123,13 +123,20 @@ Dashboard: http://0.0.0.0:8100/watchman/dashboard/
 
 ### LocalStack
 
-We are using [LocalStack](https://github.com/localstack/localstack) to create an S3 instance for local testing.
+We are using [LocalStack](https://github.com/localstack/localstack) to replicate an S3-like object store for development.
 
 [Tips on Setting up LocalStack in Docker-Compose](https://bluesock.org/~willkg/blog/dev/using_localstack_for_s3.html)
 
-```console
+```bash
 export AWS_ACCESS_KEY_ID=foo
 export AWS_SECRET_ACCESS_KEY=foo
 
-aws --endpoint-url=http://localhost:5000 --region=us-east-1 s3 ls
+# make bucket
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 mb s3://a-cli-demo
+
+# upload file
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 cp requirements.txt s3://a-cli-demo
+
+# list bucket
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 ls s3://a-cli-demo
 ```
