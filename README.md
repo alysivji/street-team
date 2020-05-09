@@ -115,8 +115,29 @@ class Migration(migrations.Migration):
     ]
 ```
 
-## Django-Watchman
+### Django-Watchman
 
 We are using [Django-Watchman](https://github.com/mwarkentin/django-watchman) to monitor services.
 
 Dashboard: http://0.0.0.0:8100/watchman/dashboard/
+
+### LocalStack
+
+We are using [LocalStack](https://github.com/localstack/localstack) to replicate an S3-like object store for development.
+
+```bash
+export AWS_ACCESS_KEY_ID=foo
+export AWS_SECRET_ACCESS_KEY=foo
+
+# make bucket
+aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
+
+# upload file
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 cp requirements.txt s3://streetteam
+
+# list bucket
+aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 ls s3://streetteam
+
+# view file
+http://localhost:4566/streetteam/requirements.txt
+```

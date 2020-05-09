@@ -59,7 +59,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # needs to be after security
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -136,11 +135,23 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Static and Media Files are stored on a Blob Store and served via http
+# LocalStack for localdev
+# DigitalOcean Blob Store with a CDN for staging and production
+# Using django-storages to upload files to CDN
+DEFAULT_FILE_STORAGE = "common.storage.MediaStorage"
+STATICFILES_STORAGE = "common.storage.StaticStorage"
+
+AWS_S3_ENDPOINT_URL = "http://localstack:4566"  # env var
+AWS_ACCESS_KEY_ID = "foo"  # env var
+AWS_SECRET_ACCESS_KEY = "bar"  # env var
+AWS_STORAGE_BUCKET_NAME = "streetteam"
+AWS_S3_CUSTOM_DOMAIN = "localhost:4566/streetteam"  # env var
+AWS_DEFAULT_ACL = "public-read"
+AWS_S3_SECURE_URLS = True if IN_PRODUCTION else False
+
+STATIC_URL = "http://localhost:4566/"  # env var
+MEDIA_URL = "http://localhost:4566/"  # env var
 
 
 # Custom Settings

@@ -2,6 +2,7 @@ version: '3.6'
 
 volumes:
   pgdata:
+  localstack-data:
 
 
 services:
@@ -47,3 +48,16 @@ services:
       - 8100:8100
     stdin_open: true
     tty: true
+
+  # localstack running a fake S3
+  localstack:
+    image: localstack/localstack:0.11.1
+    environment:
+      - EDGE_PORT=4566
+      - DEFAULT_REGION=us-east-1
+      - SERVICES=s3
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - "4566:4566"
+    volumes:
+     - localstack-data:/tmp/localstack/data
