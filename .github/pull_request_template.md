@@ -16,6 +16,8 @@ Closes # (if there is a related issue)
 
 [post SQL here]
 
+`make migration-sql app="app" migration="full_migration_name"`
+
 ### Dependencies
 
 [Merge dependencies? Deployment dependencies?]
