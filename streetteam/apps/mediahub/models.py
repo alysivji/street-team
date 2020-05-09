@@ -10,3 +10,7 @@ class MediaResource(BaseModel):
     content_type = models.CharField(max_length=30, blank=True)
 
     phone_number = models.ForeignKey(PhoneNumber, related_name="media_resources", on_delete=models.CASCADE)
+
+
+class Attachment(models.Model):
+    file = models.FileField(upload_to="attachments")
