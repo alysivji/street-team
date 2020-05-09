@@ -115,8 +115,21 @@ class Migration(migrations.Migration):
     ]
 ```
 
-## Django-Watchman
+### Django-Watchman
 
 We are using [Django-Watchman](https://github.com/mwarkentin/django-watchman) to monitor services.
 
 Dashboard: http://0.0.0.0:8100/watchman/dashboard/
+
+### LocalStack
+
+We are using [LocalStack](https://github.com/localstack/localstack) to create an S3 instance for local testing.
+
+[Tips on Setting up LocalStack in Docker-Compose](https://bluesock.org/~willkg/blog/dev/using_localstack_for_s3.html)
+
+```console
+export AWS_ACCESS_KEY_ID=foo
+export AWS_SECRET_ACCESS_KEY=foo
+
+aws --endpoint-url=http://localhost:5000 --region=us-east-1 s3 ls
+```
