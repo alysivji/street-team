@@ -1,7 +1,6 @@
 from django import forms
+from multiupload.fields import MultiImageField
 
 
 class UploadFileForm(forms.Form):
-    file_field = forms.FileField(
-        label="Select pictures to upload", widget=forms.ClearableFileInput(attrs={"multiple": True})
-    )
+    images = MultiImageField(min_num=1)

@@ -55,7 +55,6 @@ services:
     environment:
       - EDGE_PORT=4566
       - DEFAULT_REGION=us-east-1
-      - HOSTNAME=localstack
       - SERVICES=s3
       - DATA_DIR=/tmp/localstack/data
     ports:
