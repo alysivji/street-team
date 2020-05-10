@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.generic.list import ListView
 
 from .forms import UploadImagesForm
 from .interactors import handle_uploaded_file
+from .models import UploadedImage
 
 
 @login_required
@@ -24,3 +26,10 @@ def upload_file(request):
     else:
         form = UploadImagesForm()
     return render(request, "form.html", {"form": form})
+
+
+class UploadedImagesListView(ListView):
+
+    model = UploadedImage
+    paginate_by = 10  # if pagination is desired
+    template_name = "list.html"
