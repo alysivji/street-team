@@ -2,9 +2,7 @@
 
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'mediahub/style.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
   </head>
 
   <body>
@@ -12,6 +10,6 @@
       <!-- cross origin? -->
       <img id="image" width=800px height=400px src="{{ object.image.url }}" />
     </div>
-    <script src="{% static 'mediahub/crop.js' %}"></script>
+    <script src="{% static 'mediahub/index.js' %}"></script>
   </body>
 </html>
