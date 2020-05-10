@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 
 from .forms import UploadImagesForm
 from .interactors import handle_uploaded_file
@@ -33,3 +34,9 @@ class UploadedImagesListView(ListView):
     model = UploadedImage
     paginate_by = 10  # if pagination is desired
     template_name = "list.html"
+
+
+class UploadedImagesDetailView(DetailView):
+
+    model = UploadedImage
+    template_name = "crop.html"

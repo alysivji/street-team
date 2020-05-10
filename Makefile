@@ -75,3 +75,6 @@ prod-build: ## build prod containers
 
 logs: ## attach to logs
 	docker logs `docker-compose ps -q app`
+
+collectstatic: ## collect static files
+	docker-compose exec app python streetteam/manage.py collectstatic --no-input
