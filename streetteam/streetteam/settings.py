@@ -31,6 +31,10 @@ DEBUG = False if IN_PRODUCTION else True
 ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io"]
 APPEND_SLASH = True
 
+# cors
+# https://github.com/adamchainz/django-cors-headers
+CORS_ORIGIN_ALLOW_ALL = True
+
 # set in traefik
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https") if IN_PRODUCTION else None
 
@@ -49,6 +53,7 @@ INSTALLED_APPS = [
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
+    "corsheaders",  # adds Cross-Origin Resource Sharing (CORS) headers to responses for local testing
     # internal
     "apps.debug",
     "apps.mediahub",
@@ -58,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",  # should be as high as possible
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

@@ -8,7 +8,20 @@
   <body>
     <div id="main">
       <!-- cross origin? -->
-      <img id="image" width=800px height=400px src="{{ object.image.url }}" />
+      <div id="cropImage">Crop Image</div>
+      <img id="image" width=400px height=400px src="http://localhost:4566/streetteam/chicago-python/uploaded-images/e980836d-41c1-48c2-ae21-801631e74fad.png">
+
+    <!-- TODO make this dynamic -->
+    <form method="post" action="/images/10/crop">
+      {% csrf_token %}
+
+      <input type="hidden" id="cropLeft" name="cropLeft">
+      <input type="hidden" id="cropTop" name="cropTop">
+      <input type="hidden" id="cropWidth" name="cropWidth">
+      <input type="hidden" id="cropHeight" name="cropHeight">
+
+      <input type="submit" value="Submit">
+    </form>
     </div>
     <script src="{% static 'mediahub/index.js' %}"></script>
   </body>
