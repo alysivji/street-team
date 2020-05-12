@@ -24,21 +24,6 @@ def get_uploaded_images_path(self, filename):
 
 
 class UploadedImage(BaseModel):
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     image = models.ImageField(upload_to=get_uploaded_images_path)
     user = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
-
-
-def get_cropped_images_path(self, filename):
-    import pdb
-
-    pdb.set_trace()
-    extension = filename.split(".")[-1]
-    filename = f"{uuid.uuid4()}.{extension}"
-    path = os.path.join("cropped-images", filename)
-    return path
-
-
-class CroppedImage(BaseModel):
-    image = models.ImageField(upload_to=get_cropped_images_path, null=False, blank=False)
-    user = models.ForeignKey(User, related_name="cropped_images", on_delete=models.CASCADE)
-    uploaded_image = models.ForeignKey(UploadedImage, related_name="cropped_images", on_delete=models.CASCADE)

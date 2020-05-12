@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 from .forms import UploadImagesForm, CropImageParametersForm
-from .interactors import handle_uploaded_file, go_crop_image
+from .interactors import crop_image, handle_uploaded_file
 from .models import UploadedImage
 
 
@@ -42,10 +42,11 @@ class UploadedImagesDetailView(DetailView):
 
 
 @login_required
-def crop_image(request, pk):
+def crop_image_view(request, pk):
     form = CropImageParametersForm(request.POST)
     if form.is_valid():
-        go_crop_image(user=request.user, image_id=pk, crop_box=form.cleaned_data)
+        crop_image(user=request.user, image_id=pk, crop_box=form.cleaned_data)
+        # get the uuid and go to the next page
         return JsonResponse({"success": True})
     else:
         # go back to detail view
