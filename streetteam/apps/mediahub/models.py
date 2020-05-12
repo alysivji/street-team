@@ -1,6 +1,7 @@
 import os
 import uuid
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from apps.twilio_integration.models import PhoneNumber
@@ -24,6 +25,19 @@ def get_uploaded_images_path(self, filename):
 
 
 class UploadedImage(BaseModel):
+    # TODO these are unique together
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    version = models.PositiveIntegerField()
+
     image = models.ImageField(upload_to=get_uploaded_images_path)
-    user = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
+    uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
+
+
+class UploadedImageEvent(BaseModel):
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    image = models.ForeignKey(UploadedImage, related_name="events", on_delete=models.CASCADE)
+
+    name = models.CharField(max_length=32, null=False)
+    data = JSONField()
+
+    performed_by = models.ForeignKey(User, related_name="events", on_delete=models.CASCADE)
