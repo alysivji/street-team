@@ -1,0 +1,8 @@
+<h1>Uploaded Images</h1>
+<ul>
+{% for picture in object_list %}
+    <li><a href="/images/{{ picture.id }}">Link</a></li>
+{% empty %}
+    <li>No picture yet.</li>
+{% endfor %}
+</ul>

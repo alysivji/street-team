@@ -141,3 +141,9 @@ aws --endpoint-url=http://localhost:4566 --region=us-east-1 s3 ls s3://streettea
 # view file
 http://localhost:4566/streetteam/requirements.txt
 ```
+
+### Twitter Notes
+
+- every link will be made 23 chars
+- https://help.twitter.com/en/using-twitter/how-to-tweet-a-link
+- only really need this in the front end -- have a check in the backend too

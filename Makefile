@@ -27,6 +27,9 @@ migration-empty: ## create empty migration app="app" msg="msg"
 migrate-up: ## run all migration
 	docker-compose exec app python streetteam/manage.py migrate $(app)
 
+migration-sql: ## generate sql for migrations app="app" migration="migration"
+	docker-compose exec app python streetteam/manage.py sqlmigrate $(app) $(migration)
+
 dropdb:  ## drop all tables in development database
 	psql -d postgresql://streetteam_user:streetteam_password@localhost:9432/streetteam -f ./scripts/drop_all_tables.sql
 
@@ -72,3 +75,6 @@ prod-build: ## build prod containers
 
 logs: ## attach to logs
 	docker logs `docker-compose ps -q app`
+
+collectstatic: ## collect static files
+	docker-compose exec app python streetteam/manage.py collectstatic --no-input
