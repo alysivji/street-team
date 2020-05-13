@@ -35,5 +35,28 @@ class PostEventFactory(factory.DjangoModelFactory):
 class UploadImageEventFactory(PostEventFactory):
     name = "upload_image"
     data = {"width": 100, "height": 100}
-    image = factory.SubFactory(UploadedImageFactory)
-    performed_by = factory.SubFactory(UserFactory)
+
+
+class CropImageEventFactory(PostEventFactory):
+    name = "crop_iamge"
+    data = {"top": 0, "left": 0, "bottom": 50, "right": 50}
+
+
+class AddCaptionEventFactory(PostEventFactory):
+    name = "add_caption"
+    data = {"caption": "Hanging out with the cr3w"}
+
+
+class ModifyCaptionEventFactory(PostEventFactory):
+    name = "modify_caption"
+    data = {"caption": "Hanging out with the crew"}
+
+
+class SubmitPostEventFactory(PostEventFactory):
+    name = "submit_post"
+    data = {}
+
+
+class RejectPostEventFactory(PostEventFactory):
+    name = "reject_post"
+    data = {"reason": "None provided"}
