@@ -17,14 +17,13 @@ def test_caption_reducer():
     # Action
     # TODO put this into the manager
     uploaded_image = UploadedImage.objects.first()
-    events = [event.to_dict() for event in uploaded_image.events.order_by("id").all()]
-
-    all_events = []
-    for event in events:
+    events = []
+    for event in uploaded_image.events.order_by("id").all():
         for EventClass in EVENTS_LIST:
-            if EventClass.match(event):
-                all_events.append(EventClass(**event["details"]))
+            my_event = event.to_dict()
+            if EventClass.match(my_event):
+                events.append(EventClass(**my_event["details"]))
 
-    post = MediaPost(all_events)
+    post = MediaPost(events)
 
     assert post.caption == "final caption"
