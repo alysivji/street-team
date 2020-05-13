@@ -30,7 +30,7 @@ class UploadedImage(BaseModel):
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
 
 
-class UploadedImageEvent(BaseModel):
+class PostEvent(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     image = models.ForeignKey(UploadedImage, related_name="events", on_delete=models.CASCADE)
 
