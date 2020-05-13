@@ -14,8 +14,8 @@ def client():
 
 @pytest.fixture
 def login_user(client):
-    def _login_user():
-        user = UserFactory()
+    def _login_user(user=None):
+        user = user if user else UserFactory()
         client.force_login(user)
         return user
 

@@ -29,7 +29,6 @@ def test_caption_reducer():
 
 
 @pytest.mark.django_db
-@pytest.mark.current
 def test_upload_image_and_crop_reducer():
     # Arrange
     image = UploadedImageFactory(image__width=100, image__height=100)
