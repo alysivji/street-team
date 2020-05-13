@@ -15,12 +15,9 @@ def test_caption_reducer():
     ModifyCaptionEventFactory(image=image, data={"caption": "final caption"})
 
     # Action
+    # TODO put this into the manager
     uploaded_image = UploadedImage.objects.first()
-
-    # TODO add this to manager
-    events = [
-        dict([("details", event.data), ("type", event.name)]) for event in uploaded_image.events.order_by("id").all()
-    ]
+    events = [event.to_dict() for event in uploaded_image.events.order_by("id").all()]
     post = MediaPost(events)
 
     assert post.caption == "final caption"

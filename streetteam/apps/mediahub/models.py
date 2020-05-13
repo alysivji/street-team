@@ -38,3 +38,6 @@ class PostEvent(BaseModel):
     data = JSONField()
 
     performed_by = models.ForeignKey(User, related_name="events", on_delete=models.CASCADE)
+
+    def to_dict(self):
+        return {"uuid": self.uuid, "type": self.name, "details": self.data}
