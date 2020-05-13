@@ -34,11 +34,11 @@ class PostEventFactory(factory.DjangoModelFactory):
 
 class UploadImageEventFactory(PostEventFactory):
     name = "upload_image"
-    data = {"width": 100, "height": 100}
+    data = {}
 
 
 class CropImageEventFactory(PostEventFactory):
-    name = "crop_iamge"
+    name = "crop_image"
     data = {"top": 0, "left": 0, "bottom": 50, "right": 50}
 
 

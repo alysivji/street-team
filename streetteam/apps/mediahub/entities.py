@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from .forms import CropBox
 
 
 class MediaPost:
@@ -8,9 +9,9 @@ class MediaPost:
 
     def apply(self, event):
         if isinstance(event, UploadImage):
-            pass
+            self.cropbox = None
         elif isinstance(event, CropImage):
-            pass
+            self.cropbox = event.cropbox
         elif isinstance(event, AddCaption):
             self.caption = event.caption
         elif isinstance(event, ModifyCaption):
@@ -28,14 +29,12 @@ class Event:
 @dataclass
 class AddCaption(Event):
     name = "add_caption"
-
     caption: str
 
 
 @dataclass
 class ModifyCaption(Event):
     name = "modify_caption"
-
     caption: str
 
 
@@ -47,6 +46,9 @@ class UploadImage(Event):
 @dataclass
 class CropImage(Event):
     name = "crop_image"
+
+    def __init__(self, top, left, bottom, right):
+        self.cropbox = CropBox(top=top, left=left, bottom=bottom, right=right)
 
 
 EVENTS_LIST = [AddCaption, ModifyCaption, UploadImage, CropImage]
