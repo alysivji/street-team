@@ -1,7 +1,8 @@
 import factory
 
-from apps.mediahub.models import MediaResource
+from ..models import MediaResource, UploadedImage, UploadedImageEvent
 from apps.twilio_integration.tests.factories import PhoneNumberFactory
+from apps.users.tests.factories import UserFactory
 
 
 class MediaResourceFactory(factory.DjangoModelFactory):
@@ -10,3 +11,15 @@ class MediaResourceFactory(factory.DjangoModelFactory):
 
     resource_url = factory.Faker("url")
     phone_number = factory.SubFactory(PhoneNumberFactory)
+
+
+class UploadedImageFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = UploadedImage
+
+    uploaded_by = factory.SubFactory(UserFactory)
+
+
+class UploadedImageEventFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = UploadedImageEvent

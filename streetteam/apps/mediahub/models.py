@@ -25,10 +25,7 @@ def get_uploaded_images_path(self, filename):
 
 
 class UploadedImage(BaseModel):
-    # TODO these are unique together
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
-    version = models.PositiveIntegerField()
-
     image = models.ImageField(upload_to=get_uploaded_images_path)
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
 
