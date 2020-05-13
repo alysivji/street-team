@@ -1,7 +1,7 @@
 import pytest
 
 from .factories import MediaResourceFactory, UploadedImageFactory
-from ..models import MediaResource
+from ..models import MediaResource, UploadedImage
 
 
 @pytest.mark.django_db
@@ -19,11 +19,7 @@ def test_create_and_retrieve_message():
 def test_uploaded_image__user_uploads_image():
     resource = UploadedImageFactory()
 
-    import pdb
+    record = UploadedImage.objects.first()
 
-    pdb.set_trace()
-
-    record = MediaResource.objects.first()
-
-    assert record.resource_url == resource.resource_url
-    assert record.phone_number.number == resource.phone_number.number
+    assert record.image.width == resource.image.width
+    assert record.image.height == resource.image.height

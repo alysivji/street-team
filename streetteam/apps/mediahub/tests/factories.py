@@ -17,6 +17,7 @@ class UploadedImageFactory(factory.DjangoModelFactory):
     class Meta:
         model = UploadedImage
 
+    image = factory.django.ImageField(color="blue", width=100, height=100)
     uploaded_by = factory.SubFactory(UserFactory)
 
 
