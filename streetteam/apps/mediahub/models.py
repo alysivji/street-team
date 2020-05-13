@@ -48,3 +48,7 @@ class PostEvent(BaseModel):
     @classmethod
     def create_upload_event(cls, user, image):
         return cls(name="upload_image", performed_by=user, image=image, data={})
+
+    @classmethod
+    def create_crop_image_event(cls, user, image, cropbox):
+        return cls(name="crop_image", performed_by=user, image=image, data=cropbox)

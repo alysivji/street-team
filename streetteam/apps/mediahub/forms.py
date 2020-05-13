@@ -8,6 +8,9 @@ class CropBox(NamedTuple):
     right: int
     bottom: int
 
+    def to_dict(self):
+        return {"left": self.left, "top": self.top, "right": self.right, "bottom": self.bottom}
+
 
 class UploadImagesForm(forms.Form):
     image = forms.FileField(

@@ -21,6 +21,12 @@ class UploadedImageFactory(factory.DjangoModelFactory):
     image = factory.django.ImageField(color="blue", width=100, height=100)
     uploaded_by = factory.SubFactory(UserFactory)
 
+    @factory.post_generation
+    def generate_upload_event(self, create, extracted, **kwargs):
+        if not create:
+            return
+        UploadImageEventFactory(image=self, performed_by=self.uploaded_by)
+
 
 class PostEventFactory(factory.DjangoModelFactory):
     class Meta:

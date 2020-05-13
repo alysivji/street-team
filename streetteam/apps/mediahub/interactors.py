@@ -1,8 +1,4 @@
-from io import BytesIO
-
-from django.core.files.images import ImageFile
-from PIL import Image
-
+from .forms import CropBox
 from .models import UploadedImage, PostEvent
 
 
@@ -14,14 +10,6 @@ def handle_uploaded_file(user, info):
     upload_event.save()
 
 
-def crop_image(user, image_id, crop_box):
-    image = Image.open(UploadedImage.objects.get(pk=image_id).image)
-
-    cropped_blob = BytesIO()
-    cropped_image = image.crop(crop_box)
-    cropped_image.save(cropped_blob, image.format)
-    my_img = ImageFile(name=f"temp.{image.format}", file=cropped_blob)
-
-    instance = UploadedImage(user=user, image=my_img)
-    instance.save()
-    return my_img
+def crop_image(user, image, cropbox: CropBox):
+    crop_event = PostEvent.create_crop_image_event(user, image=image, cropbox=cropbox.to_dict())
+    crop_event.save()

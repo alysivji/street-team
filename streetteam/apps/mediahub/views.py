@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
@@ -39,13 +39,15 @@ class UploadedImagesDetailView(DetailView):
 
     model = UploadedImage
     template_name = "crop.html"
+    # TODO use uuid
 
 
 @login_required
-def crop_image_view(request, pk):
+def crop_image_view(request, uuid):
+    image = get_object_or_404(UploadedImage, uuid=uuid)
     form = CropImageParametersForm(request.POST)
     if form.is_valid():
-        crop_image(user=request.user, image_id=pk, crop_box=form.cleaned_data)
+        crop_image(user=request.user, image=image, cropbox=form.cleaned_data)
         # get the uuid and go to the next page
         return JsonResponse({"success": True})
     else:
