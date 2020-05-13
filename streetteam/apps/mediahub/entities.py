@@ -1,9 +1,4 @@
-events = [
-    {"type": "upload_image", "performed_by": 1, "details": {}},
-    {"type": "crop_image", "performed_by": 1, "details": {"top": 2, "left": 3, "bottom": 4, "right": 5}},
-    {"type": "add_caption", "performed_by": 1, "details": {"caption": "hanging out with the ChiPy cr3w"}},
-    {"type": "modify_caption", "performed_by": 1, "details": {"caption": "hanging out with the ChiPy crew"}},
-]
+from dataclasses import dataclass
 
 
 class MediaPost:
@@ -12,13 +7,46 @@ class MediaPost:
             self.apply(event)
 
     def apply(self, event):
-        if event["type"] == "upload_image":
+        if isinstance(event, UploadImage):
             pass
-        elif event["type"] == "crop_image":
-            self.cropbox = event["details"]
-        elif event["type"] == "add_caption":
-            self.caption = event["details"]["caption"]
-        elif event["type"] == "modify_caption":
-            self.caption = event["details"]["caption"]
+        elif isinstance(event, CropImage):
+            pass
+        elif isinstance(event, AddCaption):
+            self.caption = event.caption
+        elif isinstance(event, ModifyCaption):
+            self.caption = event.caption
         else:
             raise NotImplementedError
+
+
+class Event:
+    @classmethod
+    def match(cls, event):
+        return event["type"] == cls.name
+
+
+@dataclass
+class AddCaption(Event):
+    name = "add_caption"
+
+    caption: str
+
+
+@dataclass
+class ModifyCaption(Event):
+    name = "modify_caption"
+
+    caption: str
+
+
+@dataclass
+class UploadImage(Event):
+    name = "upload_image"
+
+
+@dataclass
+class CropImage(Event):
+    name = "crop_image"
+
+
+EVENTS_LIST = [AddCaption, ModifyCaption, UploadImage, CropImage]
