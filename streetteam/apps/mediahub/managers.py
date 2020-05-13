@@ -8,7 +8,7 @@ class PostEventManager(models.Manager):
         events = []
         for event in self.order_by("id").all():
             for EventClass in EVENTS_LIST:
-                my_event = event.to_dict()
-                if EventClass.match(my_event):
-                    events.append(EventClass(**my_event["details"]))
+                event_dict = event.to_dict()
+                if EventClass.match(event_dict):
+                    events.append(EventClass(**event_dict["details"]))
         return events
