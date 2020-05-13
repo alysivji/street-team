@@ -3,12 +3,15 @@ from io import BytesIO
 from django.core.files.images import ImageFile
 from PIL import Image
 
-from .models import UploadedImage
+from .models import UploadedImage, PostEvent
 
 
 def handle_uploaded_file(user, info):
     uploaded_image = UploadedImage(uploaded_by=user, **info)
     uploaded_image.save()
+
+    upload_event = PostEvent.create_upload_event(user, uploaded_image)
+    upload_event.save()
 
 
 def crop_image(user, image_id, crop_box):
