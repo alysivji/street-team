@@ -4,6 +4,7 @@ import uuid
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
+from .managers import PostEventManager
 from apps.twilio_integration.models import PhoneNumber
 from apps.users.models import User
 from common.models import BaseModel
@@ -38,6 +39,8 @@ class PostEvent(BaseModel):
     data = JSONField()
 
     performed_by = models.ForeignKey(User, related_name="events", on_delete=models.CASCADE)
+
+    objects = PostEventManager()
 
     def to_dict(self):
         return {"uuid": self.uuid, "type": self.name, "details": self.data}
