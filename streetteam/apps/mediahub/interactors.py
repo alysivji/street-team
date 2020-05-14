@@ -11,5 +11,5 @@ def handle_uploaded_file(user, info):
 
 
 def crop_image(user, image, crop_box: CropBox):
-    crop_event = PostEvent.create_crop_image_event(user, image=image, crop_box=crop_box.to_dict())
+    crop_event = PostEvent.create_crop_image_event(user, image=image, crop_box=crop_box._asdict())
     crop_event.save()
