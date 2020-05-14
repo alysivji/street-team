@@ -12,6 +12,13 @@ up: ## start local dev environment; run migrations
 	make migrate-up
 	make superuser
 
+up-ci:  ## start CI environment
+	docker-compose up -d
+	docker-compose exec -T localstack aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
+	docker-compose up -d
+	make migrate-up
+	make superuser
+
 down: ## stop local dev environment
 	docker-compose down
 

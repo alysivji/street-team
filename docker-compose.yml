@@ -57,6 +57,8 @@ services:
       - DEFAULT_REGION=us-east-1
       - SERVICES=s3
       - DATA_DIR=/tmp/localstack/data
+      - AWS_ACCESS_KEY_ID=foo
+      - AWS_SECRET_ACCESS_KEY=foo
     ports:
       - "4566:4566"
     volumes:

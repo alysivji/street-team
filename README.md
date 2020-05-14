@@ -147,3 +147,13 @@ http://localhost:4566/streetteam/requirements.txt
 - every link will be made 23 chars
 - https://help.twitter.com/en/using-twitter/how-to-tweet-a-link
 - only really need this in the front end -- have a check in the backend too
+docker-compose exec -T localstack aws --endpoint-url=http://localhost:4566 --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
+
+### Debug GitHub Action
+
+https://github.com/marketplace/actions/debugging-with-tmate
+
+```yaml
+- name: Setup tmate session
+  uses: mxschmitt/action-tmate@v2
+```
