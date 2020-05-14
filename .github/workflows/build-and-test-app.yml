@@ -9,8 +9,6 @@ jobs:
       TWILIO_SERVICE_SID: 789
     steps:
       - uses: actions/checkout@v2
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v2
       - name: Build the stack
         run: make up-ci
       - name: Test application
