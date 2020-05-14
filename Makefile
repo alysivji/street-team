@@ -25,7 +25,7 @@ migration-empty: ## create empty migration app="app" msg="msg"
 	docker-compose exec app python streetteam/manage.py makemigrations --empty -n "$(msg)" $(app)
 
 migrate-up: ## run all migration
-	docker-compose exec app python streetteam/manage.py migrate $(app)
+	docker-compose exec -T app python streetteam/manage.py migrate $(app)
 
 migration-sql: ## generate sql for migrations app="app" migration="migration"
 	docker-compose exec app python streetteam/manage.py sqlmigrate $(app) $(migration)
@@ -47,7 +47,7 @@ ngrok: ## start ngrok to forward port
 	ngrok http 8000
 
 test: ## run tests
-	docker-compose exec app pytest $(args)
+	docker-compose exec -T app pytest $(args)
 
 test-cov: ## run tests with coverage.py
 	docker-compose exec app pytest --cov ./streetteam $(args)
