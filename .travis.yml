@@ -18,12 +18,16 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
+install:
+  - pip install codecov
+  - pip install black
+  - pip install codecov
+
 before_script:
   - docker-compose up -d --build
 
 script:
-  - make up
-  - make test-cov
+  - docker-compose exec app pytest --cov ./streetteam
   - flake8
   - black --check .
   - codecov
