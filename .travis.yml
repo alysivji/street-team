@@ -4,29 +4,26 @@ notifications:
 dist: xenial
 sudo: required
 
-services:
-  - postgresql
-  - redis-server
-addons:
-  postgresql: "10"
+language: ruby
 
-language: python
-python:
-  - "3.8"
+services:
+  - docker
 
 env:
-  - IN_PRODUCTION=0 PYTHONPATH=./streetteam DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token IMAGE_NAME="alysivji/street-team"
+  - DOCKER_COMPOSE_VERSION=1.25.5
 
-install:
-  - pip install -r requirements_dev.txt
-  - pip install codecov
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 
 before_script:
-  - psql -c 'create database streetteam_test;' -U postgres
+  - docker-compose up -d --build
 
 script:
-  - python streetteam/manage.py migrate
-  - pytest --cov=./streetteam
+  - make up
+  - make test-cov
   - flake8
   - black --check .
   - codecov
