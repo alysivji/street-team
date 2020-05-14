@@ -5,11 +5,9 @@ from .factories import (
     CropImageEventFactory,
     MediaResourceFactory,
     ModifyCaptionEventFactory,
-    PostEventFactory,
     RejectPostEventFactory,
     SubmitPostEventFactory,
     UploadedImageFactory,
-    UploadImageEventFactory,
 )
 from ..models import MediaResource, UploadedImage, PostEvent
 
@@ -35,26 +33,13 @@ def test_create_and_retrieve_uploaded_image():
 
 
 @pytest.mark.django_db
-def test_create_and_retrieve_post_event_factory():
-    event = PostEventFactory()
-
-    record = PostEvent.objects.first()
-
-    assert record.name == event.name
-    assert record.data == event.data
-    assert record.performed_by == event.performed_by
-
-
-@pytest.mark.django_db
 def test_create_and_retrieve_upload_image_event():
     uploaded_image = UploadedImageFactory(image__width=710, image__height=710)
-    event = UploadImageEventFactory(image=uploaded_image, data={"width": 710, "height": 710})
 
     record = PostEvent.objects.first()
 
-    assert record.name == event.name
-    assert record.data == event.data
-    assert record.performed_by == event.performed_by
+    assert record.name == "upload_image"
+    assert record.performed_by == uploaded_image.uploaded_by
     assert record.image.image.width == 710
     assert record.image.image.height == 710
 
@@ -64,7 +49,7 @@ def test_create_and_retrieve_crop_image_event():
     uploaded_image = UploadedImageFactory(image__width=100, image__height=100)
     event = CropImageEventFactory(image=uploaded_image, data={"top": 0, "left": 0, "bottom": 50, "right": 50})
 
-    record = PostEvent.objects.first()
+    record = PostEvent.objects.last()
 
     assert record.name == event.name
     assert record.data == event.data
@@ -75,7 +60,7 @@ def test_create_and_retrieve_crop_image_event():
 def test_create_and_retrieve_add_caption_event():
     event = AddCaptionEventFactory(data={"caption": "test caption"})
 
-    record = PostEvent.objects.first()
+    record = PostEvent.objects.last()
 
     assert record.name == event.name
     assert record.data == event.data
@@ -86,7 +71,7 @@ def test_create_and_retrieve_add_caption_event():
 def test_create_and_retrieve_modify_caption_event():
     event = ModifyCaptionEventFactory(data={"caption": "new caption"})
 
-    record = PostEvent.objects.first()
+    record = PostEvent.objects.last()
 
     assert record.name == event.name
     assert record.data == event.data
@@ -97,7 +82,7 @@ def test_create_and_retrieve_modify_caption_event():
 def test_create_and_retrieve_submit_event():
     event = SubmitPostEventFactory(data={})
 
-    record = PostEvent.objects.first()
+    record = PostEvent.objects.last()
 
     assert record.name == event.name
     assert record.data == event.data
@@ -108,7 +93,7 @@ def test_create_and_retrieve_submit_event():
 def test_create_and_retrieve_reject_post_event():
     event = RejectPostEventFactory(data={"reason": "Used similar picture"})
 
-    record = PostEvent.objects.first()
+    record = PostEvent.objects.last()
 
     assert record.name == event.name
     assert record.data == event.data
