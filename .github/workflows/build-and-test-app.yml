@@ -2,9 +2,11 @@ name: Build and Test Street Team
 on: [pull_request]
 jobs:
   build-and-test-app:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v2
       - name: Build the stack
         run: make up
       - name: Test application
