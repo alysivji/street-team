@@ -2,35 +2,14 @@ name: Build and Test Street Team
 on: [pull_request]
 jobs:
   build-and-test-app:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
-      IN_PRODUCTION: '0'
-      PYTHONPATH: ${GITHUB_WORKSPACE}/streetteam
-      DJANGO_SETTINGS_MODULE: streetteam.settings
-      DB_URI: postgres://streetteam_user:streetteam_password@0.0.0.0:5432/streetteam
-      TWILIO_AUTH_TOKEN: test_token
-
-    services:
-      postgres:
-        image: postgres:10.3-alpine
-        env:
-          POSTGRES_USER: streetteam_user
-          POSTGRES_PASSWORD: streetteam_password
-          POSTGRES_DB: streetteam
-        ports:
-        - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+      TWILIO_ACCOUNT_SID: 123
+      TWILIO_AUTH_TOKEN: 456
+      TWILIO_SERVICE_SID: 789
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
-        with:
-          python-version: "3.8.2"
-      # cache this
-      - name: Install requirements
-        run: pip install -r requirements_dev.txt
-      - name: Migrate database
-        run: python streetteam/manage.py migrate
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: make up-ci
       - name: Test application
-        run: python streetteam/manage.py test
+        run: make test
