@@ -7,6 +7,7 @@ sudo: required
 services:
   - postgresql
   - redis-server
+  - docker
 addons:
   postgresql: "10"
 
@@ -25,6 +26,11 @@ before_script:
   - psql -c 'create database streetteam_test;' -U postgres
 
 script:
+  - pip install -q localstack; docker pull localstack/localstack; localstack start --docker & sleep 20
+  - pip install -q awscli-local
+  - export AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar AWS_DEFAULT_REGION=us-east-1
+  - aws-local --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
+
   - python streetteam/manage.py migrate
   - pytest --cov=./streetteam
   - flake8
