@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v2
-      - name: Build the stack
-        run: make up
-      - name: Test application
-        run: make test
+      # - name: Build the stack
+      #   run: make up
+      # - name: Test application
+      #   run: make test
