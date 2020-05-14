@@ -16,20 +16,20 @@ python:
   - "3.8"
 
 env:
-  - IN_PRODUCTION=0 PYTHONPATH=./streetteam DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token IMAGE_NAME="alysivji/street-team"
+  - IN_PRODUCTION=0 PYTHONPATH=./streetteam DJANGO_SETTINGS_MODULE=streetteam.settings DB_URI="postgresql://postgres@127.0.0.1:5432/streetteam_test" TWILIO_AUTH_TOKEN=fake-token IMAGE_NAME="alysivji/street-team" AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar AWS_DEFAULT_REGION=us-east-1
 
 install:
   - pip install -r requirements_dev.txt
   - pip install codecov
 
+  - pip install -q localstack; docker pull localstack/localstack; localstack start --docker & sleep 20
+  - pip install -q awscli-local
+
 before_script:
   - psql -c 'create database streetteam_test;' -U postgres
 
 script:
-  - pip install -q localstack; docker pull localstack/localstack; localstack start --docker & sleep 20
-  - pip install -q awscli-local
-  - export AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar AWS_DEFAULT_REGION=us-east-1
-  - awslocal --region us-east-1 s3api create-bucket --bucket streetteam --acl public-read
+  - awslocal s3api create-bucket --bucket streetteam --acl public-read
 
   - python streetteam/manage.py migrate
   - pytest --cov=./streetteam
