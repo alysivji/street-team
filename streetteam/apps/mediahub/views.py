@@ -47,7 +47,7 @@ def crop_image_view(request, uuid):
     image = get_object_or_404(UploadedImage, uuid=uuid)
     form = CropImageParametersForm(request.POST)
     if form.is_valid():
-        crop_image(user=request.user, image=image, cropbox=form.cleaned_data)
+        crop_image(user=request.user, image=image, crop_box=form.cleaned_data)
         # get the uuid and go to the next page
         return JsonResponse({"success": True})
     else:

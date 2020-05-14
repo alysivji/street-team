@@ -9,9 +9,9 @@ class MediaPost:
 
     def apply(self, event):
         if isinstance(event, UploadImage):
-            self.cropbox = None
+            self.crop_box = None
         elif isinstance(event, CropImage):
-            self.cropbox = event.cropbox
+            self.crop_box = event.crop_box
         elif isinstance(event, AddCaption):
             self.caption = event.caption
         elif isinstance(event, ModifyCaption):
@@ -48,7 +48,7 @@ class CropImage(Event):
     name = "crop_image"
 
     def __init__(self, top, left, bottom, right):
-        self.cropbox = CropBox(top=top, left=left, bottom=bottom, right=right)
+        self.crop_box = CropBox(top=top, left=left, bottom=bottom, right=right)
 
 
 EVENTS_LIST = [AddCaption, ModifyCaption, UploadImage, CropImage]

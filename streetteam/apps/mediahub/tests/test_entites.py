@@ -33,8 +33,8 @@ def test_upload_image_and_crop_reducer():
     # Arrange
     image = UploadedImageFactory(image__width=100, image__height=100)
     UploadImageEventFactory(image=image)
-    expected_cropbox = {"top": 0, "left": 0, "bottom": 50, "right": 50}
-    CropImageEventFactory(image=image, data=expected_cropbox)
+    expected_crop_box = {"top": 0, "left": 0, "bottom": 50, "right": 50}
+    CropImageEventFactory(image=image, data=expected_crop_box)
 
     # Act
     uploaded_image = UploadedImage.objects.first()
@@ -42,4 +42,4 @@ def test_upload_image_and_crop_reducer():
     post = MediaPost(events)
 
     # Assert
-    assert post.cropbox._asdict() == expected_cropbox
+    assert post.crop_box._asdict() == expected_crop_box
