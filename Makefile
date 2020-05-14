@@ -26,16 +26,16 @@ attach: ## attach to process for debugging purposes
 	docker attach `docker-compose ps -q app`
 
 migration: ## create migration app="app" msg="msg"
-	docker-compose exec app python streetteam/manage.py makemigrations -n "$(msg)" $(app)
+	docker-compose exec -T app python streetteam/manage.py makemigrations -n "$(msg)" $(app)
 
 migration-empty: ## create empty migration app="app" msg="msg"
-	docker-compose exec app python streetteam/manage.py makemigrations --empty -n "$(msg)" $(app)
+	docker-compose exec -T app python streetteam/manage.py makemigrations --empty -n "$(msg)" $(app)
 
 migrate-up: ## run all migration
 	docker-compose exec -T app python streetteam/manage.py migrate $(app)
 
 migration-sql: ## generate sql for migrations app="app" migration="migration"
-	docker-compose exec app python streetteam/manage.py sqlmigrate $(app) $(migration)
+	docker-compose exec -T app python streetteam/manage.py sqlmigrate $(app) $(migration)
 
 dropdb:  ## drop all tables in development database
 	psql -d postgresql://streetteam_user:streetteam_password@localhost:9432/streetteam -f ./scripts/drop_all_tables.sql
@@ -48,7 +48,7 @@ startapp: ## create an app="app"
 	docker-compose exec app python streetteam/manage.py startapp $(app) streetteam/apps/$(app)
 
 superuser:  ## add superuser to database
-	docker-compose exec app python streetteam/manage.py createsuperuser_parameterized --noinput --email admin@dev.com --password password
+	docker-compose exec -T app python streetteam/manage.py createsuperuser_parameterized --noinput --email admin@dev.com --password password
 
 ngrok: ## start ngrok to forward port
 	ngrok http 8000
@@ -57,10 +57,10 @@ test: ## run tests
 	docker-compose exec -T app pytest $(args)
 
 test-cov: ## run tests with coverage.py
-	docker-compose exec app pytest --cov ./streetteam $(args)
+	docker-compose exec -T app pytest --cov ./streetteam $(args)
 
 test-covhtml: ## run tests and load html coverage report
-	docker-compose exec app pytest --cov ./streetteam --cov-report html && open ./htmlcov/index.html
+	docker-compose exec -T app pytest --cov ./streetteam --cov-report html && open ./htmlcov/index.html
 
 requirements: ## generate requirements.txt using piptools
 	pip-compile --output-file=requirements.txt requirements.in
