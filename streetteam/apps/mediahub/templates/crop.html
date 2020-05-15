@@ -1,18 +1,19 @@
 {% load static %}
 
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
-  </head>
 
-  <body>
-    <div id="main">
-      <!-- cross origin? -->
-      <div id="cropImage">Crop Image</div>
-      <img id="image" width=400px height=400px src="{{ public_url }}">
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
+</head>
+
+<body>
+  <div id="main">
+    <!-- cross origin? -->
+    <div id="cropImage">Crop Image</div>
+    <img id="image" width=400px height=400px src="{{ public_url }}">
 
     <!-- TODO make this dynamic -->
-    <form method="post" action="/images/3/crop">
+    <form method="post" action="/images/{{ uuid }}/crop">
       {% csrf_token %}
 
       <input type="hidden" id="cropLeft" name="cropLeft">
@@ -22,7 +23,17 @@
 
       <input type="submit" value="Submit">
     </form>
-    </div>
-    <script src="{% static 'mediahub/index.js' %}"></script>
-  </body>
+  </div>
+
+  <div id="tweet">
+
+    <form method="post" action="">
+
+    </form>
+
+  </div>
+
+  <script src="{% static 'mediahub/index.js' %}"></script>
+</body>
+
 </html>

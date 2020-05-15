@@ -50,6 +50,7 @@ class CropImageDetailView(DetailView):
         context = {}
         if self.object:
             context["public_url"] = self.object.image.url
+            context["uuid"] = self.object.uuid
         context.update(kwargs)
         return super().get_context_data(**context)
 
