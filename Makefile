@@ -56,6 +56,9 @@ ngrok: ## start ngrok to forward port
 test: ## run tests
 	docker-compose exec -T app pytest $(args)
 
+testcurr: ## test ONLY current
+	make test args="-m current"
+
 test-cov: ## run tests with coverage.py
 	docker-compose exec -T app pytest --cov ./streetteam $(args)
 
