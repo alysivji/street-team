@@ -22,6 +22,7 @@ def upload_file(request):
             else:
                 print("did not process")
                 num_not_valid += 1
+        # TODO add logger
         return redirect("images-list")
     else:
         form = UploadImagesForm()
@@ -35,7 +36,7 @@ class UploadedImagesListView(ListView):
     template_name = "list.html"
 
 
-class UploadedImagesDetailView(DetailView):
+class CropImageDetailView(DetailView):
 
     model = UploadedImage
     template_name = "crop.html"
@@ -44,6 +45,13 @@ class UploadedImagesDetailView(DetailView):
     def get_object(self, queryset=None):
         pk = self.kwargs.get(self.pk_url_kwarg)
         return get_object_or_404(self.model, uuid=pk)
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context["public_url"] = self.object.image.url
+        context.update(kwargs)
+        return super().get_context_data(**context)
 
 
 @login_required
