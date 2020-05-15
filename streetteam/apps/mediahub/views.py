@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
@@ -22,7 +22,7 @@ def upload_file(request):
             else:
                 print("did not process")
                 num_not_valid += 1
-        return JsonResponse({"num_processed": num_processed, "num_not_valid": num_not_valid})
+        return redirect("images-list")
     else:
         form = UploadImagesForm()
     return render(request, "form.html", {"form": form})
@@ -39,7 +39,11 @@ class UploadedImagesDetailView(DetailView):
 
     model = UploadedImage
     template_name = "crop.html"
-    # TODO use uuid
+    pk_url_kwarg = "uuid"
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        return get_object_or_404(self.model, uuid=pk)
 
 
 @login_required

@@ -1,6 +1,6 @@
 <h1>Upload Images</h1>
 
-<form enctype="multipart/form-data" method="post" action="/upload/">
+<form enctype="multipart/form-data" method="post" action="{% url 'images-upload' %}">
   {% csrf_token %}
   {{ form }}
   <br>
