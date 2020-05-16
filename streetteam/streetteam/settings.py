@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY") if IN_PRODUCTION else "zcj4**&#_&3cer3q)wf2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if IN_PRODUCTION else True
 
-ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io"]
+ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io", "192.168.1.3"]
 APPEND_SLASH = True
 
 # set in traefik
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
+    "bootstrap4",  # Bootstrap integration within Django templates
     # internal
     "apps.debug",
     "apps.mediahub",

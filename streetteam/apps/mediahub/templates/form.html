@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Upload Images{% endblock %}
+
+{% block body %}
 <h1>Upload Images</h1>
 
 <form enctype="multipart/form-data" method="post" action="{% url 'images-upload' %}">
@@ -6,3 +12,4 @@
   <br>
   <input type="submit" value="Submit">
 </form>
+{% endblock %}

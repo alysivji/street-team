@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from .forms import UploadImagesForm, CropImageParametersForm
+from .forms import CaptionImageForm, CropImageParametersForm, UploadImagesForm
 from .interactors import crop_image, handle_uploaded_file
 from .models import UploadedImage
 
@@ -51,6 +51,7 @@ class CropImageDetailView(DetailView):
         if self.object:
             context["public_url"] = self.object.image.url
             context["uuid"] = self.object.uuid
+            context["caption_image_form"] = CaptionImageForm()
         context.update(kwargs)
         return super().get_context_data(**context)
 

@@ -1,39 +1,44 @@
+{% extends "base.html" %}
 {% load static %}
 
-<html>
+{% block title %}Crop Images{% endblock %}
 
-<head>
-  <link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
-</head>
+{% block top_loader %}
+<link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
+{% endblock %}
 
-<body>
-  <div id="main">
-    <!-- cross origin? -->
-    <div id="cropImage">Crop Image</div>
-    <img id="image" width=400px height=400px src="{{ public_url }}">
+{% block body %}
+<div id="main">
+  <!-- cross origin? -->
+  <div id="cropImage">Crop Image</div>
+  <img id="image" width=400px height=400px src="{{ public_url }}">
 
-    <!-- TODO make this dynamic -->
-    <form method="post" action="/images/{{ uuid }}/crop">
-      {% csrf_token %}
+  <!-- TODO make this dynamic -->
+  <form method="post" action="/images/{{ uuid }}/crop">
+    {% csrf_token %}
 
-      <input type="hidden" id="cropLeft" name="cropLeft">
-      <input type="hidden" id="cropTop" name="cropTop">
-      <input type="hidden" id="cropWidth" name="cropWidth">
-      <input type="hidden" id="cropHeight" name="cropHeight">
+    <input type="hidden" id="cropLeft" name="cropLeft">
+    <input type="hidden" id="cropTop" name="cropTop">
+    <input type="hidden" id="cropWidth" name="cropWidth">
+    <input type="hidden" id="cropHeight" name="cropHeight">
 
-      <input type="submit" value="Submit">
-    </form>
-  </div>
+    <input type="submit" value="Submit">
+  </form>
+</div>
 
-  <div id="tweet">
+<div id="tweet">
 
-    <form method="post" action="">
+  <form method="post" action="/image/{{ uuid }}/caption">
+    {% csrf_token %}
+    {{ caption_image_form }}
+    <input type="submit" value="Submit for Review">
 
-    </form>
+    <div id="captionCharacterCount">0 / 280</div>
+  </form>
 
-  </div>
+</div>
+{% endblock %}
 
-  <script src="{% static 'mediahub/index.js' %}"></script>
-</body>
-
-</html>
+{% block bottom_loader %}
+<script src="{% static 'mediahub/index.js' %}"></script>
+{% endblock %}

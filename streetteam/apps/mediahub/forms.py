@@ -28,3 +28,7 @@ class CropImageParametersForm(forms.Form):
         bottom = top + cleaned_data["cropHeight"]
         right = left + cleaned_data["cropWidth"]
         return CropBox(left=left, top=top, right=right, bottom=bottom)
+
+
+class CaptionImageForm(forms.Form):
+    caption = forms.CharField(label="Caption image", widget=forms.Textarea(attrs={"id": "imageCaption"}))

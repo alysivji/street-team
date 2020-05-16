@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}View Images{% endblock %}
+
+{% block body %}
 <h1>Uploaded Images</h1>
 
 <!-- TODO show the photos here in small thumnails -->
@@ -12,3 +17,4 @@
 <br>
 
 <h3><a href="{% url 'images-upload' %}">Upload pictures</a></h3>
+{% endblock %}
