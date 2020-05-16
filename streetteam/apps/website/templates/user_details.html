@@ -1,6 +1,10 @@
-<h1>Account Details</h1>
+{% extends "base.html" %}
+{% load static %}
 
-<h3>Account Details</h3>
+{% block title %}Account Details{% endblock %}
+
+{% block body %}
+<h1>Account Details</h1>
 
 <p>
   <strong>Email</strong>
@@ -11,3 +15,4 @@
   <strong>Phone Number</strong>
   {{ user.email }}
 </p>
+{% endblock %}

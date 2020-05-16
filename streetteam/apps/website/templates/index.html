@@ -1,3 +1,10 @@
-<h1>Street Team</h1>
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<h1>Account Details</h1>
 
 <a href='{% url "social:begin" "github" %}'>Login with GitHub</a>
+{% endblock %}
