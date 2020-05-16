@@ -18,15 +18,16 @@
 </head>
 
 <body>
+  <!-- Bootstrap Navigation -->
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand mx-auto" href="/" style="font-family: Pacifico">Street Team</a>
 
+    <!-- Collapsable Hamburger Menu -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
       aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarToggleExternalContent">
+    <div class="collapse show navbar-collapse" id="navbarToggleExternalContent">
       <ul class="navbar-header">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
@@ -38,6 +39,9 @@
           <!-- TODO login OR logout -->
           <li class="nav-item">
             <a class="nav-link" href='{% url "logout" %}'>Logout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href='{% url "images-list" %}'>Images</a>
           </li>
         </ul>
       </ul>
