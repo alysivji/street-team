@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
-    "bootstrap4",  # Bootstrap integration within Django templates
     # internal
     "apps.debug",
     "apps.mediahub",
