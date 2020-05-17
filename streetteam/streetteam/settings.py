@@ -153,6 +153,7 @@ AWS_S3_SECURE_URLS = True if IN_PRODUCTION else False
 STATIC_URL = "http://localhost:4566/"  # env var
 MEDIA_URL = "http://localhost:4566/"  # env var
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Custom Settings
 TEST_RUNNER = "common.runner.PytestTestRunner"

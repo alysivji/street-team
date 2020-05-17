@@ -2,17 +2,24 @@
 
 {% block title %}View Images{% endblock %}
 
-{% block body %}
+{% block container %}
 <h1>Uploaded Images</h1>
 
 <!-- TODO show the photos here in small thumnails -->
-<ul>
+<div class="card-columns">
   {% for picture in object_list %}
-  <li><a href="/images/{{ picture.uuid }}">Link</a></li>
+  <div class="card" width=100>
+    <img class="card-img-top img-fluid" src="{{ picture.image.url }}" alt="Card image cap">
+    <div class="card-body text-center">
+      <div class="button-group">
+        <button type="button" class="btn btn-primary btn-lg">Add Caption</button>
+      </div>
+    </div>
+  </div>
   {% empty %}
-  <li>No picture yet.</li>
+  <p>No picture yet.</p>
   {% endfor %}
-</ul>
+</div>
 
 <br>
 
