@@ -43,26 +43,23 @@
 <div class="modal" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Caption Photo</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
       <form method="post" action="/images/caption">
         {% csrf_token %}
         <!-- TODO validation on uuid, where does it show up? change with JS and see what happens -->
         <div class="modal-body">
           {% bootstrap_form caption_image_form show_label=False %}
-        </div>
-        <div class="modal-footer">
-          <div class="mr-auto">
+          <div class="float-right">
             <div id="captionCharacterCount" class="float-left">0</div>
             <div id="captionCharacterCount" class="float-left">&nbsp;/ 280</div>
           </div>
-          <input type="submit" class="btn btn-primary" id="modalSubmit">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <div class="float-left">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+          <div class="float-left">
+            <input type="submit" class="btn btn-primary" id="modalSubmit">
+          </div>
         </div>
       </form>
     </div>
