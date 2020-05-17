@@ -1,5 +1,7 @@
 from typing import NamedTuple
+
 from django import forms
+from twitter.twitter_utils import calc_expected_status_length as tweet_length
 
 
 class CropBox(NamedTuple):
@@ -37,8 +39,10 @@ class CaptionImageForm(forms.Form):
     uuid = forms.CharField(widget=forms.TextInput(attrs={"id": "modalUuid", "hidden": True}))
 
     def clean_caption(self):
-        # check to make sure tweet is less than 280 characters
-        pass
+        caption = self.cleaned_data["caption"]
+        if tweet_length(caption) > 280:
+            raise forms.ValidationError("Please shorten tweet")
+        return caption
 
     # def clean(self):
     #     from .models import UploadedImage

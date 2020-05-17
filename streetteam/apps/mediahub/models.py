@@ -52,3 +52,8 @@ class PostEvent(BaseModel):
     @classmethod
     def create_crop_image_event(cls, user, image, crop_box):
         return cls(name="crop_image", performed_by=user, image=image, data=crop_box)
+
+    @classmethod
+    def create_caption_image_event(cls, user, image, caption):
+        # TODO test this
+        return cls(name="add_caption", performed_by=user, image=image, data={"caption": caption})

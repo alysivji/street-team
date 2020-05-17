@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
 from .forms import CaptionImageForm, CropImageParametersForm, UploadImagesForm
-from .interactors import crop_image, handle_uploaded_file
+from .interactors import caption_image, crop_image, handle_uploaded_file
 from .models import UploadedImage
 
 
@@ -73,3 +73,14 @@ def crop_image_view(request, uuid):
     else:
         # go back to detail view
         return JsonResponse({"success": False})
+
+
+@login_required
+def add_image_caption_view(request):
+    form = CaptionImageForm(request.POST)
+    if form.is_valid():
+        image = get_object_or_404(UploadedImage, uuid=form.cleaned_data["uuid"])
+        caption_image(user=request.user, image=image, caption=form.cleaned_data["caption"])
+        return redirect("images-list")
+    else:
+        return redirect("images-list")
