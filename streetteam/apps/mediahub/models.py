@@ -11,6 +11,7 @@ from imagekit.processors import Anchor, Thumbnail, Transpose
 from .entities import MediaPost
 from .managers import PostEventManager
 from apps.twilio_integration.models import PhoneNumber
+from apps.events.models import Event
 from apps.users.models import User
 from common.models import BaseModel
 
@@ -46,6 +47,7 @@ class UploadedImage(BaseModel):
     image = models.ImageField(upload_to=get_uploaded_images_path, null=False)
     thumbnail = ImageSpecField(source="image", id="mediahub:thumbnail")
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, related_name="images", on_delete=models.PROTECT)
 
     @property
     def caption(self):
@@ -57,6 +59,11 @@ class UploadedImage(BaseModel):
 
 
 class PostEvent(BaseModel):
+    """Represents all events associated with Media posts created by users
+
+    TODO rename this to MediaPostEvent or ImagePostEvent
+    """
+
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     image = models.ForeignKey(UploadedImage, related_name="events", on_delete=models.CASCADE)
 
