@@ -5,38 +5,11 @@
 {% block title %}View Images{% endblock %}
 
 {% block top_loader %}
+<link rel="stylesheet" type="text/css" href="{% static 'mediahub/list.css' %}">
 {% endblock %}
 
 {% block container %}
 <h1>Uploaded Images</h1>
-
-<style>
-  .box {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    z-index: 0;
-  }
-
-  .box .text {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    color: white;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 2;
-    font-size: small;
-  }
-
-  img.submitted {
-    -webkit-filter: grayscale(85%);
-    filter: grayscale(85%);
-    opacity: .5;
-    z-index: 1;
-  }
-</style>
 
 <div class="modal" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -95,8 +68,8 @@
   <p>Upload a picture.</p>
   {% endfor %}
 </div>
+{% endblock %}
 
-<br>
+{% block bottom_loader %}
 <script src="{% static 'mediahub/tweet_length.js' %}"></script>
-
 {% endblock %}
