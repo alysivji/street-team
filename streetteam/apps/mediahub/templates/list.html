@@ -1,18 +1,77 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}View Images{% endblock %}
 
 {% block container %}
 <h1>Uploaded Images</h1>
 
-<!-- TODO show the photos here in small thumnails -->
+<style>
+  .box {
+    position: relative;
+    display: inline-block;
+    /* Make the width of box same as image */
+  }
+
+  .box .text {
+    position: absolute;
+    z-index: 999;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 40%;
+    /* Adjust this value to move the positioned div up and down */
+    background: rgba(0, 0, 0, 0.6);
+    font-family: Arial, sans-serif;
+    color: #fff;
+    width: 100%;
+    /* TODO use flexbox to align vertically */
+    /* Set the width of the positioned div */
+  }
+
+  img.submitted {
+    -webkit-filter: grayscale(85%);
+    filter: grayscale(85%);
+  }
+</style>
+
+<div class="modal" role="dialog" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Caption Photo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- TODO Add a form here -->
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <!-- on the left side we want a count -->
+        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="card-columns">
   {% for picture in object_list %}
   <div class="card" width=100>
-    <img class="card-img-top img-fluid" src="{{ picture.image.url }}" alt="Card image cap">
+    <div class="box">
+      <img class="card-img-top img-fluid {{ "" }}" src="{{ picture.image.url }}" alt="Card image cap">
+      <!-- <div class="text">
+        <p>Submitted</p>
+      </div> -->
+    </div>
     <div class="card-body text-center">
       <div class="button-group">
-        <button type="button" class="btn btn-primary btn-lg">Add Caption</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+          Caption</button>
+        <!-- TODO modify caption for submitted -->
       </div>
     </div>
   </div>
@@ -22,6 +81,13 @@
 </div>
 
 <br>
+
+<script>
+  $('#exampleModal').on('show.bs.modal', event => {
+    console.log(event);
+    console.log(event.relatedTarget);
+  });
+</script>
 
 <h3><a href="{% url 'images-upload' %}">Upload pictures</a></h3>
 {% endblock %}
