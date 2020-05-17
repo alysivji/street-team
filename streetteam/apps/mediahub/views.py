@@ -35,6 +35,12 @@ class UploadedImagesListView(ListView):
     paginate_by = 10  # if pagination is desired
     template_name = "list.html"
 
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["caption_image_form"] = CaptionImageForm()
+        context.update(kwargs)
+        return super().get_context_data(**context)
+
 
 class CropImageDetailView(DetailView):
 

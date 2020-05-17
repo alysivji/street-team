@@ -31,4 +31,21 @@ class CropImageParametersForm(forms.Form):
 
 
 class CaptionImageForm(forms.Form):
-    caption = forms.CharField(label="Caption image", widget=forms.Textarea(attrs={"id": "imageCaption"}))
+    caption = forms.CharField(
+        label="Caption image", widget=forms.Textarea(attrs={"id": "imageCaption", "placeholder": "", "rows": 5})
+    )
+    uuid = forms.CharField(widget=forms.TextInput(attrs={"id": "modalUuid", "hidden": True}))
+
+    def clean_caption(self):
+        # check to make sure tweet is less than 280 characters
+        pass
+
+    # def clean(self):
+    #     from .models import UploadedImage
+
+    #     cleaned_data = super().clean()
+    #     uuid = cleaned_data["uuid"]
+    #     image = UploadedImage.objects.filter(uuid=uuid)
+    #     if not image:
+    #         raise forms.ValidationError("Not a valid image")
+    #     return image

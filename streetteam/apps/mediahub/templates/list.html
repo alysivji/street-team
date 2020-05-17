@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block title %}View Images{% endblock %}
 
@@ -46,12 +47,18 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- TODO Add a form here -->
-        <p>Modal body text goes here.</p>
+        <form method="post" action="/image/caption">
+          {% csrf_token %}
+          {% bootstrap_form caption_image_form show_label=False %}
+          <!-- TODO validation on uuid, where does it show up? -->
+        </form>
       </div>
       <div class="modal-footer">
-        <!-- on the left side we want a count -->
-        <button type="button" class="btn btn-primary">Submit</button>
+        <div class="mr-auto">
+          <div id="captionCharacterCount" class="float-left">0</div>
+          <div id="captionCharacterCount" class="float-left">&nbsp;/ 280</div>
+        </div>
+        <button type="button" class="btn btn-primary" id="modalSubmit">Submit</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -62,21 +69,23 @@
   {% for picture in object_list %}
   <div class="card" width=100>
     <div class="box">
-      <img class="card-img-top img-fluid {{ "" }}" src="{{ picture.image.url }}" alt="Card image cap">
+      <!-- TODO add class for submitted -->
+      <img class="card-img-top img-fluid" src="{{ picture.image.url }}" alt="Card image cap">
       <!-- <div class="text">
         <p>Submitted</p>
       </div> -->
     </div>
     <div class="card-body text-center">
       <div class="button-group">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" st-image-uuid="{{ picture.uuid }}">Add
           Caption</button>
         <!-- TODO modify caption for submitted -->
       </div>
     </div>
   </div>
   {% empty %}
-  <p>No picture yet.</p>
+  <!-- TODO add a link that takes us to the upload page -->
+  <p>Upload a picture.</p>
   {% endfor %}
 </div>
 
@@ -84,8 +93,8 @@
 
 <script>
   $('#exampleModal').on('show.bs.modal', event => {
-    console.log(event);
-    console.log(event.relatedTarget);
+    const uuid = event.relatedTarget.getAttribute("st-image-uuid");
+    document.getElementById("modalUuid").value = uuid;
   });
 </script>
 
