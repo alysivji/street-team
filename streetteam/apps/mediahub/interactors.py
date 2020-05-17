@@ -13,3 +13,8 @@ def handle_uploaded_file(user, info):
 def crop_image(user, image, crop_box: CropBox):
     crop_event = PostEvent.create_crop_image_event(user, image=image, crop_box=crop_box._asdict())
     crop_event.save()
+
+
+def caption_image(user, image, caption):
+    caption_event = PostEvent.create_caption_image_event(user, image=image, caption=caption)
+    caption_event.save()

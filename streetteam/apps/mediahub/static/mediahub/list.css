@@ -1,0 +1,24 @@
+.box {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+.box .text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+img.submitted {
+  -webkit-filter: grayscale(85%);
+  filter: grayscale(85%);
+  opacity: .5;
+  z-index: 1;
+}

@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 
-from .forms import UploadImagesForm, CropImageParametersForm
-from .interactors import crop_image, handle_uploaded_file
+from .forms import CaptionImageForm, CropImageParametersForm, UploadImagesForm
+from .interactors import caption_image, crop_image, handle_uploaded_file
 from .models import UploadedImage
 
 
@@ -22,7 +22,8 @@ def upload_file(request):
             else:
                 print("did not process")
                 num_not_valid += 1
-        return JsonResponse({"num_processed": num_processed, "num_not_valid": num_not_valid})
+        # TODO add logger
+        return redirect("images-list")
     else:
         form = UploadImagesForm()
     return render(request, "form.html", {"form": form})
@@ -34,12 +35,31 @@ class UploadedImagesListView(ListView):
     paginate_by = 10  # if pagination is desired
     template_name = "list.html"
 
+    def get_context_data(self, **kwargs):
+        context = {}
+        context["caption_image_form"] = CaptionImageForm()
+        context.update(kwargs)
+        return super().get_context_data(**context)
 
-class UploadedImagesDetailView(DetailView):
+
+class CropImageDetailView(DetailView):
 
     model = UploadedImage
     template_name = "crop.html"
-    # TODO use uuid
+    pk_url_kwarg = "uuid"
+
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get(self.pk_url_kwarg)
+        return get_object_or_404(self.model, uuid=pk)
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context["public_url"] = self.object.image.url
+            context["uuid"] = self.object.uuid
+            context["caption_image_form"] = CaptionImageForm()
+        context.update(kwargs)
+        return super().get_context_data(**context)
 
 
 @login_required
@@ -53,3 +73,14 @@ def crop_image_view(request, uuid):
     else:
         # go back to detail view
         return JsonResponse({"success": False})
+
+
+@login_required
+def add_image_caption_view(request):
+    form = CaptionImageForm(request.POST)
+    if form.is_valid():
+        image = get_object_or_404(UploadedImage, uuid=form.cleaned_data["uuid"])
+        caption_image(user=request.user, image=image, caption=form.cleaned_data["caption"])
+        return redirect("images-list")
+    else:
+        return redirect("images-list")

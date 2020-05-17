@@ -1,13 +1,17 @@
+import logging
 import os
 import uuid
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 
+from .entities import MediaPost
 from .managers import PostEventManager
 from apps.twilio_integration.models import PhoneNumber
 from apps.users.models import User
 from common.models import BaseModel
+
+logger = logging.getLogger(__name__)
 
 
 class MediaResource(BaseModel):
@@ -29,6 +33,14 @@ class UploadedImage(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     image = models.ImageField(upload_to=get_uploaded_images_path, null=False)
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
+
+    @property
+    def caption(self):
+        # TODO test
+        events = self.events.get_log()
+        caption = MediaPost(events).caption
+        logger.info(caption)
+        return caption
 
 
 class PostEvent(BaseModel):
@@ -52,3 +64,8 @@ class PostEvent(BaseModel):
     @classmethod
     def create_crop_image_event(cls, user, image, crop_box):
         return cls(name="crop_image", performed_by=user, image=image, data=crop_box)
+
+    @classmethod
+    def create_caption_image_event(cls, user, image, caption):
+        # TODO test this
+        return cls(name="add_caption", performed_by=user, image=image, data={"caption": caption})

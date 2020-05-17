@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY") if IN_PRODUCTION else "zcj4**&#_&3cer3q)wf2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if IN_PRODUCTION else True
 
-ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io"]
+ALLOWED_HOSTS = ["0.0.0.0", ".sivji.com"] if IN_PRODUCTION else ["0.0.0.0", ".ngrok.io", "192.168.1.3"]
 APPEND_SLASH = True
 
 # set in traefik
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
+    "bootstrap4",  # bootstrap integration with Django (used for forms)
     # internal
     "apps.debug",
     "apps.mediahub",
@@ -147,12 +148,14 @@ AWS_ACCESS_KEY_ID = "foo"  # env var
 AWS_SECRET_ACCESS_KEY = "bar"  # env var
 AWS_STORAGE_BUCKET_NAME = "streetteam"
 AWS_S3_CUSTOM_DOMAIN = "localhost:4566/streetteam"  # env var
+# ^^ Change this to machine's IP address to test on mobile
 AWS_DEFAULT_ACL = "public-read"
 AWS_S3_SECURE_URLS = True if IN_PRODUCTION else False
 
 STATIC_URL = "http://localhost:4566/"  # env var
 MEDIA_URL = "http://localhost:4566/"  # env var
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Custom Settings
 TEST_RUNNER = "common.runner.PytestTestRunner"

@@ -1,28 +1,47 @@
+{% extends "base.html" %}
 {% load static %}
 
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
-  </head>
+{% block title %}Crop Images{% endblock %}
 
-  <body>
-    <div id="main">
-      <!-- cross origin? -->
-      <div id="cropImage">Crop Image</div>
-      <img id="image" width=400px height=400px src="http://localhost:4566/streetteam/chicago-python/uploaded-images/e9a02631-463a-42b6-b60a-76e969b691ae.png">
+{% block top_loader %}
+<link rel="stylesheet" type="text/css" href="{% static 'mediahub/index.css' %}">
+{% endblock %}
 
-    <!-- TODO make this dynamic -->
-    <form method="post" action="/images/3/crop">
-      {% csrf_token %}
+{% block container %}
+<div class="row">
+  <div class="col">
+    <!-- cross origin? -->
+    <div id="cropImage">Crop Image</div>
+    <img width=400px height=400px src="{{ public_url }}">
+  </div>
+</div>
 
-      <input type="hidden" id="cropLeft" name="cropLeft">
-      <input type="hidden" id="cropTop" name="cropTop">
-      <input type="hidden" id="cropWidth" name="cropWidth">
-      <input type="hidden" id="cropHeight" name="cropHeight">
-
-      <input type="submit" value="Submit">
-    </form>
+<div class="row">
+  <div class="col">
+    <div id="tweet">
+      <form method="post" action="/image/{{ uuid }}/caption">
+        {% csrf_token %}
+        {{ caption_image_form }}
+        <div id="captionCharacterCount">0 / 280</div>
+      </form>
     </div>
-    <script src="{% static 'mediahub/index.js' %}"></script>
-  </body>
-</html>
+  </div>
+</div>
+
+<div class="row">
+  <!-- TODO make this dynamic -->
+  <form method="post" action="/images/{{ uuid }}/crop">
+    <input type="submit" value="Submit for Review">
+    <input type="hidden" id="cropLeft" name="cropLeft" value=0>
+    <input type="hidden" id="cropTop" name="cropTop" value=0>
+    <input type="hidden" id="cropWidth" name="cropWidth" value={{ img_width }}>
+    <input type="hidden" id="cropHeight" name="cropHeight" value={{ img_height }}>
+    <!-- <input type="submit" value="Submit"> -->
+  </form>
+</div>
+
+{% endblock %}
+
+{% block bottom_loader %}
+<script src="{% static 'mediahub/index.js' %}"></script>
+{% endblock %}
