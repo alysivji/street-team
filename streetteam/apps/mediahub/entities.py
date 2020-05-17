@@ -4,6 +4,7 @@ from .forms import CropBox
 
 class MediaPost:
     def __init__(self, events):
+        self.caption = ""
         for event in events:
             self.apply(event)
 

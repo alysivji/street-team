@@ -71,10 +71,13 @@
   <div class="card" width=100>
     <div class="box">
       <!-- TODO add class for submitted -->
-      <img class="card-img-top img-fluid" src="{{ picture.image.url }}" alt="Card image cap">
-      <!-- <div class="text">
+      <img class="card-img-top img-fluid {% if picture.caption != '' %}submitted{% endif %}"
+        src="{{ picture.image.url }}" alt="Card image cap">
+      {% if picture.caption != '' %}
+      <div class="text">
         <p>Submitted</p>
-      </div> -->
+      </div>
+      {% endif %}
     </div>
     <div class="card-body text-center">
       <div class="button-group">
