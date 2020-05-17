@@ -47,7 +47,7 @@ class UploadedImage(BaseModel):
     image = models.ImageField(upload_to=get_uploaded_images_path, null=False)
     thumbnail = ImageSpecField(source="image", id="mediahub:thumbnail")
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, related_name="images", on_delete=models.PROTECT)
+    event = models.ForeignKey(Event, related_name="images", on_delete=models.PROTECT, null=False)
 
     @property
     def caption(self):
