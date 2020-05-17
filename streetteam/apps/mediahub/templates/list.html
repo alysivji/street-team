@@ -7,6 +7,9 @@
 {% block container %}
 <h1>Uploaded Images</h1>
 
+{% block top_loader %}
+{% endblock %}
+
 <style>
   .box {
     position: relative;
@@ -24,7 +27,7 @@
     top: 40%;
     /* Adjust this value to move the positioned div up and down */
     background: rgba(0, 0, 0, 0.6);
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
     color: #fff;
     width: 100%;
     /* TODO use flexbox to align vertically */
@@ -81,10 +84,15 @@
     </div>
     <div class="card-body text-center">
       <div class="button-group">
+        {% if picture.caption == '' %}
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
           st-image-uuid="{{ picture.uuid }}">Add
           Caption</button>
-        <!-- TODO modify caption for submitted -->
+        {% else %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+          st-image-uuid="{{ picture.uuid }}" st-image-caption="{{ picture.caption }}">Modify
+          Caption</button>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -96,12 +104,25 @@
 
 <br>
 
+<h3><a href="{% url 'images-upload' %}">Upload pictures</a></h3>
+{% endblock %}
+
+{% block bottom_loader %}
 <script>
   $('#exampleModal').on('show.bs.modal', event => {
     const uuid = event.relatedTarget.getAttribute("st-image-uuid");
     document.getElementById("modalUuid").value = uuid;
-  });
-</script>
 
-<h3><a href="{% url 'images-upload' %}">Upload pictures</a></h3>
+    const caption = event.relatedTarget.getAttribute("st-image-caption");
+    document.getElementById("imageCaption").value = caption;
+  });
+
+  const characterCount = document.getElementById('imageCaption');
+  const characterDisplay = document.getElementById('captionCharacterCount');
+  characterCount.oninput = event => {
+    const entered_text = event.srcElement.value;
+    const result = twitter.parseTweet(entered_text);
+    captionCharacterCount.innerText = result.weightedLength;
+  }
+</script>
 {% endblock %}
