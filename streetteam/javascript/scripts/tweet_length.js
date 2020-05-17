@@ -26,7 +26,4 @@ $('#exampleModal').on('show.bs.modal', event => {
   captionElement.value = caption;
   const result = twitter.parseTweet(caption);
   characterCountElement.innerText = result.weightedLength;
-
-  // Is there a way to give the textbox focus when the modal loads?
-  // TODO show alert when too many characters are submitted
 });

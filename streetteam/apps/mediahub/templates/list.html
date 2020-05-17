@@ -4,39 +4,37 @@
 
 {% block title %}View Images{% endblock %}
 
-{% block container %}
-<h1>Uploaded Images</h1>
-
 {% block top_loader %}
 {% endblock %}
+
+{% block container %}
+<h1>Uploaded Images</h1>
 
 <style>
   .box {
     position: relative;
-    display: inline-block;
-    /* Make the width of box same as image */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
   }
 
   .box .text {
     position: absolute;
-    z-index: 999;
-    margin: 0 auto;
-    left: 0;
-    right: 0;
-    text-align: center;
-    top: 40%;
-    /* Adjust this value to move the positioned div up and down */
-    background: rgba(0, 0, 0, 0.6);
-    /* font-family: Arial, sans-serif; */
-    color: #fff;
     width: 100%;
-    /* TODO use flexbox to align vertically */
-    /* Set the width of the positioned div */
+    text-align: center;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    font-size: small;
   }
 
   img.submitted {
     -webkit-filter: grayscale(85%);
     filter: grayscale(85%);
+    opacity: .5;
+    z-index: 1;
   }
 </style>
 
@@ -49,8 +47,8 @@
         <div class="modal-body">
           {% bootstrap_form caption_image_form show_label=False %}
           <div class="d-flex justify-content-end">
-            <div id="captionCharacterCount" class="float-left">0</div>
-            <div class="float-left">&nbsp;/ 280</div>
+            <div id="captionCharacterCount">0</div>
+            <div>&nbsp;/ 280</div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
@@ -70,13 +68,10 @@
   {% for picture in object_list %}
   <div class="card" width=100>
     <div class="box">
-      <!-- TODO add class for submitted -->
       <img class="card-img-top img-fluid {% if picture.caption != '' %}submitted{% endif %}"
         src="{{ picture.image.url }}" alt="Card image cap">
       {% if picture.caption != '' %}
-      <div class="text">
-        <p>Submitted</p>
-      </div>
+      <div class="text">Submitted</div>
       {% endif %}
     </div>
     <div class="card-body text-center">
@@ -89,8 +84,9 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
           st-image-uuid="{{ picture.uuid }}" st-image-caption="{{ picture.caption }}">Modify
           Caption</button>
-          <!-- TODO modify should  -->
         {% endif %}
+  <!-- Is there a way to give the textbox focus when the modal loads? -->
+  <!-- TODO show alert when too many characters are submitted -->
       </div>
     </div>
   </div>
@@ -101,10 +97,6 @@
 </div>
 
 <br>
-
-<h3><a href="{% url 'images-upload' %}">Upload pictures</a></h3>
-{% endblock %}
-
-{% block bottom_loader %}
 <script src="{% static 'mediahub/tweet_length.js' %}"></script>
+
 {% endblock %}
