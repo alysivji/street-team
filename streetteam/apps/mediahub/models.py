@@ -4,6 +4,9 @@ import uuid
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from imagekit import ImageSpec, register
+from imagekit.models import ImageSpecField
+from imagekit.processors import Anchor, Thumbnail, Transpose
 
 from .entities import MediaPost
 from .managers import PostEventManager
@@ -22,6 +25,15 @@ class MediaResource(BaseModel):
     phone_number = models.ForeignKey(PhoneNumber, related_name="media_resources", on_delete=models.CASCADE)
 
 
+class ThumbnailSpec(ImageSpec):
+    processors = [Transpose(), Thumbnail(height=500, width=500, anchor=Anchor.CENTER, crop=True, upscale=False)]
+    format = "JPEG"
+    options = {"quality": 60}
+
+
+register.generator("mediahub:thumbnail", ThumbnailSpec)
+
+
 def get_uploaded_images_path(self, filename):
     extension = filename.split(".")[-1]
     filename = f"{uuid.uuid4()}.{extension}"
@@ -32,6 +44,7 @@ def get_uploaded_images_path(self, filename):
 class UploadedImage(BaseModel):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     image = models.ImageField(upload_to=get_uploaded_images_path, null=False)
+    thumbnail = ImageSpecField(source="image", id="mediahub:thumbnail")
     uploaded_by = models.ForeignKey(User, related_name="uploaded_images", on_delete=models.CASCADE)
 
     @property
