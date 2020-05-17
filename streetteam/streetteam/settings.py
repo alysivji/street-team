@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "apps.twilio_integration",
     "apps.users",
     "apps.website",
+    "apps.events",
 ]
 
 MIDDLEWARE = [
