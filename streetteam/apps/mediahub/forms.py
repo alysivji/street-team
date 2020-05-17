@@ -33,9 +33,7 @@ class CropImageParametersForm(forms.Form):
 
 
 class CaptionImageForm(forms.Form):
-    caption = forms.CharField(
-        label="Caption image", widget=forms.Textarea(attrs={"id": "imageCaption", "placeholder": "", "rows": 5})
-    )
+    caption = forms.CharField(label="What's happening?", widget=forms.Textarea(attrs={"id": "imageCaption", "rows": 5}))
     uuid = forms.CharField(widget=forms.TextInput(attrs={"id": "modalUuid", "hidden": True}))
 
     def clean_caption(self):

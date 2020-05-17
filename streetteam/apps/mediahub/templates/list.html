@@ -50,7 +50,7 @@
           {% bootstrap_form caption_image_form show_label=False %}
           <div class="d-flex justify-content-end">
             <div id="captionCharacterCount" class="float-left">0</div>
-            <div id="captionCharacterCount" class="float-left">&nbsp;/ 280</div>
+            <div class="float-left">&nbsp;/ 280</div>
           </div>
         </div>
         <div class="modal-footer justify-content-between">
@@ -89,6 +89,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
           st-image-uuid="{{ picture.uuid }}" st-image-caption="{{ picture.caption }}">Modify
           Caption</button>
+          <!-- TODO modify should  -->
         {% endif %}
       </div>
     </div>
@@ -105,21 +106,5 @@
 {% endblock %}
 
 {% block bottom_loader %}
-<script>
-  $('#exampleModal').on('show.bs.modal', event => {
-    const uuid = event.relatedTarget.getAttribute("st-image-uuid");
-    document.getElementById("modalUuid").value = uuid;
-
-    const caption = event.relatedTarget.getAttribute("st-image-caption");
-    document.getElementById("imageCaption").value = caption;
-  });
-
-  const characterCount = document.getElementById('imageCaption');
-  const characterDisplay = document.getElementById('captionCharacterCount');
-  characterCount.oninput = event => {
-    const entered_text = event.srcElement.value;
-    const result = twitter.parseTweet(entered_text);
-    captionCharacterCount.innerText = result.weightedLength;
-  }
-</script>
+<script src="{% static 'mediahub/tweet_length.js' %}"></script>
 {% endblock %}

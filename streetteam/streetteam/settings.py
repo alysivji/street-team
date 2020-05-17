@@ -147,8 +147,8 @@ AWS_S3_ENDPOINT_URL = "http://localstack:4566"  # env var
 AWS_ACCESS_KEY_ID = "foo"  # env var
 AWS_SECRET_ACCESS_KEY = "bar"  # env var
 AWS_STORAGE_BUCKET_NAME = "streetteam"
-AWS_S3_CUSTOM_DOMAIN = "192.168.1.3:4566/streetteam"  # env var
-# ^^ CHANGE THIS TO GET IT WORKING ON PHONE
+AWS_S3_CUSTOM_DOMAIN = "localhost:4566/streetteam"  # env var
+# ^^ Change this to machine's IP address to test on mobile
 AWS_DEFAULT_ACL = "public-read"
 AWS_S3_SECURE_URLS = True if IN_PRODUCTION else False
 
