@@ -9,7 +9,7 @@ from .interactors import caption_image, crop_image, handle_uploaded_file
 from .models import UploadedImage
 
 
-@login_required
+# @login_required
 def upload_file(request):
     num_processed = num_not_valid = 0
     if request.method == "POST":
@@ -34,6 +34,7 @@ class UploadedImagesListView(ListView):
     model = UploadedImage
     paginate_by = 10  # if pagination is desired
     template_name = "list.html"
+    # permissions
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -47,6 +48,7 @@ class CropImageDetailView(DetailView):
     model = UploadedImage
     template_name = "crop.html"
     pk_url_kwarg = "uuid"
+    # permissions
 
     def get_object(self, queryset=None):
         pk = self.kwargs.get(self.pk_url_kwarg)

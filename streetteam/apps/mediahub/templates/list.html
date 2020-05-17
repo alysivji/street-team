@@ -42,7 +42,7 @@
   <div class="card" width=100>
     <div class="box">
       <img class="card-img-top img-fluid {% if picture.caption != '' %}submitted{% endif %}"
-        src="{{ picture.image.url }}" alt="Card image cap">
+        src="{{ picture.thumbnail.url }}" alt="Card image cap">
       {% if picture.caption != '' %}
       <div class="text">Submitted</div>
       {% endif %}
