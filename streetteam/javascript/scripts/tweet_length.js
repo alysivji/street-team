@@ -26,4 +26,12 @@ $('#exampleModal').on('show.bs.modal', event => {
   captionElement.value = caption;
   const result = twitter.parseTweet(caption);
   characterCountElement.innerText = result.weightedLength;
+
+  if (result.valid) {
+    $('#modalSubmit').prop('disabled', false);
+    characterCountElement.classList.remove("text-danger");
+  } else {
+    $('#modalSubmit').prop('disabled', true);
+    characterCountElement.classList.add("text-danger");
+  }
 });
