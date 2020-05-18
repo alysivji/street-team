@@ -6,13 +6,48 @@
 {% block container %}
 <h1>Account Details</h1>
 
-<p>
-  <strong>Email</strong>
-  {{ user.email }}
-</p>
+<div>
+  <h3>My Teams</h3>
+  <ul>
+    {% for team in teams %}
+    <li>{{ team.name }}</li>
+    {% empty %}
+    <li>Create a team!</li>
+    {% endfor %}
+  </ul>
+</div>
 
-<p>
-  <strong>Phone Number</strong>
-  {{ user.email }}
-</p>
+<div>
+  <h3>My Events</h3>
+  <ul>
+    {% for team in teams %}
+    <li>{{ team.name }}</li>
+    {% empty %}
+    <li>Create a team!</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div>
+  <h3>My Submissions</h3>
+  <ul>
+    {% for team in teams %}
+    <li>{{ team.name }}</li>
+    {% empty %}
+    <li>Create a team!</li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div>
+  <h3>My Statistics</h3>
+  <ul>
+    {% for team in teams %}
+    <li>{{ team.name }}</li>
+    {% empty %}
+    <li>Create a team!</li>
+    {% endfor %}
+  </ul>
+</div>
+
 {% endblock %}

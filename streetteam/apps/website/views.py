@@ -14,7 +14,12 @@ class AccountView(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         user = request.user
-        context = {"user": user}
+        context = {
+            "user": user,
+            "teams": user.teams.all(),
+            "events": user.events.all(),
+            "submissions": user.uploaded_images.all(),
+        }
         return render(request, "user_details.html", context)
 
 
