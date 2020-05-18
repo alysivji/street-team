@@ -5,11 +5,15 @@ from django.views.generic.edit import CreateView
 
 from .interactors import add_user_team_relationship
 from .models import Team
+from common.auth import AdminStaffRequiredMixin
 
 
-class TeamCreate(CreateView):
+class TeamCreate(AdminStaffRequiredMixin, CreateView):
     model = Team
     fields = ["name"]
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object = form.save()
