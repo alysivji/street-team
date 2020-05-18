@@ -29,5 +29,5 @@ class TeamDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["now"] = timezone.now()
+        context = {"users": self.object.memberships.get_users(), "now": timezone.now()}
         return context

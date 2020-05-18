@@ -21,9 +21,11 @@ class Team(BaseModel):
 
 
 class UserTeam(BaseModel):
+    """UserTeamMemberships"""
+
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, related_name="memberships", on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, related_name="members", on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, related_name="memberships", on_delete=models.CASCADE)
     # position should be an enum: Organizer, Lead, Member
 
     objects = UserTeamManager()

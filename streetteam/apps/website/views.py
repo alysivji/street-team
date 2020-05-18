@@ -20,7 +20,6 @@ class AccountView(View):
             "events": user.events.all(),
             "submissions": user.uploaded_images.all(),
         }
-        # TODO use a manager to get teams
         return render(request, "user_details.html", context)
 
 
