@@ -12,8 +12,7 @@ class Event(BaseModel):
 
     title = models.CharField(null=False, max_length=255)
     description = models.TextField(blank=True, null=False)
-    happened_at = models.DateTimeField(null=False)
-    # TODO make this happens_on
+    happens_on = models.DateTimeField(null=False)
 
     # TODO foreign key with teams
     # TODO state machine for event_status field

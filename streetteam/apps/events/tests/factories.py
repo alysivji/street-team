@@ -13,5 +13,5 @@ class EventFactory(factory.DjangoModelFactory):
     description = ""
 
     @factory.lazy_attribute
-    def happened_at(self):
+    def happens_on(self):
         return datetime.datetime.now() + datetime.timedelta(weeks=1)
