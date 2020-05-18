@@ -5,9 +5,7 @@ from common.models import BaseModel
 logger = logging.getLogger(__name__)
 
 
-class Event(BaseModel):
-    """Rename this to TeamEvent"""
-
+class TeamEvent(BaseModel):
     id = models.AutoField(primary_key=True)
 
     title = models.CharField(null=False, max_length=255)
