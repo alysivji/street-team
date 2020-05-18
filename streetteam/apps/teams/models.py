@@ -2,6 +2,7 @@ import logging
 import uuid
 
 from django.db import models
+from django.urls import reverse
 
 from apps.users.models import User
 from common.models import BaseModel
@@ -13,6 +14,9 @@ class Team(BaseModel):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     name = models.CharField(null=False, max_length=255)
+
+    def get_absolute_url(self):
+        return reverse("team-detail", args=[str(self.uuid)])
 
 
 class UserTeam(BaseModel):
