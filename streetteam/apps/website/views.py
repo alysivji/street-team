@@ -16,7 +16,7 @@ class AccountView(View):
         user = request.user
         context = {
             "user": user,
-            "teams": user.teams.all(),
+            "teams": user.memberships.get_teams(),
             "events": user.events.all(),
             "submissions": user.uploaded_images.all(),
         }
