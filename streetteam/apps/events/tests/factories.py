@@ -2,12 +2,12 @@ import datetime
 
 import factory
 
-from ..models import Event
+from ..models import TeamEvent
 
 
-class EventFactory(factory.DjangoModelFactory):
+class TeamEventFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Event
+        model = TeamEvent
 
     title = "Chicago Python Presents"
     description = ""
