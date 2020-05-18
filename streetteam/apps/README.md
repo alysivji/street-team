@@ -7,6 +7,7 @@
 |debug|Tools to help development and debug|
 |events|Event management tools|
 |mediahub|Collect media sent to site in a central location; display it to the world|
+|teams|Tools related to team management|
 |twilio_integration|Integrate with twilio webhook to process messages received|
 |users|Custom Django User class|
 |website|Contains all logic related to the website view|

@@ -53,11 +53,12 @@ INSTALLED_APPS = [
     "imagekit",  # image processing utilities
     # internal
     "apps.debug",
+    "apps.events",
     "apps.mediahub",
+    "apps.teams",
     "apps.twilio_integration",
     "apps.users",
     "apps.website",
-    "apps.events",
 ]
 
 MIDDLEWARE = [
