@@ -49,13 +49,13 @@ def team_was_just_created(instance):
 def can_perform_group_modifications(instance, user):
     conditions = {"user": user, "team": instance.team}
     membership = UserTeam.objects.filter(**conditions).first()
-    return membership.position in [UserTeam.PositionState.ORGANIZER, UserTeam.PositionState.ADMIN]
+    return membership.position_state in [UserTeam.PositionState.ORGANIZER, UserTeam.PositionState.ADMIN]
 
 
 def is_admin(instance, user):
     conditions = {"user": user, "team": instance.team}
     membership = UserTeam.objects.filter(**conditions).first()
-    return membership.position == UserTeam.PositionState.ADMIN
+    return membership.position_state == UserTeam.PositionState.ADMIN
 
 
 class UserTeam(BaseModel):
