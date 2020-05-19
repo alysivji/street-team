@@ -3,6 +3,7 @@ import logging
 import uuid
 
 from django_fsm import FSMField, transition
+from django_fsm_log.decorators import fsm_log_by
 from django.db import models
 from django.urls import reverse
 
@@ -19,7 +20,7 @@ class Team(BaseModel):
     name = models.CharField(null=False, max_length=255)
 
     def get_absolute_url(self):
-        return reverse("team-detail", args=[str(self.uuid)])
+        return reverse("teams:detail", args=[str(self.uuid)])
 
 
 ##############################################
@@ -72,12 +73,13 @@ class UserTeam(BaseModel):
 
     position = FSMField(default=PositionState.INITIAL_STATE, choices=PositionState.CHOICES)
 
+    @fsm_log_by
     @transition(
         field=position,
         source=PositionState.MEMBER,
         target=PositionState.ADMIN,
         conditions=[user_is_only_member_of_team, team_was_just_created],
     )
-    def make_user_admin_of_newly_created_group(self):
+    def make_user_admin_of_newly_created_group(self, by):
         # TODO test audit log by
         pass

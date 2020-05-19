@@ -5,7 +5,7 @@ def make_user_admin_of_team(user, team):
     user_team_membership = UserTeam(user=user, team=team)
     user_team_membership.save()
 
-    user_team_membership.make_user_admin_of_newly_created_group()
+    user_team_membership.make_user_admin_of_newly_created_group(by=user)
     # except TransitionNotAllowed:
     # pass
     # TODO log
