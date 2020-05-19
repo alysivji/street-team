@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from .interactors import add_user_team_relationship
+from .interactors import make_user_admin_of_team
 from .models import Team
 from common.auth import AdminStaffRequiredMixin
 
@@ -17,7 +17,7 @@ class TeamCreate(AdminStaffRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        add_user_team_relationship(self.request.user, team=self.object)
+        make_user_admin_of_team(self.request.user, team=self.object)
         return HttpResponseRedirect(self.get_success_url())
 
 
