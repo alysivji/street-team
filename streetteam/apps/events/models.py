@@ -21,3 +21,4 @@ class TeamEvent(BaseModel):
     # TODO state machine for event_status field
     # Active
     # Inactive
+    # Deleted (cannot have passed)

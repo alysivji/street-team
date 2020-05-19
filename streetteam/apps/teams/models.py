@@ -61,10 +61,10 @@ class UserTeam(BaseModel):
     class PositionState:
         """Has phone_number been linked to account"""
 
-        MEMBER = "community_member"
-        TEAM_LEAD = "team_lead"
-        ORGANIZER = "organizer"
-        ADMIN = "admin"
+        MEMBER = "community_member"  # can send pictures and add captions for own images
+        TEAM_LEAD = "team_lead"  # can crop pictures and modify captions and approve for posting
+        ORGANIZER = "organizer"  # create events and invite members
+        ADMIN = "admin"  # can change group settings
 
         CHOICES = [(MEMBER,) * 2, (TEAM_LEAD,) * 2, (ORGANIZER,) * 2, (ADMIN,) * 2]
 
