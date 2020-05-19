@@ -34,8 +34,8 @@ def user_is_only_member_of_team(instance):
     return False
 
 
-def user_has_position_member(instance):
-    if instance.position == UserTeam.PositionState.MEMBER:
+def user_has_position_state_requested(instance):
+    if instance.position_state == UserTeam.PositionState.REQUESTED:
         return True
     return False
 
@@ -55,31 +55,39 @@ class UserTeam(BaseModel):
 
     objects = UserTeamManager()
 
-    # TODO state machine for invitation status: requested, accepted, rejected
-    # probably not the right place, but wanted to make a note
-
-    # state machine for position
     class PositionState:
-        """Has phone_number been linked to account"""
+        """Position user holds in group"""
 
+        REQUESTED = "request_to_join"  # user has requested to join team
+        REJECTED = "request_rejected"  # user request to join team has been rejected
+        WITHDREW = "withdrew_from_team"  # user has withdrawn from team, removed request
+        RELEASED = "released_by_team"  # team admin has released user from team
         MEMBER = "community_member"  # can send pictures and add captions for own images
         TEAM_LEAD = "team_lead"  # can crop pictures and modify captions and approve for posting
         ORGANIZER = "organizer"  # create events and invite members
         ADMIN = "admin"  # can change group settings
 
-        CHOICES = [(MEMBER,) * 2, (TEAM_LEAD,) * 2, (ORGANIZER,) * 2, (ADMIN,) * 2]
+        CHOICES = [
+            (REQUESTED,) * 2,
+            (REJECTED,) * 2,
+            (WITHDREW,) * 2,
+            (RELEASED,) * 2,
+            (MEMBER,) * 2,
+            (TEAM_LEAD,) * 2,
+            (ORGANIZER,) * 2,
+            (ADMIN,) * 2,
+        ]
 
         INITIAL_STATE = MEMBER
 
-    position = FSMField(default=PositionState.INITIAL_STATE, choices=PositionState.CHOICES)
+    position_state = FSMField(default=PositionState.REQUESTED, choices=PositionState.CHOICES)
 
     @fsm_log_by
     @transition(
-        field=position,
-        source=PositionState.MEMBER,
+        field=position_state,
+        source=PositionState.REQUESTED,
         target=PositionState.ADMIN,
-        conditions=[user_is_only_member_of_team, team_was_just_created],
+        conditions=[user_is_only_member_of_team, team_was_just_created, user_has_position_state_requested],
     )
     def make_user_admin_of_newly_created_group(self, by):
-        # TODO test audit log by
         pass

@@ -1,6 +1,6 @@
 import pytest
 
-from ..models import UserTeam, user_is_only_member_of_team, user_has_position_member
+from ..models import UserTeam, user_is_only_member_of_team, user_has_position_state_requested
 from .factories import UserTeamMembershipFactory
 from apps.users.tests.factories import UserFactory
 
@@ -23,17 +23,21 @@ def test_user_is_only_member_of_team__group_has_two_members():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "position, expected_result",
+    "position_state, expected_result",
     [
-        (UserTeam.PositionState.MEMBER, True),
+        (UserTeam.PositionState.REQUESTED, True),
+        (UserTeam.PositionState.REJECTED, False),
+        (UserTeam.PositionState.WITHDREW, False),
+        (UserTeam.PositionState.RELEASED, False),
+        (UserTeam.PositionState.MEMBER, False),
         (UserTeam.PositionState.TEAM_LEAD, False),
         (UserTeam.PositionState.ORGANIZER, False),
         (UserTeam.PositionState.ADMIN, False),
     ],
 )
-def test_user_has_position_member(position, expected_result):
-    member = UserTeamMembershipFactory(user=UserFactory(), position=position)
-    assert user_has_position_member(member) is expected_result
+def test_user_has_position_member(position_state, expected_result):
+    member = UserTeamMembershipFactory(user=UserFactory(), position_state=position_state)
+    assert user_has_position_state_requested(member) is expected_result
 
 
 @pytest.mark.django_db

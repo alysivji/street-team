@@ -17,4 +17,4 @@ class UserTeamMembershipFactory(factory.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     team = factory.SubFactory(TeamFactory)
-    position = UserTeam.PositionState.MEMBER
+    position_state = UserTeam.PositionState.REQUESTED
