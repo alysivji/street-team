@@ -3,6 +3,7 @@ import datetime
 import factory
 
 from ..models import TeamEvent
+from apps.teams.tests.factories import TeamFactory
 
 
 class TeamEventFactory(factory.DjangoModelFactory):
@@ -11,6 +12,8 @@ class TeamEventFactory(factory.DjangoModelFactory):
 
     title = "Chicago Python Presents"
     description = ""
+
+    team = factory.SubFactory(TeamFactory)
 
     @factory.lazy_attribute
     def happens_on(self):
