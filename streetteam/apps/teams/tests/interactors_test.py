@@ -17,7 +17,7 @@ def test_make_user_admin_of_team__happy_path():
     membership = UserTeam.objects.first()
     assert membership.team == team
     assert membership.user == user
-    assert membership.position_state == UserTeam.PositionState.ADMIN
+    assert membership.position == UserTeam.PositionState.ADMIN
 
 
 @pytest.mark.django_db

@@ -23,7 +23,7 @@ def test_user_is_only_member_of_team__group_has_two_members():
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "position_state, expected_result",
+    "position, expected_result",
     [
         (UserTeam.PositionState.MEMBER, True),
         (UserTeam.PositionState.TEAM_LEAD, False),
@@ -31,8 +31,8 @@ def test_user_is_only_member_of_team__group_has_two_members():
         (UserTeam.PositionState.ADMIN, False),
     ],
 )
-def test_user_has_position_member(position_state, expected_result):
-    member = UserTeamMembershipFactory(user=UserFactory(), position_state=position_state)
+def test_user_has_position_member(position, expected_result):
+    member = UserTeamMembershipFactory(user=UserFactory(), position=position)
     assert user_has_position_member(member) is expected_result
 
 

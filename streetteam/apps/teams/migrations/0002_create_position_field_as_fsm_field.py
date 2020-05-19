@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="userteam",
-            name="position_state",
+            name="position",
             field=django_fsm.FSMField(
                 choices=[
                     ("community_member", "community_member"),

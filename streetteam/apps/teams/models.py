@@ -34,7 +34,7 @@ def user_is_only_member_of_team(instance):
 
 
 def user_has_position_member(instance):
-    if instance.position_state == UserTeam.PositionState.MEMBER:
+    if instance.position == UserTeam.PositionState.MEMBER:
         return True
     return False
 
@@ -70,10 +70,10 @@ class UserTeam(BaseModel):
 
         INITIAL_STATE = MEMBER
 
-    position_state = FSMField(default=PositionState.INITIAL_STATE, choices=PositionState.CHOICES)
+    position = FSMField(default=PositionState.INITIAL_STATE, choices=PositionState.CHOICES)
 
     @transition(
-        field=position_state,
+        field=position,
         source=PositionState.MEMBER,
         target=PositionState.ADMIN,
         conditions=[user_is_only_member_of_team, team_was_just_created],
