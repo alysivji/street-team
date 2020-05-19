@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta, timezone
 
 import factory
 
@@ -17,4 +17,4 @@ class TeamEventFactory(factory.DjangoModelFactory):
 
     @factory.lazy_attribute
     def happens_on(self):
-        return datetime.datetime.now() + datetime.timedelta(weeks=1)
+        return datetime.now(timezone.utc) + timedelta(weeks=1)
