@@ -1,0 +1,43 @@
+digraph {
+	subgraph cluster_teams_UserTeam_position_state {
+		graph [label="teams.UserTeam.position_state"]
+		"teams.user_team.position_state.admin" [label=admin shape=doublecircle]
+		"teams.user_team.position_state.request_rejected" [label=request_rejected shape=circle]
+		"teams.user_team.position_state.team_lead" [label=team_lead shape=circle]
+		"teams.user_team.position_state.community_member" [label=community_member shape=circle]
+		"teams.user_team.position_state.organizer" [label=organizer shape=circle]
+		"teams.user_team.position_state.released_by_team" [label=released_by_team shape=circle]
+		"teams.user_team.position_state.withdrew_from_team" [label=withdrew_from_team shape=circle]
+		"teams.user_team.position_state.request_to_join" [label=request_to_join shape=circle]
+		"teams.user_team.position_state._initial" [label="" shape=point]
+		"teams.user_team.position_state._initial" -> "teams.user_team.position_state.request_to_join"
+		"teams.user_team.position_state.community_member" -> "teams.user_team.position_state.team_lead" [label=change_position_to_team_lead]
+		"teams.user_team.position_state.organizer" -> "teams.user_team.position_state.team_lead" [label=change_position_to_team_lead]
+		"teams.user_team.position_state.team_lead" -> "teams.user_team.position_state.organizer" [label=promote_to_organizer]
+		"teams.user_team.position_state.community_member" -> "teams.user_team.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team.position_state.team_lead" -> "teams.user_team.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team.position_state.organizer" -> "teams.user_team.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team.position_state.released_by_team" -> "teams.user_team.position_state.request_to_join" [label=reapply]
+		"teams.user_team.position_state.request_to_join" -> "teams.user_team.position_state.withdrew_from_team" [label=withdraw_application]
+		"teams.user_team.position_state.community_member" -> "teams.user_team.position_state.organizer" [label=promote_to_organizer]
+		"teams.user_team.position_state.request_to_join" -> "teams.user_team.position_state.request_rejected" [label=reject_request]
+		"teams.user_team.position_state.request_rejected" -> "teams.user_team.position_state.request_to_join" [label=reapply]
+		"teams.user_team.position_state.request_to_join" -> "teams.user_team.position_state.admin" [label=make_admin_of_newly_created_group]
+		"teams.user_team.position_state.withdrew_from_team" -> "teams.user_team.position_state.request_to_join" [label=reapply]
+		"teams.user_team.position_state.team_lead" -> "teams.user_team.position_state.community_member" [label=change_position_to_member]
+		"teams.user_team.position_state.request_to_join" -> "teams.user_team.position_state.community_member" [label=approve_application]
+		"teams.user_team.position_state.organizer" -> "teams.user_team.position_state.community_member" [label=change_position_to_member]
+	}
+	subgraph cluster_twilio_integration_PhoneNumber_account_link_state {
+		graph [label="twilio_integration.PhoneNumber.account_link_state"]
+		"twilio_integration.phone_number.account_link_state.phone_link_success" [label=phone_link_success shape=doublecircle]
+		"twilio_integration.phone_number.account_link_state.phone_link_failed" [label=phone_link_failed shape=doublecircle]
+		"twilio_integration.phone_number.account_link_state.unlinked_phone_number" [label=unlinked_phone_number shape=circle]
+		"twilio_integration.phone_number.account_link_state._initial" [label="" shape=point]
+		"twilio_integration.phone_number.account_link_state._initial" -> "twilio_integration.phone_number.account_link_state.unlinked_phone_number"
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" [label=attempt_phone_link shape=circle]
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" -> "twilio_integration.phone_number.account_link_state.phone_link_failed" [style=dotted]
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" -> "twilio_integration.phone_number.account_link_state.phone_link_success" [label=confirm_verification_code]
+		"twilio_integration.phone_number.account_link_state.unlinked_phone_number" -> "twilio_integration.phone_number.account_link_state.attempt_phone_link" [label=link_account]
+	}
+}

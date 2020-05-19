@@ -1,5 +1,4 @@
 from django_fsm import TransitionNotAllowed
-from django_fsm_log.models import StateLog
 import pytest
 
 from .factories import TeamFactory, UserTeamMembershipFactory
@@ -22,15 +21,6 @@ def test_make_user_admin_of_team__happy_path():
     assert membership.team == team
     assert membership.user == user
     assert membership.position_state == UserTeam.PositionState.ADMIN
-
-    # not sure if i actually need to test this
-    logs = StateLog.objects.all()
-    assert len(logs) == 1
-    log = logs[0]
-    assert log.by == user
-    assert log.source_state == UserTeam.PositionState.REQUESTED
-    assert log.state == UserTeam.PositionState.ADMIN
-    assert log.transition == "make_user_admin_of_newly_created_group"
 
 
 @pytest.mark.django_db
