@@ -1,7 +1,7 @@
 from django_fsm import TransitionNotAllowed
 import pytest
 
-from .factories import TeamFactory
+from .factories import TeamFactory, UserTeamMembershipFactory
 from ..interactors import make_user_admin_of_team
 from ..models import UserTeam
 from apps.users.tests.factories import UserFactory
@@ -20,7 +20,10 @@ def test_make_user_admin_of_team__happy_path():
     assert membership.position_state == UserTeam.PositionState.ADMIN
 
 
+@pytest.mark.django_db
 def test_make_user_admin_of_team__transition_not_allowed():
-    # TODO
+    membership = UserTeamMembershipFactory()
+    user = UserFactory()
+
     with pytest.raises(TransitionNotAllowed):
-        pass
+        make_user_admin_of_team(user, team=membership.team)
