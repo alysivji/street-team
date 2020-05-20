@@ -1,3 +1,6 @@
+from datetime import datetime, timezone
+
+from dateutil.relativedelta import relativedelta
 import pytest
 
 from ..models import (
@@ -5,9 +8,10 @@ from ..models import (
     is_admin,
     user_has_position_state_requested,
     user_is_only_member_of_team,
+    team_was_just_created,
     UserTeam,
 )
-from .factories import UserTeamMembershipFactory
+from .factories import TeamFactory, UserTeamMembershipFactory
 from apps.users.tests.factories import UserFactory
 
 
@@ -47,12 +51,54 @@ def test_user_has_position_state_requested(position_state, expected_result):
 
 
 @pytest.mark.django_db
-# TODO test this using freeze gun
-def test_team_was_just_created__happy_path():
-    # test created 59 seconds ago
-    # test created 60 seconds ago
-    # test created 61 seconds ago
-    pass
+@pytest.mark.freeze_time
+def test_team_was_just_created__happy_path(freezer):
+    # Arrange
+    now = datetime.now(timezone.utc)
+    fifty_nine_seconds_ago = now - relativedelta(seconds=59)
+    freezer.move_to(fifty_nine_seconds_ago)
+    team = TeamFactory()
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+
+    # Act
+    freezer.move_to(now)
+    result = team_was_just_created(membership)
+
+    assert result is True
+
+
+@pytest.mark.django_db
+@pytest.mark.freeze_time
+def test_team_was_just_created__boundary(freezer):
+    # Arrange
+    now = datetime.now(timezone.utc)
+    sixty_seconds_ago = now - relativedelta(seconds=60)
+    freezer.move_to(sixty_seconds_ago)
+    team = TeamFactory()
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+
+    # Act
+    freezer.move_to(now)
+    result = team_was_just_created(membership)
+
+    assert result is True
+
+
+@pytest.mark.django_db
+@pytest.mark.freeze_time
+def test_team_was_just_created__outside_boundary(freezer):
+    # Arrange
+    now = datetime.now(timezone.utc)
+    over_sixty_seconds_ago = now - relativedelta(seconds=61)
+    freezer.move_to(over_sixty_seconds_ago)
+    team = TeamFactory()
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+
+    # Act
+    freezer.move_to(now)
+    result = team_was_just_created(membership)
+
+    assert result is False
 
 
 @pytest.mark.django_db
