@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import upload_file
-from .views import add_image_caption_view, crop_image_view, UploadedImagesListView
+from .views import add_image_caption_view, crop_image_view, upload_file, UploadedImagesListView
 
 urlpatterns = [
     path("images/upload/", view=upload_file, name="images-upload"),

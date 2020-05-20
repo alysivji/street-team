@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}View Images{% endblock %}
+
+{% block top_loader %}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+  <div class="col">
+    <h1>{{ object.name }}</h1>
+    <p>Date: {{ now|date }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>Members</h2>
+    <ul>
+      {% for user in users %}
+      <li>{{ user.email }}</li>
+      {% empty %}
+      <li>No members</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block bottom_loader %}
+{% endblock %}

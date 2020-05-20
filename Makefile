@@ -88,3 +88,7 @@ logs: ## attach to logs
 
 collectstatic: ## collect static files
 	docker-compose exec app python streetteam/manage.py collectstatic --no-input
+
+draw_state_machine:  ## draw state machine inferred from django-fsm
+	docker-compose exec app python streetteam/manage.py graph_transitions > transitions.dot
+	# then visualize in https://dreampuf.github.io/GraphvizOnline
