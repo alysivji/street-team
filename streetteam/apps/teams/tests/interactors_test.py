@@ -3,7 +3,7 @@ import pytest
 
 from .factories import TeamFactory, UserTeamMembershipFactory
 from ..interactors import make_user_admin_of_team
-from ..models import UserTeam
+from ..models import UserTeamMembership
 from apps.users.tests.factories import UserFactory
 
 
@@ -17,10 +17,10 @@ def test_make_user_admin_of_team__happy_path():
     make_user_admin_of_team(user, team)
 
     # Assert
-    membership = UserTeam.objects.first()
+    membership = UserTeamMembership.objects.first()
     assert membership.team == team
     assert membership.user == user
-    assert membership.position_state == UserTeam.PositionState.ADMIN
+    assert membership.position_state == UserTeamMembership.PositionState.ADMIN
 
 
 @pytest.mark.django_db

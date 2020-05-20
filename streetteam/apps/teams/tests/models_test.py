@@ -9,7 +9,7 @@ from ..models import (
     user_has_position_state_requested,
     user_is_only_member_of_team,
     team_was_just_created,
-    UserTeam,
+    UserTeamMembership,
 )
 from .factories import TeamFactory, UserTeamMembershipFactory
 from apps.users.tests.factories import UserFactory
@@ -35,14 +35,14 @@ def test_user_is_only_member_of_team__group_has_two_members():
 @pytest.mark.parametrize(
     "position_state, expected_result",
     [
-        (UserTeam.PositionState.REQUESTED, True),
-        (UserTeam.PositionState.REJECTED, False),
-        (UserTeam.PositionState.WITHDREW, False),
-        (UserTeam.PositionState.RELEASED, False),
-        (UserTeam.PositionState.MEMBER, False),
-        (UserTeam.PositionState.TEAM_LEAD, False),
-        (UserTeam.PositionState.ORGANIZER, False),
-        (UserTeam.PositionState.ADMIN, False),
+        (UserTeamMembership.PositionState.REQUESTED, True),
+        (UserTeamMembership.PositionState.REJECTED, False),
+        (UserTeamMembership.PositionState.WITHDREW, False),
+        (UserTeamMembership.PositionState.RELEASED, False),
+        (UserTeamMembership.PositionState.MEMBER, False),
+        (UserTeamMembership.PositionState.TEAM_LEAD, False),
+        (UserTeamMembership.PositionState.ORGANIZER, False),
+        (UserTeamMembership.PositionState.ADMIN, False),
     ],
 )
 def test_user_has_position_state_requested(position_state, expected_result):
@@ -58,7 +58,7 @@ def test_team_was_just_created__happy_path(freezer):
     fifty_nine_seconds_ago = now - relativedelta(seconds=59)
     freezer.move_to(fifty_nine_seconds_ago)
     team = TeamFactory()
-    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
 
     # Act
     freezer.move_to(now)
@@ -75,13 +75,13 @@ def test_team_was_just_created__boundary(freezer):
     sixty_seconds_ago = now - relativedelta(seconds=60)
     freezer.move_to(sixty_seconds_ago)
     team = TeamFactory()
-    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
 
     # Act
     freezer.move_to(now)
     result = team_was_just_created(membership)
 
-    assert result is True
+    assert result is False
 
 
 @pytest.mark.django_db
@@ -92,7 +92,7 @@ def test_team_was_just_created__outside_boundary(freezer):
     over_sixty_seconds_ago = now - relativedelta(seconds=61)
     freezer.move_to(over_sixty_seconds_ago)
     team = TeamFactory()
-    membership = UserTeamMembershipFactory(team=team, position_state=UserTeam.PositionState.REQUESTED)
+    membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
 
     # Act
     freezer.move_to(now)
@@ -105,14 +105,14 @@ def test_team_was_just_created__outside_boundary(freezer):
 @pytest.mark.parametrize(
     "position_state, expected_result",
     [
-        (UserTeam.PositionState.REQUESTED, False),
-        (UserTeam.PositionState.REJECTED, False),
-        (UserTeam.PositionState.WITHDREW, False),
-        (UserTeam.PositionState.RELEASED, False),
-        (UserTeam.PositionState.MEMBER, False),
-        (UserTeam.PositionState.TEAM_LEAD, False),
-        (UserTeam.PositionState.ORGANIZER, True),
-        (UserTeam.PositionState.ADMIN, True),
+        (UserTeamMembership.PositionState.REQUESTED, False),
+        (UserTeamMembership.PositionState.REJECTED, False),
+        (UserTeamMembership.PositionState.WITHDREW, False),
+        (UserTeamMembership.PositionState.RELEASED, False),
+        (UserTeamMembership.PositionState.MEMBER, False),
+        (UserTeamMembership.PositionState.TEAM_LEAD, False),
+        (UserTeamMembership.PositionState.ORGANIZER, True),
+        (UserTeamMembership.PositionState.ADMIN, True),
     ],
 )
 def test_can_perform_group_modifications(position_state, expected_result):
@@ -125,14 +125,14 @@ def test_can_perform_group_modifications(position_state, expected_result):
 @pytest.mark.parametrize(
     "position_state, expected_result",
     [
-        (UserTeam.PositionState.REQUESTED, False),
-        (UserTeam.PositionState.REJECTED, False),
-        (UserTeam.PositionState.WITHDREW, False),
-        (UserTeam.PositionState.RELEASED, False),
-        (UserTeam.PositionState.MEMBER, False),
-        (UserTeam.PositionState.TEAM_LEAD, False),
-        (UserTeam.PositionState.ORGANIZER, False),
-        (UserTeam.PositionState.ADMIN, True),
+        (UserTeamMembership.PositionState.REQUESTED, False),
+        (UserTeamMembership.PositionState.REJECTED, False),
+        (UserTeamMembership.PositionState.WITHDREW, False),
+        (UserTeamMembership.PositionState.RELEASED, False),
+        (UserTeamMembership.PositionState.MEMBER, False),
+        (UserTeamMembership.PositionState.TEAM_LEAD, False),
+        (UserTeamMembership.PositionState.ORGANIZER, False),
+        (UserTeamMembership.PositionState.ADMIN, True),
     ],
 )
 def test_is_admin(position_state, expected_result):

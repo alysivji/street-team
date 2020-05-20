@@ -28,14 +28,14 @@ class Team(BaseModel):
 ##############################################
 def user_is_only_member_of_team(instance):
     conditions = {"team": instance.team}
-    members = UserTeam.objects.filter(**conditions).all()
+    members = UserTeamMembership.objects.filter(**conditions).all()
     if len(members) == 1 and members[0].user == instance.user:
         return True
     return False
 
 
 def user_has_position_state_requested(instance):
-    if instance.position_state == UserTeam.PositionState.REQUESTED:
+    if instance.position_state == UserTeamMembership.PositionState.REQUESTED:
         return True
     return False
 
@@ -48,17 +48,20 @@ def team_was_just_created(instance):
 
 def can_perform_group_modifications(instance, user):
     conditions = {"user": user, "team": instance.team}
-    membership = UserTeam.objects.filter(**conditions).first()
-    return membership.position_state in [UserTeam.PositionState.ORGANIZER, UserTeam.PositionState.ADMIN]
+    membership = UserTeamMembership.objects.filter(**conditions).first()
+    return membership.position_state in [
+        UserTeamMembership.PositionState.ORGANIZER,
+        UserTeamMembership.PositionState.ADMIN,
+    ]
 
 
 def is_admin(instance, user):
     conditions = {"user": user, "team": instance.team}
-    membership = UserTeam.objects.filter(**conditions).first()
-    return membership.position_state == UserTeam.PositionState.ADMIN
+    membership = UserTeamMembership.objects.filter(**conditions).first()
+    return membership.position_state == UserTeamMembership.PositionState.ADMIN
 
 
-class UserTeam(BaseModel):
+class UserTeamMembership(BaseModel):
     """TODO rename to UserTeamMembership"""
 
     # TODO user, team are unique together
