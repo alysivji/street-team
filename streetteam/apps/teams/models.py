@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 import logging
-import uuid
+import uuid as uuid_
 
 from django_fsm import FSMField, transition
 from django_fsm_log.decorators import fsm_log_by
@@ -16,11 +16,18 @@ logger = logging.getLogger(__name__)
 
 class Team(BaseModel):
     id = models.AutoField(primary_key=True)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid_.uuid4, unique=True)
     name = models.CharField(null=False, max_length=255)
+    join_code = models.UUIDField(default=uuid_.uuid4, unique=True)
 
     def get_absolute_url(self):
         return reverse("teams:detail", args=[str(self.uuid)])
+
+    def generate_new_join_code(self):
+        new_code = uuid_.uuid4()
+        self.join_code = new_code
+        self.save()
+        return new_code
 
 
 ##############################################

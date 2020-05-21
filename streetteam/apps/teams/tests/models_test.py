@@ -6,13 +6,34 @@ import pytest
 from ..models import (
     can_perform_group_modifications,
     is_admin,
+    team_was_just_created,
+    Team,
     user_has_position_state_requested,
     user_is_only_member_of_team,
-    team_was_just_created,
     UserTeamMembership,
 )
 from .factories import TeamFactory, UserTeamMembershipFactory
 from apps.users.tests.factories import UserFactory
+
+
+@pytest.mark.django_db
+class TestTeamModel:
+    def test_create_and_retrieve_team(self):
+        team = TeamFactory()
+
+        record = Team.objects.first()
+
+        assert record.name == team.name
+
+    def test_generate_new_join_code(self):
+        team = TeamFactory()
+        old_code = team.join_code
+        code = team.generate_new_join_code()
+
+        record = Team.objects.first()
+
+        assert record.join_code != old_code
+        assert record.join_code == code
 
 
 ##############################################
