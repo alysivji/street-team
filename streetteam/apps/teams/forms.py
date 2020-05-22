@@ -4,16 +4,16 @@ from .models import Team
 
 
 class EnterJoinCodeForm(forms.Form):
-    uuid = forms.CharField()
+    join_code = forms.CharField()
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
     def clean_uuid(self):
-        joined_code = self.cleaned_data.get("uuid")
+        join_code = self.cleaned_data.get("join_code")
         try:
-            team_to_join = Team.objects.get(join_code=joined_code)
+            team_to_join = Team.objects.get(join_code=join_code)
         except Team.DoesNotExist:
             raise forms.ValidationError("Invalid join code. Please talk to team owner")
 
