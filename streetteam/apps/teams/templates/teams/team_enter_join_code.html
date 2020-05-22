@@ -1,6 +1,24 @@
-Enter Join Code
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
 
-<form method="post">{% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Save">
-</form>
+{% block title %}View Images{% endblock %}
+
+{% block top_loader %}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+  <div class="col">
+    <h4>Enter Join Code</h4>
+
+    <form method="post">{% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Save">
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block bottom_loader %}
+{% endblock %}
