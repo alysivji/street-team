@@ -37,6 +37,11 @@ class JoinTeamView(FormView):
     def get_success_url(self):
         return reverse("teams:detail", kwargs={"uuid": str(self.team_to_join.uuid)})
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user": self.request.user})
+        return kwargs
+
 
 class TeamDetailView(DetailView):
     model = Team
@@ -49,7 +54,7 @@ class TeamDetailView(DetailView):
         context = {
             "name": self.object.name,
             "join_code": self.object.join_code,
-            "users": self.object.memberships.get_users(),
+            "users": self.object.memberships.get_members(),
             "now": timezone.now(),
         }
         return context
