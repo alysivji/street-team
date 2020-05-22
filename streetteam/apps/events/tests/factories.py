@@ -12,6 +12,7 @@ class TeamEventFactory(factory.DjangoModelFactory):
 
     title = "Chicago Python Presents"
     description = ""
+    event_status = Event.EventStatus.DRAFT
 
     team = factory.SubFactory(TeamFactory)
 

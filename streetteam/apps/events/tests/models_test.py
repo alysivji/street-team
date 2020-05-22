@@ -12,3 +12,4 @@ def test_create_and_retrieve_event():
 
     assert record.title == event.title
     assert record.description == event.description
+    assert record.event_status == Event.EventStatus.DRAFT
