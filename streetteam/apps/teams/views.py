@@ -1,9 +1,12 @@
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+from django.urls import reverse
+from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 
-from .interactors import make_user_admin_of_team
+from .forms import EnterJoinCodeForm
+from .interactors import add_user_to_team, make_user_admin_of_team
 from .models import Team
 from common.auth import AdminStaffRequiredMixin
 
@@ -21,6 +24,20 @@ class TeamCreate(AdminStaffRequiredMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
+class JoinTeamView(FormView):
+    form_class = EnterJoinCodeForm
+    template_name = "teams/team_enter_join_code.html"
+
+    def form_valid(self, form):
+        self.team_to_join = form.cleaned_data["uuid"]
+        user = self.request.user
+        add_user_to_team(user, self.team_to_join)
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("teams:detail", kwargs={"uuid": str(self.team_to_join.uuid)})
+
+
 class TeamDetailView(DetailView):
     model = Team
 
@@ -29,5 +46,10 @@ class TeamDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context = {"users": self.object.memberships.get_users(), "now": timezone.now()}
+        context = {
+            "name": self.object.name,
+            "join_code": self.object.join_code,
+            "users": self.object.memberships.get_users(),
+            "now": timezone.now(),
+        }
         return context

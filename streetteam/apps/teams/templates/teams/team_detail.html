@@ -10,8 +10,15 @@
 {% block container %}
 <div class="row">
   <div class="col">
-    <h1>{{ object.name }}</h1>
+    <h1>{{ name }}</h1>
     <p>Date: {{ now|date }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>Join Code</h2>
+    <p>{{ join_code }}</p>
   </div>
 </div>
 

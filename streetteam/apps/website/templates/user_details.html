@@ -10,9 +10,8 @@
   <ul>
     {% for team in teams %}
     <li><a href="{% url 'teams:detail' team.uuid %}">{{ team.name }}</a></li>
-    {% empty %}
-    <li>Create a team!</li>
     {% endfor %}
+    <li><a href="{% url 'teams:join' %}">Join a team!</a></li>
   </ul>
 </div>
 

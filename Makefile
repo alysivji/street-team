@@ -34,6 +34,9 @@ migration-empty: ## create empty migration app="app" msg="msg"
 migrate-up: ## run all migration
 	docker-compose exec -T app python streetteam/manage.py migrate $(app)
 
+migrate-down: ## rollback back to previous migrate
+	docker-compose exec -T app python streetteam/manage.py migrate $(app) $(migration)
+
 migration-sql: ## generate sql for migrations app="app" migration="migration"
 	docker-compose exec -T app python streetteam/manage.py sqlmigrate $(app) $(migration)
 
