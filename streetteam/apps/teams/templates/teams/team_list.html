@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}View Images{% endblock %}
+
+{% block top_loader %}
+{% endblock %}
+
+{% block container %}
+<div class="row">
+  <div class="col">
+    <h4>Teams</h4>
+
+    <ul>
+      {% for team in teams %}
+      <li><a href="{% url 'teams:detail' team.uuid %}">{{ team.name }}</a></li>
+      {% empty %}
+      <li><a href="{% url 'teams:join' %}">Join a team!</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block bottom_loader %}
+{% endblock %}

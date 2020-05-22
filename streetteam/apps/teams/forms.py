@@ -10,7 +10,7 @@ class EnterJoinCodeForm(forms.Form):
         self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
-    def clean_uuid(self):
+    def clean_join_code(self):
         join_code = self.cleaned_data.get("join_code")
         try:
             team_to_join = Team.objects.get(join_code=join_code)
