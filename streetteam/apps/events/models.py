@@ -4,7 +4,6 @@ import uuid
 
 from django_fsm import FSMField, transition
 from django_fsm_log.decorators import fsm_log_by
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from apps.teams.models import Team
@@ -32,8 +31,6 @@ class Event(BaseModel):
     title = models.CharField(null=False, max_length=255)
     description = models.TextField(blank=True, null=False)
     happens_on = models.DateTimeField(null=False)
-
-    log = JSONField(default=list)
 
     class EventStatus:
         """Status of event"""
