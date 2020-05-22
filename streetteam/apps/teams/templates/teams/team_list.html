@@ -10,13 +10,15 @@
 {% block container %}
 <div class="row">
   <div class="col">
-    <h4>Create a New Team</h4>
+    <h4>Teams</h4>
 
-    <form method="post">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      <input type="submit" value="Save">
-    </form>
+    <ul>
+      {% for team in teams %}
+      <li><a href="{% url 'teams:detail' team.uuid %}">{{ team.name }}</a></li>
+      {% empty %}
+      <li><a href="{% url 'teams:join' %}">Join a team!</a></li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 import logging
-import uuid
+import uuid as uuid_
 
 from django_fsm import FSMField, transition
 from django_fsm_log.decorators import fsm_log_by
@@ -16,11 +16,18 @@ logger = logging.getLogger(__name__)
 
 class Team(BaseModel):
     id = models.AutoField(primary_key=True)
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    uuid = models.UUIDField(default=uuid_.uuid4, unique=True)
     name = models.CharField(null=False, max_length=255)
+    join_code = models.UUIDField(default=uuid_.uuid4, unique=True)
 
     def get_absolute_url(self):
         return reverse("teams:detail", args=[str(self.uuid)])
+
+    def generate_new_join_code(self):
+        new_code = uuid_.uuid4()
+        self.join_code = new_code
+        self.save()
+        return new_code
 
 
 ##############################################
@@ -30,12 +37,6 @@ def user_is_only_member_of_team(instance):
     conditions = {"team": instance.team}
     members = UserTeamMembership.objects.filter(**conditions).all()
     if len(members) == 1 and members[0].user == instance.user:
-        return True
-    return False
-
-
-def user_has_position_state_requested(instance):
-    if instance.position_state == UserTeamMembership.PositionState.REQUESTED:
         return True
     return False
 
@@ -62,9 +63,8 @@ def is_admin(instance, user):
 
 
 class UserTeamMembership(BaseModel):
-    """TODO rename to UserTeamMembership"""
-
-    # TODO user, team are unique together
+    class Meta:
+        unique_together = [["user", "team"]]
 
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, related_name="memberships", on_delete=models.CASCADE)
@@ -78,8 +78,6 @@ class UserTeamMembership(BaseModel):
         ADMIN to other states has a lot of complexity we haven't thought about
         """
 
-        REQUESTED = "request_to_join"  # user has requested to join team
-        REJECTED = "request_rejected"  # user request to join team has been rejected
         WITHDREW = "withdrew_from_team"  # user has withdrawn from team, removed request
         RELEASED = "released_by_team"  # team admin has released user from team
         MEMBER = "community_member"  # can send pictures and add captions for own images
@@ -87,49 +85,20 @@ class UserTeamMembership(BaseModel):
         ORGANIZER = "organizer"  # create events and approve invited members
         ADMIN = "admin"  # can change group settings
 
-        CHOICES = [
-            (REQUESTED,) * 2,
-            (REJECTED,) * 2,
-            (WITHDREW,) * 2,
-            (RELEASED,) * 2,
-            (MEMBER,) * 2,
-            (TEAM_LEAD,) * 2,
-            (ORGANIZER,) * 2,
-            (ADMIN,) * 2,
-        ]
+        CHOICES = [(WITHDREW,) * 2, (RELEASED,) * 2, (MEMBER,) * 2, (TEAM_LEAD,) * 2, (ORGANIZER,) * 2, (ADMIN,) * 2]
 
         INITIAL_STATE = MEMBER
 
-    position_state = FSMField(default=PositionState.REQUESTED, choices=PositionState.CHOICES)
+    position_state = FSMField(default=PositionState.INITIAL_STATE, choices=PositionState.CHOICES)
 
     @fsm_log_by
     @transition(
         field=position_state,
-        source=PositionState.REQUESTED,
+        source=PositionState.MEMBER,
         target=PositionState.ADMIN,
-        conditions=[user_is_only_member_of_team, team_was_just_created, user_has_position_state_requested],
+        conditions=[user_is_only_member_of_team, team_was_just_created],
     )
     def make_admin_of_newly_created_group(self, by):
-        pass
-
-    @fsm_log_by
-    @transition(
-        field=position_state,
-        source=PositionState.REQUESTED,
-        target=PositionState.REJECTED,
-        permission=can_perform_group_modifications,
-    )
-    def reject_request(self, by):
-        pass
-
-    @fsm_log_by
-    @transition(
-        field=position_state,
-        source=PositionState.REQUESTED,
-        target=PositionState.MEMBER,
-        permission=can_perform_group_modifications,
-    )
-    def approve_application(self, by):
         pass
 
     @fsm_log_by
@@ -163,25 +132,10 @@ class UserTeamMembership(BaseModel):
         pass
 
     @fsm_log_by
-    @transition(field=position_state, source=PositionState.REQUESTED, target=PositionState.WITHDREW)
-    def withdraw_application(self, by):
-        pass
-
-    @fsm_log_by
     @transition(
         field=position_state,
         source=[PositionState.MEMBER, PositionState.ORGANIZER, PositionState.TEAM_LEAD],
         target=PositionState.WITHDREW,
     )
     def quit_team(self, by):
-        pass
-
-    @fsm_log_by
-    @transition(
-        field=position_state,
-        source=[PositionState.REJECTED, PositionState.WITHDREW, PositionState.RELEASED],
-        target=PositionState.REQUESTED,
-    )
-    def reapply(self, by):
-        # TODO can only reapply after meeting some requirement
         pass

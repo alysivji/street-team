@@ -30,7 +30,6 @@ def test_upload_image(client, login_user):
 
 @pytest.mark.django_db
 @pytest.mark.end2end
-@pytest.mark.current
 def test_crop_image(client, login_user):
     image = UploadedImageFactory(image__width=710, image__height=710)
 
