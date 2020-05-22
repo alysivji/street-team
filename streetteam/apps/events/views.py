@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic.list import ListView
 
-from .forms import EventDetailsForm
+from .forms import EventInformationForm
+from .interactors import create_event
 from .models import Event
 from common.auth import AdminStaffRequiredMixin  # will need to clean this up
 
@@ -11,20 +13,27 @@ class EventListView(ListView):
     model = Event
 
 
+class TeamEventListView(ListView):
+    # TODO this is just like events by for a single team
+    # TODO return a team only queryset
+    model = Event
+
+
 class EventCreate(AdminStaffRequiredMixin, FormView):
-    form_class = EventDetailsForm
+    form_class = EventInformationForm
     template_name = "events/event_form.html"
 
     def form_valid(self, form):
-        # self.team_to_join = form.cleaned_data["join_code"]
-        # user = self.request.user
-        # add_user_to_team(user, self.team_to_join)
+        self.team = form.cleaned_data.pop("team")
+        user = self.request.user
+        create_event(user, self.team, form.cleaned_data)
         return HttpResponseRedirect(self.get_success_url())
 
-    # def get_success_url(self):
-    #     return reverse("teams:detail", kwargs={"uuid": str(self.team_to_join.uuid)})
+    def get_success_url(self):
+        # TODO take to a save as drafts / publish page
+        return reverse("teams:events", kwargs={"uuid": str(self.team.uuid)})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        # kwargs.update({"user": self.request.user})
+        kwargs.update({"user": self.request.user, "team_uuid": self.kwargs["uuid"]})
         return kwargs

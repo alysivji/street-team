@@ -11,6 +11,13 @@
 <div class="row">
   <div class="col">
     <h4>Events</h4>
+
+    <ul>
+      {% for event in object_list %}
+      <li>{{ event.title }}</li>
+      {% empty %}
+      {% endfor %}
+    </ul>
   </div>
 </div>
 {% endblock %}
