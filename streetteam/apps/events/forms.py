@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from django import forms
 
 from .models import Event
@@ -13,6 +15,15 @@ class EventInformationForm(forms.ModelForm):
         self.user = kwargs.pop("user", None)
         self.team_uuid = kwargs.pop("team_uuid", None)
         super().__init__(*args, **kwargs)
+
+    def clean_happens_on(self):
+        # TODO test that we cannot create events in the past
+        # TODO end to end functional test
+        event_date = self.cleaned_data["happens_on"]
+        # TODO can only create events x amount of time in the future
+        if event_date <= datetime.now(timezone.utc):
+            raise forms.ValidationError("Event needs to be in the future")
+        return event_date
 
     def clean(self):
         try:

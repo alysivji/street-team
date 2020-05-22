@@ -5,5 +5,5 @@ def create_event(user, team, event_information):
     event = Event(team=team, **event_information)
     event.save()
 
-    # todo json log
-    # add who created it
+    event.log.append({"action": "create_event", "user_id": user.id})
+    event.save()
