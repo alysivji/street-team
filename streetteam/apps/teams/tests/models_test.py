@@ -9,7 +9,6 @@ from ..models import (
     is_admin,
     team_was_just_created,
     Team,
-    user_has_position_state_requested,
     user_is_only_member_of_team,
     UserTeamMembership,
 )
@@ -67,23 +66,6 @@ class TestUserTeamMembershipStateMachine:
         second_member = UserTeamMembershipFactory(user=UserFactory(), team=first_member.team)
         assert not user_is_only_member_of_team(second_member)
 
-    @pytest.mark.parametrize(
-        "position_state, expected_result",
-        [
-            (UserTeamMembership.PositionState.REQUESTED, True),
-            (UserTeamMembership.PositionState.REJECTED, False),
-            (UserTeamMembership.PositionState.WITHDREW, False),
-            (UserTeamMembership.PositionState.RELEASED, False),
-            (UserTeamMembership.PositionState.MEMBER, False),
-            (UserTeamMembership.PositionState.TEAM_LEAD, False),
-            (UserTeamMembership.PositionState.ORGANIZER, False),
-            (UserTeamMembership.PositionState.ADMIN, False),
-        ],
-    )
-    def test_user_has_position_state_requested(self, position_state, expected_result):
-        membership = UserTeamMembershipFactory(user=UserFactory(), position_state=position_state)
-        assert user_has_position_state_requested(membership) is expected_result
-
     @pytest.mark.freeze_time
     def test_team_was_just_created__happy_path(self, freezer):
         # Arrange
@@ -91,7 +73,7 @@ class TestUserTeamMembershipStateMachine:
         fifty_nine_seconds_ago = now - relativedelta(seconds=59)
         freezer.move_to(fifty_nine_seconds_ago)
         team = TeamFactory()
-        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
+        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.MEMBER)
 
         # Act
         freezer.move_to(now)
@@ -106,7 +88,7 @@ class TestUserTeamMembershipStateMachine:
         sixty_seconds_ago = now - relativedelta(seconds=60)
         freezer.move_to(sixty_seconds_ago)
         team = TeamFactory()
-        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
+        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.MEMBER)
 
         # Act
         freezer.move_to(now)
@@ -121,7 +103,7 @@ class TestUserTeamMembershipStateMachine:
         over_sixty_seconds_ago = now - relativedelta(seconds=61)
         freezer.move_to(over_sixty_seconds_ago)
         team = TeamFactory()
-        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.REQUESTED)
+        membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.MEMBER)
 
         # Act
         freezer.move_to(now)
@@ -132,8 +114,6 @@ class TestUserTeamMembershipStateMachine:
     @pytest.mark.parametrize(
         "position_state, expected_result",
         [
-            (UserTeamMembership.PositionState.REQUESTED, False),
-            (UserTeamMembership.PositionState.REJECTED, False),
             (UserTeamMembership.PositionState.WITHDREW, False),
             (UserTeamMembership.PositionState.RELEASED, False),
             (UserTeamMembership.PositionState.MEMBER, False),
@@ -150,8 +130,6 @@ class TestUserTeamMembershipStateMachine:
     @pytest.mark.parametrize(
         "position_state, expected_result",
         [
-            (UserTeamMembership.PositionState.REQUESTED, False),
-            (UserTeamMembership.PositionState.REJECTED, False),
             (UserTeamMembership.PositionState.WITHDREW, False),
             (UserTeamMembership.PositionState.RELEASED, False),
             (UserTeamMembership.PositionState.MEMBER, False),
