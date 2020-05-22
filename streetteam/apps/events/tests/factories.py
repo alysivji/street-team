@@ -2,13 +2,13 @@ from datetime import datetime, timedelta, timezone
 
 import factory
 
-from ..models import TeamEvent
+from ..models import Event
 from apps.teams.tests.factories import TeamFactory
 
 
 class TeamEventFactory(factory.DjangoModelFactory):
     class Meta:
-        model = TeamEvent
+        model = Event
 
     title = "Chicago Python Presents"
     description = ""

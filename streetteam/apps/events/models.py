@@ -9,7 +9,7 @@ from common.models import BaseModel
 logger = logging.getLogger(__name__)
 
 
-class TeamEvent(BaseModel):
+class Event(BaseModel):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, null=False)
     team = models.ForeignKey(Team, related_name="events", on_delete=models.CASCADE, null=False)
