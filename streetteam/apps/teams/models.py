@@ -69,9 +69,8 @@ def is_admin(instance, user):
 
 
 class UserTeamMembership(BaseModel):
-    """TODO rename to UserTeamMembership"""
-
-    # TODO user, team are unique together
+    class Meta:
+        unique_together = [["user", "team"]]
 
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, related_name="memberships", on_delete=models.CASCADE)

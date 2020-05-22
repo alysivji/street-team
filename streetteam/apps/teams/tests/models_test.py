@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 
 from dateutil.relativedelta import relativedelta
+from django.db import IntegrityError
 import pytest
 
 from ..models import (
@@ -36,9 +37,25 @@ class TestTeamModel:
         assert record.join_code == code
 
 
-##############################################
-# User to Team many-to-many relationship tests
-##############################################
+@pytest.mark.django_db
+class TestTeamUserMembershipModel:
+    def test_create_and_retrieve_membership(self):
+        membership = UserTeamMembershipFactory()
+
+        record = UserTeamMembership.objects.first()
+
+        assert record.user == membership.user
+        assert record.team == membership.team
+
+    def test_unique_together_constraint(self):
+        membership = UserTeamMembershipFactory()
+        user = membership.user
+        team = membership.team
+
+        with pytest.raises(IntegrityError):
+            UserTeamMembershipFactory(user=user, team=team)
+
+
 @pytest.mark.django_db
 class TestUserTeamMembershipStateMachine:
     def test_user_is_only_member_of_team__happy_path(self):
