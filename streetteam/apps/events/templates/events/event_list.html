@@ -14,7 +14,7 @@
 
     <ul>
       {% for event in object_list %}
-      <li>{{ event.title }}</li>
+      <li><a href="{% url 'events:detail' event.uuid %}">{{ event.title }}</a></li>
       {% empty %}
       {% endfor %}
     </ul>

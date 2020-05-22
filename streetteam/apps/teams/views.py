@@ -74,7 +74,7 @@ class TeamDetailView(DetailView):
                 "name": self.object.name,
                 "join_code": self.object.join_code,
                 "users": self.object.memberships.get_members(),
-                "uuid": self.kwargs["uuid"],
+                "team_uuid": self.kwargs["uuid"],
             }
         )
         return context

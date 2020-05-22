@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Event Detail{% endblock %}
+
+{% block top_loader %}
+{% endblock %}
+
+<!-- breadcrumbs back to team or my event -->
+
+{% block container %}
+<div class="row">
+  <div class="col">
+    <h1>{{ object.title }}</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>Your Pictures</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>All Pictures (admin only)</h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block bottom_loader %}
+{% endblock %}
