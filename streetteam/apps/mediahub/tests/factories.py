@@ -1,7 +1,7 @@
 import factory
 
 from ..models import MediaResource, UploadedImage, PostEvent
-from apps.events.tests.factories import TeamEventFactory
+from apps.events.tests.factories import EventFactory
 from apps.twilio_integration.tests.factories import PhoneNumberFactory
 from apps.users.tests.factories import UserFactory
 
@@ -21,7 +21,7 @@ class UploadedImageFactory(factory.DjangoModelFactory):
     # https://factoryboy.readthedocs.io/en/latest/orms.html#factory.django.ImageField
     image = factory.django.ImageField(color="blue", width=100, height=100)
     uploaded_by = factory.SubFactory(UserFactory)
-    event = factory.SubFactory(TeamEventFactory)
+    event = factory.SubFactory(EventFactory)
 
     @factory.post_generation
     def generate_upload_event(self, create, extracted, **kwargs):

@@ -6,7 +6,7 @@ from ..models import Event
 from apps.teams.tests.factories import TeamFactory
 
 
-class TeamEventFactory(factory.DjangoModelFactory):
+class EventFactory(factory.DjangoModelFactory):
     class Meta:
         model = Event
 
