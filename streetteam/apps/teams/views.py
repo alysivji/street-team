@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
-from django.utils import timezone
 from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -70,13 +69,14 @@ class TeamDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context = {
-            "name": self.object.name,
-            "join_code": self.object.join_code,
-            "users": self.object.memberships.get_members(),
-            "now": timezone.now(),
-            "uuid": self.kwargs["uuid"],
-        }
+        context.update(
+            {
+                "name": self.object.name,
+                "join_code": self.object.join_code,
+                "users": self.object.memberships.get_members(),
+                "uuid": self.kwargs["uuid"],
+            }
+        )
         return context
 
 
