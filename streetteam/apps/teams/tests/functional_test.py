@@ -17,7 +17,7 @@ class TestUserJoiningTeamWorkflow:
         login_user(user)
 
         # user enters join code successfully; use the view
-        resp = client.post(f"/teams/join/", data={"uuid": team.join_code})
+        resp = client.post(f"/teams/join/", {"join_code": team.join_code})
 
         # check that user is on team
         assert resp.status_code == 302
