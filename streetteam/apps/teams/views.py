@@ -1,4 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.views.generic import FormView
@@ -8,7 +10,7 @@ from django.views.generic.list import ListView
 
 from .forms import EnterJoinCodeForm
 from .interactors import add_user_to_team, make_user_admin_of_team
-from .models import Team
+from .models import Team, UserTeamMembership
 from common.auth import AdminStaffRequiredMixin
 
 
@@ -23,6 +25,25 @@ class TeamCreate(AdminStaffRequiredMixin, CreateView):
         self.object = form.save()
         make_user_admin_of_team(self.request.user, team=self.object)
         return HttpResponseRedirect(self.get_success_url())
+
+
+@login_required
+def new_join_code_view(request, uuid):
+    # TODO don't 404, do a 403
+    # TODO add tests
+    team = get_object_or_404(Team, uuid=uuid)
+    conditions = {"user": request.user, "team": team}
+
+    membership = UserTeamMembership.objects.filter(**conditions).first()
+    if not membership:
+        return HttpResponseForbidden
+    if membership.position_state not in [
+        UserTeamMembership.PositionState.ORGANIZER,
+        UserTeamMembership.PositionState.ADMIN,
+    ]:
+        return HttpResponseForbidden
+    team.generate_new_join_code()
+    return redirect("teams:detail", uuid)
 
 
 class JoinTeamView(FormView):
@@ -57,6 +78,7 @@ class TeamDetailView(DetailView):
             "join_code": self.object.join_code,
             "users": self.object.memberships.get_members(),
             "now": timezone.now(),
+            "uuid": self.kwargs["uuid"],
         }
         return context
 
