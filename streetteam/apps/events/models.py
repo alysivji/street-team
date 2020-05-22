@@ -57,20 +57,18 @@ class Event(BaseModel):
         pass
 
     @fsm_log_by
-    @transition(field=event_status, source=EventStatus.DRAFT, target=EventStatus.ACTIVE, conditions=[is_future_event])
-    def publish(self, by):
-        pass
-
-    @fsm_log_by
     @transition(field=event_status, source=EventStatus.ACTIVE, target=EventStatus.INACTIVE)
     def hide(self, by):
         pass
 
     @fsm_log_by
     @transition(
-        field=event_status, source=EventStatus.INACTIVE, target=EventStatus.ACTIVE, conditions=[is_future_event]
+        field=event_status,
+        source=[EventStatus.DRAFT, EventStatus.INACTIVE],
+        target=EventStatus.ACTIVE,
+        conditions=[is_future_event],
     )
-    def unhide(self, by):
+    def publish(self, by):
         pass
 
     @fsm_log_by

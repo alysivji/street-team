@@ -1,0 +1,52 @@
+digraph {
+	subgraph cluster_events_Event_event_status {
+		graph [label="events.Event.event_status"]
+		"events.event.event_status.deleted" [label=deleted shape=doublecircle]
+		"events.event.event_status.completed" [label=completed shape=doublecircle]
+		"events.event.event_status.inactive" [label=inactive shape=circle]
+		"events.event.event_status.draft" [label=draft shape=circle]
+		"events.event.event_status._initial" [label="" shape=point]
+		"events.event.event_status._initial" -> "events.event.event_status.draft"
+		"events.event.event_status.active" [label=active shape=circle]
+		"events.event.event_status.active" -> "events.event.event_status.inactive" [label=hide]
+		"events.event.event_status.draft" -> "events.event.event_status.draft" [label=update_draft]
+		"events.event.event_status.draft" -> "events.event.event_status.active" [label=publish]
+		"events.event.event_status.draft" -> "events.event.event_status.deleted" [label=delete]
+		"events.event.event_status.active" -> "events.event.event_status.deleted" [label=delete]
+		"events.event.event_status.active" -> "events.event.event_status.completed" [label=archive]
+		"events.event.event_status.inactive" -> "events.event.event_status.active" [label=publish]
+		"events.event.event_status.inactive" -> "events.event.event_status.deleted" [label=delete]
+	}
+	subgraph cluster_teams_UserTeamMembership_position_state {
+		graph [label="teams.UserTeamMembership.position_state"]
+		"teams.user_team_membership.position_state.admin" [label=admin shape=doublecircle]
+		"teams.user_team_membership.position_state.withdrew_from_team" [label=withdrew_from_team shape=doublecircle]
+		"teams.user_team_membership.position_state.organizer" [label=organizer shape=circle]
+		"teams.user_team_membership.position_state.team_lead" [label=team_lead shape=circle]
+		"teams.user_team_membership.position_state.community_member" [label=community_member shape=circle]
+		"teams.user_team_membership.position_state._initial" [label="" shape=point]
+		"teams.user_team_membership.position_state._initial" -> "teams.user_team_membership.position_state.community_member"
+		"teams.user_team_membership.position_state.team_lead" -> "teams.user_team_membership.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team_membership.position_state.community_member" -> "teams.user_team_membership.position_state.organizer" [label=promote_to_organizer]
+		"teams.user_team_membership.position_state.team_lead" -> "teams.user_team_membership.position_state.organizer" [label=promote_to_organizer]
+		"teams.user_team_membership.position_state.organizer" -> "teams.user_team_membership.position_state.team_lead" [label=change_position_to_team_lead]
+		"teams.user_team_membership.position_state.organizer" -> "teams.user_team_membership.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team_membership.position_state.community_member" -> "teams.user_team_membership.position_state.withdrew_from_team" [label=quit_team]
+		"teams.user_team_membership.position_state.team_lead" -> "teams.user_team_membership.position_state.community_member" [label=change_position_to_member]
+		"teams.user_team_membership.position_state.community_member" -> "teams.user_team_membership.position_state.admin" [label=make_admin_of_newly_created_group]
+		"teams.user_team_membership.position_state.organizer" -> "teams.user_team_membership.position_state.community_member" [label=change_position_to_member]
+		"teams.user_team_membership.position_state.community_member" -> "teams.user_team_membership.position_state.team_lead" [label=change_position_to_team_lead]
+	}
+	subgraph cluster_twilio_integration_PhoneNumber_account_link_state {
+		graph [label="twilio_integration.PhoneNumber.account_link_state"]
+		"twilio_integration.phone_number.account_link_state.phone_link_failed" [label=phone_link_failed shape=doublecircle]
+		"twilio_integration.phone_number.account_link_state.phone_link_success" [label=phone_link_success shape=doublecircle]
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" [label=attempt_phone_link shape=circle]
+		"twilio_integration.phone_number.account_link_state.unlinked_phone_number" [label=unlinked_phone_number shape=circle]
+		"twilio_integration.phone_number.account_link_state._initial" [label="" shape=point]
+		"twilio_integration.phone_number.account_link_state._initial" -> "twilio_integration.phone_number.account_link_state.unlinked_phone_number"
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" -> "twilio_integration.phone_number.account_link_state.phone_link_success" [label=confirm_verification_code]
+		"twilio_integration.phone_number.account_link_state.unlinked_phone_number" -> "twilio_integration.phone_number.account_link_state.attempt_phone_link" [label=link_account]
+		"twilio_integration.phone_number.account_link_state.attempt_phone_link" -> "twilio_integration.phone_number.account_link_state.phone_link_failed" [style=dotted]
+	}
+}
