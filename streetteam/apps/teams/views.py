@@ -18,9 +18,6 @@ class TeamCreate(AdminStaffRequiredMixin, CreateView):
     model = Team
     fields = ["name"]
 
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         self.object = form.save()
         make_user_admin_of_team(self.request.user, team=self.object)
