@@ -24,7 +24,6 @@ class TestUserJoiningTeamWorkflow:
         membership = UserTeamMembership.objects.filter(**conditions).all()
         assert len(membership) == 1
 
-    @pytest.mark.current
     def test_user_joins_team_with_old_join_code__rejected(self, client, login_user):
         # Arrange
         team = TeamFactory()
