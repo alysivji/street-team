@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+from dateutil.relativedelta import relativedelta
 import pytest
 from apps.users.tests.factories import UserFactory
 
@@ -22,3 +24,11 @@ def patcher(monkeypatch):
         return replacement
 
     yield _patcher
+
+
+@pytest.fixture
+def ago():
+    def _wrapper(**kwargs):
+        return datetime.now(timezone.utc) - relativedelta(**kwargs)
+
+    return _wrapper
