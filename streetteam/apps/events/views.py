@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 from .forms import EventInformationForm
 from .interactors import create_event
 from .models import Event
-from common.auth import AdminStaffRequiredMixin  # will need to clean this up
+from common.auth import StaffRequiredMixin  # will need to clean this up
 
 
 class EventListView(ListView):
@@ -20,7 +20,7 @@ class TeamEventListView(ListView):
     model = Event
 
 
-class EventCreate(AdminStaffRequiredMixin, FormView):
+class EventCreate(StaffRequiredMixin, FormView):
     form_class = EventInformationForm
     template_name = "events/event_form.html"
 

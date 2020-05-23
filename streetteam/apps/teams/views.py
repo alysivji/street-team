@@ -10,10 +10,10 @@ from django.views.generic.list import ListView
 from .forms import EnterJoinCodeForm
 from .interactors import add_user_to_team, make_user_admin_of_team
 from .models import Team, UserTeamMembership
-from common.auth import AdminStaffRequiredMixin
+from common.auth import StaffRequiredMixin
 
 
-class TeamCreate(AdminStaffRequiredMixin, CreateView):
+class TeamCreate(StaffRequiredMixin, CreateView):
     model = Team
     fields = ["name"]
 
