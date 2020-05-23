@@ -157,3 +157,9 @@ https://github.com/marketplace/actions/debugging-with-tmate
 - name: Setup tmate session
   uses: mxschmitt/action-tmate@v2
 ```
+
+### Debug Django Templates
+
+```html
+<pre> {% filter force_escape %} {% debug %} {% endfilter %} </pre>
+```

@@ -2,7 +2,7 @@
 {% load static %}
 {% load bootstrap4 %}
 
-{% block title %}View Images{% endblock %}
+{% block title %}Team Detail{% endblock %}
 
 {% block top_loader %}
 {% endblock %}
@@ -11,7 +11,6 @@
 <div class="row">
   <div class="col">
     <h1>{{ name }}</h1>
-    <p>Date: {{ now|date }}</p>
   </div>
 </div>
 
@@ -19,7 +18,7 @@
   <div class="col">
     <h2>Join Code</h2>
     <p>{{ join_code }}</p>
-    <p><a href="{% url 'teams:modify-joincode' uuid %}">Modify Join Code</a></p>
+    <p><a href="{% url 'teams:modify-joincode' team_uuid %}">Modify Join Code</a></p>
     <!-- link to new join code -->
   </div>
 </div>
@@ -34,6 +33,13 @@
       <li>No members</li>
       {% endfor %}
     </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <h2>Events</h2>
+    <p><a href="{% url 'teams:create-event' team_uuid %}">Create an event</a></p>
   </div>
 </div>
 {% endblock %}

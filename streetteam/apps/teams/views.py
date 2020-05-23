@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
-from django.utils import timezone
 from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
@@ -11,15 +10,12 @@ from django.views.generic.list import ListView
 from .forms import EnterJoinCodeForm
 from .interactors import add_user_to_team, make_user_admin_of_team
 from .models import Team, UserTeamMembership
-from common.auth import AdminStaffRequiredMixin
+from common.auth import StaffRequiredMixin
 
 
-class TeamCreate(AdminStaffRequiredMixin, CreateView):
+class TeamCreate(StaffRequiredMixin, CreateView):
     model = Team
     fields = ["name"]
-
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         self.object = form.save()
@@ -73,13 +69,14 @@ class TeamDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context = {
-            "name": self.object.name,
-            "join_code": self.object.join_code,
-            "users": self.object.memberships.get_members(),
-            "now": timezone.now(),
-            "uuid": self.kwargs["uuid"],
-        }
+        context.update(
+            {
+                "name": self.object.name,
+                "join_code": self.object.join_code,
+                "users": self.object.memberships.get_members(),
+                "team_uuid": self.kwargs["uuid"],
+            }
+        )
         return context
 
 

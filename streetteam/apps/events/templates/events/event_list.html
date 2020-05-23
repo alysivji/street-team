@@ -2,7 +2,7 @@
 {% load static %}
 {% load bootstrap4 %}
 
-{% block title %}View Teams{% endblock %}
+{% block title %}View Events{% endblock %}
 
 {% block top_loader %}
 {% endblock %}
@@ -10,14 +10,13 @@
 {% block container %}
 <div class="row">
   <div class="col">
-    <h4>Teams</h4>
+    <h4>Events</h4>
 
     <ul>
-      {% for team in object_list %}
-      <li><a href="{% url 'teams:detail' team.uuid %}">{{ team.name }}</a></li>
+      {% for event in object_list %}
+      <li><a href="{% url 'events:detail' event.uuid %}">{{ event.title }}</a></li>
       {% empty %}
       {% endfor %}
-      <li><a href="{% url 'teams:join' %}">Join a team!</a></li>
     </ul>
   </div>
 </div>

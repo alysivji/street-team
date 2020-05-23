@@ -27,6 +27,7 @@ urlpatterns = [
     path("admin/", include("admin_honeypot.urls", namespace="admin_honeypot")),
     # business functionality
     path("", include("apps.mediahub.urls"), name="mediahub"),
+    path("", include("apps.events.urls"), name="events"),
     path("", include("apps.teams.urls"), name="teams"),
     path("", include("apps.website.urls"), name="website"),
     path("sms/", include("apps.twilio_integration.urls"), name="twilio_integration"),
