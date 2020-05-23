@@ -1,15 +1,5 @@
-from django.test import Client
 import pytest
 from apps.users.tests.factories import UserFactory
-
-
-# TODO: use RequestFactory
-# test client is slow... this is fast, but requires us to test view
-# so we have to do it a bit differently
-@pytest.fixture
-def client():
-    """Django Test Client"""
-    yield Client()
 
 
 @pytest.fixture
