@@ -17,8 +17,10 @@ class EventInformationForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
     def clean_happens_on(self):
-        # TODO test that we cannot create events in the past
-        # TODO end to end functional test
+        # TODO think thru timezones
+        # user always sees information in their timezone
+        # we always compare against UTC
+        # how do comparisons work?
         event_date = self.cleaned_data["happens_on"]
         # TODO can only create events x amount of time in the future
         if event_date <= datetime.now(timezone.utc):

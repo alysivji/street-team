@@ -20,7 +20,11 @@ class TestCreatingEventWorkflow:
         tomorrow = datetime.now(timezone.utc) + timedelta(days=1)
 
         # Act
-        form_data = {"title": "Event", "description": "My Description", "happens_on": tomorrow}
+        form_data = {
+            "title": "Event",
+            "description": "My Description",
+            "happens_on": tomorrow.strftime("%Y-%m-%d %H:%M"),
+        }
         resp = client.post(f"/teams/{team.uuid}/events/new", form_data)
 
         # check that user is on team
