@@ -35,7 +35,3 @@ class RequestUuidMiddleware:
         request.request_id = request_id
         response = self.get_response(request)
         return response
-
-    def process_exception(self, request, exception):
-        if request.user.is_superuser:
-            return technical_500_response(request, *sys.exc_info())
