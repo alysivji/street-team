@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-
 from dateutil.relativedelta import relativedelta
 from django.db import IntegrityError
 import pytest
@@ -67,9 +65,9 @@ class TestUserTeamMembershipStateMachine:
         assert not user_is_only_member_of_team(second_member)
 
     @pytest.mark.freeze_time
-    def test_team_was_just_created__happy_path(self, freezer):
+    def test_team_was_just_created__happy_path(self, freezer, ago):
         # Arrange
-        now = datetime.now(timezone.utc)
+        now = ago()
         fifty_nine_seconds_ago = now - relativedelta(seconds=59)
         freezer.move_to(fifty_nine_seconds_ago)
         team = TeamFactory()
@@ -82,9 +80,9 @@ class TestUserTeamMembershipStateMachine:
         assert result is True
 
     @pytest.mark.freeze_time
-    def test_team_was_just_created__boundary(self, freezer):
+    def test_team_was_just_created__boundary(self, freezer, ago):
         # Arrange
-        now = datetime.now(timezone.utc)
+        now = ago()
         sixty_seconds_ago = now - relativedelta(seconds=60)
         freezer.move_to(sixty_seconds_ago)
         team = TeamFactory()
@@ -97,10 +95,10 @@ class TestUserTeamMembershipStateMachine:
         assert result is False
 
     @pytest.mark.freeze_time
-    def test_team_was_just_created__outside_boundary(self, freezer):
+    def test_team_was_just_created__outside_boundary(self, freezer, ago):
         # Arrange
-        now = datetime.now(timezone.utc)
-        over_sixty_seconds_ago = now - relativedelta(seconds=61)
+        now = ago()
+        over_sixty_seconds_ago = ago(seconds=61)
         freezer.move_to(over_sixty_seconds_ago)
         team = TeamFactory()
         membership = UserTeamMembershipFactory(team=team, position_state=UserTeamMembership.PositionState.MEMBER)
