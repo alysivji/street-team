@@ -10,7 +10,7 @@ django-fsm==2.7.0
 django-imagekit
 django-storages==1.9.1
 django-watchman==1.0.0
-Django==3.0.6
+Django==3.1.6
 djangorestframework==3.10.3
 factory-boy==2.12.0
 faker-e164==0.1.0
