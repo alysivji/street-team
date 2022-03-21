@@ -110,6 +110,8 @@ WSGI_APPLICATION = "streetteam.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 # development environment setting
 DATABASES = {}
 DATABASES["default"] = dj_database_url.config(env="DB_URI")
