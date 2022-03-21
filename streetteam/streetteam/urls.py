@@ -29,6 +29,7 @@ urlpatterns = [
     path("", include("apps.mediahub.urls"), name="mediahub"),
     path("", include("apps.events.urls"), name="events"),
     path("", include("apps.teams.urls"), name="teams"),
+    path("users", include("apps.users.urls"), name="users"),
     path("", include("apps.website.urls"), name="website"),
     path("sms/", include("apps.twilio_integration.urls"), name="twilio_integration"),
     # third party apps
