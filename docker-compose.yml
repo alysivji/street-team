@@ -37,6 +37,9 @@ services:
       SECRET_KEY: shhhhh-its-a-secret
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@db:5432/streetteam
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_SERVICE_SID: ${TWILIO_SERVICE_SID}
     volumes:
       - .:/app/
     ports:
