@@ -2,7 +2,6 @@ import logging
 import os
 import uuid
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from imagekit import ImageSpec, register
 from imagekit.models import ImageSpecField
@@ -68,7 +67,7 @@ class PostEvent(BaseModel):
     image = models.ForeignKey(UploadedImage, related_name="events", on_delete=models.CASCADE)
 
     name = models.CharField(max_length=32, null=False)
-    data = JSONField()
+    data = models.JSONField()
 
     performed_by = models.ForeignKey(User, related_name="events", on_delete=models.CASCADE)
 

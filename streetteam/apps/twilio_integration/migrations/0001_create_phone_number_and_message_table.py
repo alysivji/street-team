@@ -9,24 +9,26 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='PhoneNumber',
+            name="PhoneNumber",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('number', models.CharField(max_length=30, unique=True)),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("number", models.CharField(max_length=30, unique=True)),
             ],
         ),
         migrations.CreateModel(
-            name='ReceivedMessage',
+            name="ReceivedMessage",
             fields=[
-                ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('twilio_message_id', models.CharField(max_length=34)),
-                ('data', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('phone_number', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='twilio_integration.PhoneNumber')),
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("twilio_message_id", models.CharField(max_length=34)),
+                ("data", models.JSONField()),
+                (
+                    "phone_number",
+                    models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to="twilio_integration.PhoneNumber"),
+                ),
             ],
         ),
     ]
