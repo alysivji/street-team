@@ -7,13 +7,13 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from .managers import UserManager
+from common.models import BaseModel
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+class User(AbstractBaseUser, BaseModel, PermissionsMixin):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
 
     email = models.EmailField(_("email address"), unique=True)
-    username = models.EmailField(null=True)  # field is required for python social auth
 
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

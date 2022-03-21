@@ -6,6 +6,6 @@ import pytest
 @pytest.mark.django_db
 def test_user_has_uuid_field():
     User = get_user_model()
-    user = User.objects.create_user("super@user.com", "foo")
+    user = User.objects.create_user(email="super@user.com", password="foo")
 
-    assert isinstance(user.uuid, uuid.UUID)
+    assert isinstance(user.id, uuid.UUID)
