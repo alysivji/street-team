@@ -10,7 +10,7 @@ class CreateNewUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("email", "password")
-        extra_kwargs = {"password": {"write_only": True}, "username": {"read_only": True}}
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
         return User.objects.create_user(email=validated_data["email"], password=validated_data["password"])
@@ -39,3 +39,5 @@ class CreateNewUserSerializer(serializers.ModelSerializer):
         # check for letter
         if not any(char.isalpha() for char in value):
             raise ValidationError("Password must contain at least 1 letter.")
+
+        return value

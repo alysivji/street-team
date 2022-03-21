@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import DebugEndpoint, DebugPageView
+from . import views
 
 urlpatterns = [
-    path("", view=DebugEndpoint.as_view()),
-    path("template/", view=DebugPageView.as_view(), name="template_view"),
+    path("", view=views.DebugEndpoint.as_view()),
+    path("authenticated/", view=views.AuthenticatedDebugEndpoint.as_view()),
+    path("template/", view=views.DebugPageView.as_view(), name="template_view"),
 ]
