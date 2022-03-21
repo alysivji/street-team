@@ -11,3 +11,30 @@ Django documentation [highly recommends that we should use a custom User model](
 - [Creating a Custom User Model in Django](https://testdriven.io/blog/django-custom-user-model/)
 - [How to Extend Django User Model](https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#abstractbaseuser)
 - [Django Tips #6: Custom User Model](https://wsvincent.com/django-tips-custom-user-model/)
+
+## Workflow
+
+### Create New User Flow
+
+- User sends a `POST` request to `/users`
+  - email address
+  - password
+
+- validate the email address and password
+
+- Phase 2
+  - send them an email confirming registration
+
+### Login Flow
+
+- user sends a `POST` request to `/users/login`
+  - email address
+  - password
+  - send token back
+    - for now lets make this a known value
+
+- perform JWT exchange
+
+- Phase 2
+  - create a profile
+  - register for a team
