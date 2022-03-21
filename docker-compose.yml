@@ -37,11 +37,6 @@ services:
       SECRET_KEY: shhhhh-its-a-secret
       DJANGO_SETTINGS_MODULE: streetteam.settings
       DB_URI: postgres://streetteam_user:streetteam_password@db:5432/streetteam
-      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
-      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
-      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
-      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
-      TWILIO_SERVICE_SID: ${TWILIO_SERVICE_SID}
     volumes:
       - .:/app/
     ports:
@@ -50,6 +45,7 @@ services:
     tty: true
 
   # localstack running a fake S3
+  # TODO move to something a bit more lightweight
   localstack:
     image: localstack/localstack:0.11.1
     environment:

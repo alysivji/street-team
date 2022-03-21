@@ -33,7 +33,6 @@ urlpatterns = [
     path("sms/", include("apps.twilio_integration.urls"), name="twilio_integration"),
     # third party apps
     path("watchman/", include("watchman.urls")),
-    path("", include("social_django.urls", namespace="social")),
 ]
 
 if settings.DEBUG:

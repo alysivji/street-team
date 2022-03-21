@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     # third party
     "rest_framework",  # REST APIs
     "watchman",  # status endpoints for services (db, cache, storage, etc)
-    "social_django",  # login using oauth providers
     "django_fsm",  # declarative state management for django models
     "django_fsm_log",  # audit log for django fsm changes
     "admin_honeypot",  # fake Django Admin login screen to capture unauthorized access
@@ -128,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Authentication backends
 # https://docs.djangoproject.com/en/2.2/ref/settings/#authentication-backends
-AUTHENTICATION_BACKENDS = ["social_core.backends.github.GithubOAuth2", "django.contrib.auth.backends.ModelBackend"]
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 
 
 # Internationalization
@@ -170,21 +169,6 @@ AUTH_USER_MODEL = "users.User"
 # https://github.com/mwarkentin/django-watchman
 WATCHMAN_CHECKS = ("watchman.checks.caches", "watchman.checks.databases")
 WATCHMAN_AUTH_DECORATOR = "django.contrib.admin.views.decorators.staff_member_required"
-
-
-# Python Social Auth -- login using OAuth providers
-# https://python-social-auth.readthedocs.io/
-# https://python-social-auth.readthedocs.io/en/latest/backends/github.html
-LOGIN_URL = "/"
-SOCIAL_AUTH_PASSWORDLESS = True
-SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/account"
-SOCIAL_AUTH_LOGIN_ERROR_URL = "/error"  # TODO
-SOCIAL_AUTH_LOGOUT_REDIRECT_URL = "/"
-# SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/new-users-redirect-url/'
-SOCIAL_AUTH_GITHUB_KEY = os.getenv("GITHUB_CLIENT_ID")
-SOCIAL_AUTH_GITHUB_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-SOCIAL_AUTH_GITHUB_SCOPE = ["read:user", "user:email"]
 
 
 # Twilio Credentials
