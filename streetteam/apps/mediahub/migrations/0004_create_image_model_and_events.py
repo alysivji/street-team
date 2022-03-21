@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ("updated_at", models.DateTimeField(auto_now=True)),
                 ("uuid", models.UUIDField(default=uuid.uuid4, unique=True)),
                 ("name", models.CharField(max_length=32)),
-                ("data", django.contrib.postgres.fields.jsonb.JSONField()),
+                ("data", models.JSONField()),
                 (
                     "image",
                     models.ForeignKey(
